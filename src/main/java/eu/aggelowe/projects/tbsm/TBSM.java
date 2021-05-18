@@ -17,8 +17,10 @@ public final class TBSM {
 	 * 
 	 * @param args The given arguments when the program is executed.
 	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws Throwable{
+		Reference.MAIN_LOGGER.info("Starting the application...");
+		GuiManager.initGui();
+		Reference.MAIN_LOGGER.info("Application started successfully!");
 	}
 	
 }
