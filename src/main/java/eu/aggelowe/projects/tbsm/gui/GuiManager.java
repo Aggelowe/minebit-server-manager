@@ -16,7 +16,7 @@ import eu.aggelowe.projects.tbsm.util.Reference;
  */
 public final class GuiManager {
 
-	static final Logger GUI_LOGGER = LogManager.getLogger("Gui");
+	static final Logger GUI_LOGGER = LogManager.getLogger("GuiManager");
 	
 	static final JFrame FRAME = new JFrame();
 	

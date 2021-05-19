@@ -19,6 +19,7 @@ public final class TBSM {
 	 */
 	public static void main(String[] args) throws Throwable{
 		Reference.MAIN_LOGGER.info("Starting the application...");
+		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
 		GuiManager.initGui();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
 	}
