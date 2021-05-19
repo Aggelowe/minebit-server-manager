@@ -1,7 +1,7 @@
 package eu.aggelowe.projects.tbsm;
 
+import eu.aggelowe.projects.tbsm.gui.GuiManager;
 import eu.aggelowe.projects.tbsm.util.Reference;
-import eu.aggelowe.projects.tbsm.util.gui.GuiManager;
 
 /**
  * This class is the main class of the project and is used to call all the

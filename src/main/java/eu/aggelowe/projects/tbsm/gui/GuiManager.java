@@ -1,4 +1,4 @@
-package eu.aggelowe.projects.tbsm.util.gui;
+package eu.aggelowe.projects.tbsm.gui;
 
 import javax.swing.JFrame;
 
