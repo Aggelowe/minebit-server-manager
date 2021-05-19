@@ -8,5 +8,5 @@
 
 ### Issues
 - Please report issues to the [github issues](../../issues) page.
-- Check if you have the correct versions and have configured the plugin correctly before posting. 
-- Include your minecraft version, spigot-api version and plugin version.
+- Check if you have the correct versions and also include a screenshot if possible. 
+- Include your computer and Java specs in order to make it easier to fix.
