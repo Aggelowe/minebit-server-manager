@@ -1,7 +1,5 @@
 package eu.aggelowe.projects.tbsm;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.SwingUtilities;
 
 import eu.aggelowe.projects.tbsm.gui.GuiManager;
