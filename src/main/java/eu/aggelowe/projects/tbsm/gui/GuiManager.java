@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.aggelowe.projects.tbsm.TBSM;
-import eu.aggelowe.projects.tbsm.gui.components.AppButton;
 import eu.aggelowe.projects.tbsm.util.AppUtils;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
@@ -51,10 +50,9 @@ public final class GuiManager {
 		GUI_LOGGER.info("Starting drawing gui...");
 		GUI_LOGGER.debug("Creating mainframe...");
 		GuiManager.setupWindow();
+		GUI_LOGGER.debug("Initialising layout...");
+		GuiLayout.initAppLayout();
 		GUI_LOGGER.debug("Showing frame...");
-		AppButton button = new AppButton("Text", ComponentReference.APP_LOGO);
-		button.setIconAsButton(true);
-		MAINFRAME.add(button);
 		WINDOW.setVisible(true);
 		GUI_LOGGER.info("Gui drawn succesgully!");
 	}
