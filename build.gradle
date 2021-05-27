@@ -29,8 +29,10 @@ repositories {
 jar {
     version = '0.1' 
 	destinationDir = file("exports/")
-	from.configurations.compile.collect { 
-	    it.isDirectory() ? it : zipTree(it) 
+	from {
+		configurations.compile.collect { 
+	   		it.isDirectory() ? it : zipTree(it) 
+		}
 	}
 	manifest { 
 		attributes 'Main-Class': 'eu.aggelowe.projects.tbsm.TBSM' 
