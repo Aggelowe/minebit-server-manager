@@ -16,6 +16,11 @@ import eu.aggelowe.projects.tbsm.util.Reference;
 public final class TBSM {
 
 	/**
+	 * The application's main thread.
+	 */
+	public static Thread MAIN_THREAD;
+	
+	/**
 	 * This class is the main method of the project and is used to call all the
 	 * important methods for the application to run and is being called when the
 	 * program is executed.
@@ -23,6 +28,7 @@ public final class TBSM {
 	 * @param args The given arguments when the program is executed.
 	 */
 	public static void main(String[] args) throws Throwable {
+		MAIN_THREAD = Thread.currentThread();
 		Reference.MAIN_LOGGER.info("Starting the application...");
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
 		SwingUtilities.invokeLater(new Runnable() {

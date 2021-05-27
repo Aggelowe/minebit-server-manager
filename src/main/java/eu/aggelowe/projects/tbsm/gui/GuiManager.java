@@ -1,5 +1,7 @@
 package eu.aggelowe.projects.tbsm.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
@@ -48,8 +50,10 @@ public final class GuiManager {
 	 */
 	public static void initGui() {
 		GUI_LOGGER.info("Starting drawing gui...");
-		GUI_LOGGER.debug("Creating mainframe...");
+		GUI_LOGGER.debug("Setting up window...");
 		GuiManager.setupWindow();
+		GUI_LOGGER.debug("Setting up mainframe...");
+		GuiManager.setupMainframe();
 		GUI_LOGGER.debug("Initialising layout...");
 		GuiLayout.initAppLayout();
 		GUI_LOGGER.debug("Showing frame...");
@@ -73,18 +77,31 @@ public final class GuiManager {
 		WINDOW.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		WINDOW.setFont(Font.getFont("Monospaced Bold"));
 		WINDOW.setIconImage(ComponentReference.APP_LOGO.getImage());
+		WINDOW.setLayout(new BorderLayout());
+		WINDOW.getContentPane().setBackground(GuiManager.ComponentReference.MAIN_COLOR);
+		WINDOW.setUndecorated(true);
+	}
+	/**
+	 * This method is used to setup the main frame of the application in order to make it work and
+	 * able to cooperate with the other components. This method should <b>only</b>
+	 * be called by the {@link #initGui()} method as it might interfere with the
+	 * application's appearance.
+	 */
+	private static void setupMainframe() {
+		MAINFRAME.setOpaque(false);
+		MAINFRAME.setSize(WINDOW.getSize());
 	}
 
 	/**
 	 * This class contains a lot of very important variables of the application such
 	 * as the default size of the window or frame layouts.
 	 */
-	private static final class ComponentReference {
+	 static final class ComponentReference {
 
 		/**
 		 * The window's default size.
 		 */
-		public static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(960, 540);
+		public static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1200, 675);
 
 		/**
 		 * The window's minimum size.
@@ -95,6 +112,11 @@ public final class GuiManager {
 		 * The application's logo.
 		 */
 		public static final ImageIcon APP_LOGO = new ImageIcon(AppUtils.getResource("assets/icon.png"));
+		
+		/**
+		 * The application's main color.
+		 */
+		public static final Color MAIN_COLOR = new Color(0, 35, 90);
 
 	}
 }
