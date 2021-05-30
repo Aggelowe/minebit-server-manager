@@ -27,9 +27,9 @@ import eu.aggelowe.projects.tbsm.util.Reference;
  */
 public final class GuiManager {
 
-	static final Logger GUI_LOGGER = LogManager.getLogger("GuiManager");
-	static final JPanel MAINFRAME = new JPanel();
-	static final JFrame WINDOW = new JFrame() {
+	public static final Logger GUI_LOGGER = LogManager.getLogger("GuiManager");
+	public static final JPanel MAINFRAME = new JPanel();
+	public static final JFrame WINDOW = new JFrame() {
 
 		protected void processWindowEvent(WindowEvent e) {
 			if (e.getID() == WindowEvent.WINDOW_CLOSING) {
@@ -71,8 +71,9 @@ public final class GuiManager {
 		GUI_LOGGER.debug("Creating frame...");
 		WINDOW.setTitle(Reference.FULL_NAME);
 		WINDOW.setName("Main frame");
-		WINDOW.setSize(ComponentReference.DEFAULT_WINDOW_SIZE);
-		WINDOW.setMinimumSize(ComponentReference.MINIMUM_WINDOW_SIZE);
+		WINDOW.setMaximumSize(ComponentReference.WINDOW_SIZE);
+		WINDOW.setPreferredSize(ComponentReference.WINDOW_SIZE);
+		WINDOW.setMinimumSize(ComponentReference.WINDOW_SIZE);
 		WINDOW.getContentPane().add(MAINFRAME);
 		WINDOW.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		WINDOW.setFont(Font.getFont("Monospaced Bold"));
@@ -81,6 +82,7 @@ public final class GuiManager {
 		WINDOW.getContentPane().setBackground(GuiManager.ComponentReference.MAIN_COLOR);
 		WINDOW.setUndecorated(true);
 	}
+
 	/**
 	 * This method is used to setup the main frame of the application in order to make it work and
 	 * able to cooperate with the other components. This method should <b>only</b>
@@ -89,24 +91,21 @@ public final class GuiManager {
 	 */
 	private static void setupMainframe() {
 		MAINFRAME.setOpaque(false);
+		MAINFRAME.setVisible(true);
 		MAINFRAME.setSize(WINDOW.getSize());
+		MAINFRAME.setLayout(new BorderLayout());
 	}
 
 	/**
 	 * This class contains a lot of very important variables of the application such
 	 * as the default size of the window or frame layouts.
 	 */
-	 static final class ComponentReference {
-
+	 public static final class ComponentReference {
+		 
 		/**
 		 * The window's default size.
 		 */
-		public static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1200, 675);
-
-		/**
-		 * The window's minimum size.
-		 */
-		public static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(720, 405);
+		public static final Dimension WINDOW_SIZE = new Dimension(1200, 675);
 		
 		/**
 		 * The application's logo.

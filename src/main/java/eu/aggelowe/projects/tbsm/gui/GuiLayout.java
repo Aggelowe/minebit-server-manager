@@ -1,8 +1,12 @@
 package eu.aggelowe.projects.tbsm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.border.LineBorder;
 
 /**
  * This class is used to manage the layout of the application's components and
@@ -18,31 +22,68 @@ public final class GuiLayout {
 	 * used for the layout to work.
 	 */
 	public static void initAppLayout() {
-		GuiLayout.setupMenuBar();
-		GuiManager.MAINFRAME.add(AppComponents.MENU_BAR, BorderLayout.NORTH);
+		GuiLayout.setupWindowControlBar();
+		GuiManager.MAINFRAME.add(AppComponents.WINDOW_CONTROL_BAR, BorderLayout.NORTH);
 	}
-
+	
 	/**
-	 * This method is used to setup the menu bar of the application in order to make
+	 * This method is used to setup the control bar of the application in order to make
 	 * it work and operational.
 	 */
-	private static void setupMenuBar() {
-		AppComponents.MENU_BAR.setFloatable(false);
-		AppComponents.MENU_BAR.setOpaque(false);
-		AppComponents.MENU_BAR.setSize(100,100);
+	private static void setupWindowControlBar() {
+		Color controlBarColor = new Color(0, 70, 190);
+		Dimension controlBarSize = new Dimension(1200, 75);
+		AppComponents.WINDOW_CONTROL_BAR.setMinimumSize(controlBarSize);
+		AppComponents.WINDOW_CONTROL_BAR.setPreferredSize(controlBarSize);
+		AppComponents.WINDOW_CONTROL_BAR.setMaximumSize(controlBarSize);
+		AppComponents.WINDOW_CONTROL_BAR.setVisible(true);
+		AppComponents.WINDOW_CONTROL_BAR.setOpaque(true);
+		AppComponents.WINDOW_CONTROL_BAR.setBackground(controlBarColor);
+		AppComponents.WINDOW_CONTROL_BAR.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		AppComponents.WINDOW_CONTROL_BAR.setLayout(new BorderLayout());
+		GuiLayout.setupWindowOperationBar();
+		GuiLayout.setupWindowActionBar();
+		AppComponents.WINDOW_CONTROL_BAR.add(AppComponents.WINDOW_OPERATION_BAR, BorderLayout.NORTH);
+		AppComponents.WINDOW_CONTROL_BAR.add(AppComponents.WINDOW_ACTION_BAR, BorderLayout.SOUTH);
 	}
 
 	/**
-	 * This class contains all of the application components in order to keep them
-	 * organised in one class.
+	 * This method is used to setup the operation bar of the application in order to make
+	 * it work and operational.
+	 */
+	private static void setupWindowOperationBar() {
+		Dimension operationBarSize = new Dimension(1200, 25);
+		AppComponents.WINDOW_OPERATION_BAR.setMinimumSize(operationBarSize);
+		AppComponents.WINDOW_OPERATION_BAR.setPreferredSize(operationBarSize);
+		AppComponents.WINDOW_OPERATION_BAR.setMaximumSize(operationBarSize);
+		GuiComponentHandler.customiseWindowOperationBar();
+	}
+	
+	/**
+	 * This method is used to setup the action bar of the application in order to make
+	 * it work and operational.
+	 */
+	private static void setupWindowActionBar() {
+		Dimension actionBarSize = new Dimension(1200, 50);
+		AppComponents.WINDOW_ACTION_BAR.setMinimumSize(actionBarSize);
+		AppComponents.WINDOW_ACTION_BAR.setPreferredSize(actionBarSize);
+		AppComponents.WINDOW_ACTION_BAR.setMaximumSize(actionBarSize);
+		GuiComponentHandler.customiseWindowActionBar();
+	}
+
+	/**
+	 * This class contains all of the application major components in order to keep
+	 * them organised in one class.
 	 * 
 	 * @author Aggelowe
 	 */
 	public static class AppComponents {
 
-		public static final JToolBar MENU_BAR = new JToolBar(JToolBar.HORIZONTAL);
-
-		public static final JToolBar MAIN_TOOL_BAR = new JToolBar(JToolBar.HORIZONTAL);
+		public static final JPanel WINDOW_CONTROL_BAR = new JPanel();
+		
+		public static final JToolBar WINDOW_OPERATION_BAR = new JToolBar(JToolBar.HORIZONTAL);
+		
+		public static final JToolBar WINDOW_ACTION_BAR = new JToolBar(JToolBar.HORIZONTAL);
 
 	}
 

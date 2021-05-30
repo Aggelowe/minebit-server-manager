@@ -1,6 +1,13 @@
 package eu.aggelowe.projects.tbsm.util;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 /**
  * This class contains a lot of very useful utilities for the application which
@@ -25,6 +32,22 @@ public final class AppUtils {
 			return null;
 		}
 		return Thread.currentThread().getContextClassLoader().getResource(resource);
+	}
+
+	/**
+	 * This method returns the given {@link ImageIcon} resized to the given size;
+	 * 
+	 * @param inputImage The initial image.
+	 * @param size       The size to which the image is going to get resized.
+	 * @return the resized image.
+	 */
+	public static ImageIcon resizeImageIcon(ImageIcon inputImage, Dimension size) {
+		Image sourceImage = inputImage.getImage();
+		BufferedImage outputImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = outputImage.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics.drawImage(sourceImage, 0, 0, size.width, size.height, null);
+		return new ImageIcon(outputImage);
 	}
 
 }
