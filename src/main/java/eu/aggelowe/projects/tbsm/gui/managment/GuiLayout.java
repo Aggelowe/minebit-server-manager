@@ -1,4 +1,4 @@
-package eu.aggelowe.projects.tbsm.gui;
+package eu.aggelowe.projects.tbsm.gui.managment;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -6,7 +6,9 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+
+import eu.aggelowe.projects.tbsm.gui.GuiManager;
 
 /**
  * This class is used to manage the layout of the application's components and
@@ -32,14 +34,14 @@ public final class GuiLayout {
 	 */
 	private static void setupWindowControlBar() {
 		Color controlBarColor = new Color(0, 70, 190);
-		Dimension controlBarSize = new Dimension(1200, 75);
+		Dimension controlBarSize = new Dimension(1200, 80);
 		AppComponents.WINDOW_CONTROL_BAR.setMinimumSize(controlBarSize);
 		AppComponents.WINDOW_CONTROL_BAR.setPreferredSize(controlBarSize);
 		AppComponents.WINDOW_CONTROL_BAR.setMaximumSize(controlBarSize);
 		AppComponents.WINDOW_CONTROL_BAR.setVisible(true);
 		AppComponents.WINDOW_CONTROL_BAR.setOpaque(true);
 		AppComponents.WINDOW_CONTROL_BAR.setBackground(controlBarColor);
-		AppComponents.WINDOW_CONTROL_BAR.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		AppComponents.WINDOW_CONTROL_BAR.setBorder(new MatteBorder(0, 0, 2, 0, new Color(30, 45, 65)));
 		AppComponents.WINDOW_CONTROL_BAR.setLayout(new BorderLayout());
 		GuiLayout.setupWindowOperationBar();
 		GuiLayout.setupWindowActionBar();
@@ -64,7 +66,7 @@ public final class GuiLayout {
 	 * it work and operational.
 	 */
 	private static void setupWindowActionBar() {
-		Dimension actionBarSize = new Dimension(1200, 50);
+		Dimension actionBarSize = new Dimension(1200, 55);
 		AppComponents.WINDOW_ACTION_BAR.setMinimumSize(actionBarSize);
 		AppComponents.WINDOW_ACTION_BAR.setPreferredSize(actionBarSize);
 		AppComponents.WINDOW_ACTION_BAR.setMaximumSize(actionBarSize);

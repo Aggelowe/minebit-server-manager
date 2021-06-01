@@ -1,7 +1,5 @@
 package eu.aggelowe.projects.tbsm;
 
-import javax.swing.SwingUtilities;
-
 import eu.aggelowe.projects.tbsm.gui.GuiManager;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
@@ -16,11 +14,6 @@ import eu.aggelowe.projects.tbsm.util.Reference;
 public final class TBSM {
 
 	/**
-	 * The application's main thread.
-	 */
-	public static Thread MAIN_THREAD;
-	
-	/**
 	 * This class is the main method of the project and is used to call all the
 	 * important methods for the application to run and is being called when the
 	 * program is executed.
@@ -28,15 +21,9 @@ public final class TBSM {
 	 * @param args The given arguments when the program is executed.
 	 */
 	public static void main(String[] args) throws Throwable {
-		MAIN_THREAD = Thread.currentThread();
 		Reference.MAIN_LOGGER.info("Starting the application...");
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				GuiManager.initGui();				
-			}
-		});
+		GuiManager.initGui();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
 	}
 
@@ -49,7 +36,6 @@ public final class TBSM {
 	public static void exit(ExitStatus status) {
 		Reference.MAIN_LOGGER.info(status.getOutputMessage());
 		System.exit(status.getExitCode());
-		
 	}
 
 }

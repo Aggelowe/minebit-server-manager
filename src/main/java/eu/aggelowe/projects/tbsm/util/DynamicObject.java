@@ -8,7 +8,7 @@ package eu.aggelowe.projects.tbsm.util;
  *
  * @param <ObjectType> The type of object which is going to be obtained.
  */
-public abstract class ObjectDynamicObtainer<ObjectType> {
+public abstract class DynamicObject<ObjectType> {
 
 	/**
 	 * This class is used to return an object of which the type is given on the

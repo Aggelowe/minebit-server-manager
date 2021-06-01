@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.aggelowe.projects.tbsm.TBSM;
+import eu.aggelowe.projects.tbsm.gui.managment.GuiLayout;
 import eu.aggelowe.projects.tbsm.util.AppUtils;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
@@ -68,7 +69,7 @@ public final class GuiManager {
 	 * application's appearance or even cause component duplications.
 	 */
 	private static void setupWindow() {
-		GUI_LOGGER.debug("Creating frame...");
+		GUI_LOGGER.debug("Creating frame..."); 
 		WINDOW.setTitle(Reference.FULL_NAME);
 		WINDOW.setName("Main frame");
 		WINDOW.setMaximumSize(ComponentReference.WINDOW_SIZE);
@@ -76,7 +77,7 @@ public final class GuiManager {
 		WINDOW.setMinimumSize(ComponentReference.WINDOW_SIZE);
 		WINDOW.getContentPane().add(MAINFRAME);
 		WINDOW.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		WINDOW.setFont(Font.getFont("Monospaced Bold"));
+		WINDOW.setFont(Font.getFont("FreeMono"));
 		WINDOW.setIconImage(ComponentReference.APP_LOGO.getImage());
 		WINDOW.setLayout(new BorderLayout());
 		WINDOW.getContentPane().setBackground(GuiManager.ComponentReference.MAIN_COLOR);
