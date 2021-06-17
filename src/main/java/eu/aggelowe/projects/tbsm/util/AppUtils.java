@@ -1,5 +1,6 @@
 package eu.aggelowe.projects.tbsm.util;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -48,6 +49,12 @@ public final class AppUtils {
 		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		graphics.drawImage(sourceImage, 0, 0, size.width, size.height, null);
 		return new ImageIcon(outputImage);
+	}
+	
+	public static void setFinalComponentSize(Component component, Dimension size) {
+		component.setMaximumSize(size);
+		component.setPreferredSize(size);
+		component.setMinimumSize(size);
 	}
 
 }

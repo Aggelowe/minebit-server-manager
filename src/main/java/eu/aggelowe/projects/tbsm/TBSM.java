@@ -1,6 +1,6 @@
 package eu.aggelowe.projects.tbsm;
 
-import eu.aggelowe.projects.tbsm.gui.GuiManager;
+import eu.aggelowe.projects.tbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
 
@@ -23,7 +23,7 @@ public final class TBSM {
 	public static void main(String[] args) throws Throwable {
 		Reference.MAIN_LOGGER.info("Starting the application...");
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
-		GuiManager.initGui();
+		GuiLayoutSetup.initGui();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
 	}
 
