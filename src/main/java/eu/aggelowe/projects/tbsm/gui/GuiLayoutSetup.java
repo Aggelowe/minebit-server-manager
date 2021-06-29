@@ -8,6 +8,7 @@ import java.awt.LayoutManager;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.OverlayLayout;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +16,9 @@ import org.apache.logging.log4j.Logger;
 import eu.aggelowe.projects.tbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.tbsm.gui.components.AppButton;
 import eu.aggelowe.projects.tbsm.gui.components.AppFrame;
+import eu.aggelowe.projects.tbsm.gui.tabs.MainTab;
+import eu.aggelowe.projects.tbsm.gui.tabs.ServersTab;
+import eu.aggelowe.projects.tbsm.gui.tabs.SettingsTab;
 import eu.aggelowe.projects.tbsm.util.AppUtils;
 
 /**
@@ -47,12 +51,20 @@ public final class GuiLayoutSetup {
 	 * This class is used to call the setup method of every component necessary.
 	 */
 	private static void setupComponents() {
+		GUI_LOGGER.debug("Setting up main components...");
 		GuiLayoutSetup.setupWindowLayout();
 		GuiLayoutSetup.setupMainframeLayout();
 		GuiLayoutSetup.setupActionPanelLayout();
 		GuiLayoutSetup.setupWindowOperationBarLayout();
 		GuiLayoutSetup.setupCloseButtonLayout();
 		GuiLayoutSetup.setupTabSelectionBarLayout();
+		GuiLayoutSetup.setupMainTabButtonLayout();
+		GuiLayoutSetup.setupServersTabButtonLayout();
+		GuiLayoutSetup.setupSettingsTabButtonLayout();
+		GuiLayoutSetup.setupTabPanelLayout();
+		MainTab.setupMainTab();
+		ServersTab.setupServersTab();
+		SettingsTab.setupSettingsTab();
 	}
 
 	/**
@@ -75,6 +87,7 @@ public final class GuiLayoutSetup {
 		AppUtils.setFinalComponentSize(mainframe, ComponentData.WINDOW_SIZE);
 		GuiComponentCustomization.customizeMainframe();
 		mainframe.add(ComponentReference.ACTION_PANEL, BorderLayout.NORTH);
+		mainframe.add(ComponentReference.TAB_PANEL, BorderLayout.SOUTH);
 	}
 
 	/**
@@ -97,7 +110,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupWindowOperationBarLayout() {
 		final JToolBar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
-		final Dimension barSize = new Dimension(ComponentReference.WINDOW.getWidth(), 25);
+		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.ACTION_PANEL_SIZE.height / 80 * 25);
 		windowOperationBar.setOrientation(JToolBar.HORIZONTAL);
 		windowOperationBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		AppUtils.setFinalComponentSize(windowOperationBar, barSize);
@@ -122,7 +135,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupTabSelectionBarLayout() {
 		final JToolBar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
-		final Dimension barSize = new Dimension(ComponentReference.WINDOW.getWidth(), 55);
+		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
 		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL);
 		AppUtils.setFinalComponentSize(tabSelectionBar, barSize);
 		GuiComponentCustomization.customizeTabSelectionBar();
@@ -131,6 +144,55 @@ public final class GuiLayoutSetup {
 		AppUtils.setFinalComponentSize(barIcon, new Dimension(barSize.height, barSize.height));
 		tabSelectionBar.add(barIcon);
 		tabSelectionBar.addSeparator(new Dimension(8, 25));
+		tabSelectionBar.add(ComponentReference.MAIN_TAB_BUTTON);
+		tabSelectionBar.add(ComponentReference.SERVERS_TAB_BUTTON);
+		tabSelectionBar.add(ComponentReference.SETTINGS_TAB_BUTTON);
+	}
+
+	/**
+	 * This method is used to manage the main tab button and to set up it's look and
+	 * feel.
+	 */
+	private static void setupMainTabButtonLayout() {
+		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
+		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 85, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		AppUtils.setFinalComponentSize(mainTabButton, buttonDimension);
+		GuiComponentCustomization.customizeMainTabButton();
+	}
+
+	/**
+	 * This method is used to manage the servers button and to set up it's look and
+	 * feel.
+	 */
+	private static void setupServersTabButtonLayout() {
+		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
+		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 125, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		AppUtils.setFinalComponentSize(serversTabButton, buttonDimension);
+		GuiComponentCustomization.customizeServersTabButton();
+	}
+
+	/**
+	 * This method is used to manage the servers button and to set up it's look and
+	 * feel.
+	 */
+	private static void setupSettingsTabButtonLayout() {
+		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
+		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 135, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		AppUtils.setFinalComponentSize(settingsTabButton, buttonDimension);
+		GuiComponentCustomization.customizeSettingsTabButton();
+	}
+
+	/**
+	 * This method is used to manage the tab panel and to set up it's look and feel.
+	 */
+	private static void setupTabPanelLayout() {
+		final JPanel tabPanel = ComponentReference.TAB_PANEL;
+		AppUtils.setFinalComponentSize(tabPanel, ComponentData.TAB_PANEL_SIZE);
+		tabPanel.setLayout(new OverlayLayout(tabPanel));
+		GuiComponentCustomization.customizeTabPanel();
+		tabPanel.add(ComponentReference.MAIN_TAB_PANEL);
+		tabPanel.add(ComponentReference.SERVERS_TAB_PANEL);
+		tabPanel.add(ComponentReference.SETTINGS_TAB_PANEL);
 	}
 
 }

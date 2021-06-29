@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 import eu.aggelowe.projects.tbsm.util.interfaces.IAction;
+import eu.aggelowe.projects.tbsm.util.properties.IPropertized;
 
 /**
  * This class represents a {@link JButton} shaped for this application as it
@@ -15,7 +16,7 @@ import eu.aggelowe.projects.tbsm.util.interfaces.IAction;
  * @author Aggelowe
  *
  */
-public class AppButton extends JButton implements ActionListener {
+public class AppButton extends JButton implements ActionListener, IPropertized {
 
 	private final IAction[] actions;
 
@@ -79,5 +80,4 @@ public class AppButton extends JButton implements ActionListener {
 	}
 	
 	private static final long serialVersionUID = 268902900084298268L;
-
 }

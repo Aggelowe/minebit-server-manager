@@ -6,9 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+
+import eu.aggelowe.projects.tbsm.storage.StorageReference;
+import eu.aggelowe.projects.tbsm.util.exceptions.InvalidFileTypeException;
 
 /**
  * This class contains a lot of very useful utilities for the application which
@@ -55,6 +59,22 @@ public final class AppUtils {
 		component.setMaximumSize(size);
 		component.setPreferredSize(size);
 		component.setMinimumSize(size);
+	}
+	
+	/**
+	 * This method checks if the application directory exists and creates the folder
+	 * if it doesn't or throws an {@link InvalidFileTypeException} if a file with
+	 * the same name exists in it's position.
+	 * 
+	 * @throws InvalidFileTypeException
+	 */
+	public static void initStorageLocation() throws InvalidFileTypeException {
+		final File applicationDirectory = new File(StorageReference.APPLICATION_FILE_PATH);
+		if (!applicationDirectory.exists()) {
+			applicationDirectory.mkdir();
+		} else if (!applicationDirectory.isDirectory()) {
+			throw new InvalidFileTypeException();
+		}
 	}
 
 }

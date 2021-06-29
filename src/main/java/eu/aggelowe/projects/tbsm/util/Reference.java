@@ -42,5 +42,5 @@ public final class Reference {
 	 * The main {@link Logger} of the application.
 	 */
 	public static final Logger MAIN_LOGGER = LogManager.getLogger("Main");
-	
+		
 }

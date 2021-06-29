@@ -1,6 +1,8 @@
 package eu.aggelowe.projects.tbsm;
 
 import eu.aggelowe.projects.tbsm.gui.GuiLayoutSetup;
+import eu.aggelowe.projects.tbsm.storage.StorageInit;
+import eu.aggelowe.projects.tbsm.storage.StorageReference.ApplicationPreferences;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
 
@@ -22,6 +24,8 @@ public final class TBSM {
 	 */
 	public static void main(String[] args) throws Throwable {
 		Reference.MAIN_LOGGER.info("Starting the application...");
+		Reference.MAIN_LOGGER.debug("Calling the storage manager...");
+		StorageInit.setupStorage();
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
 		GuiLayoutSetup.initGui();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
@@ -32,8 +36,19 @@ public final class TBSM {
 	 * messages on the console based on the status given.
 	 * 
 	 * @param status
+	 * @throws Exception
 	 */
 	public static void exit(ExitStatus status) {
+		if (status == ExitStatus.GRACEFUL) {
+			try {
+				StorageInit.STORAGE_LOGGER.debug("Saving...");
+				ApplicationPreferences.get().save();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());
+				System.exit(ExitStatus.FATAL.getExitCode());
+			}
+		}
 		Reference.MAIN_LOGGER.info(status.getOutputMessage());
 		System.exit(status.getExitCode());
 	}

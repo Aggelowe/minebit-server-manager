@@ -1,7 +1,7 @@
 package eu.aggelowe.projects.tbsm.util.interfaces;
 
 /**
- * This class is used to return the object wanted using the {@link #obtain()}
+ * This interface is used to return the object wanted using the {@link #obtain()}
  * method.
  * 
  * @author Aggelowe

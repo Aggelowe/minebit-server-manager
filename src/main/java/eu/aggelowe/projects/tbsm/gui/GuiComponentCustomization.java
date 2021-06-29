@@ -1,6 +1,7 @@
 package eu.aggelowe.projects.tbsm.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window.Type;
 
 import javax.swing.ImageIcon;
@@ -92,5 +93,65 @@ public class GuiComponentCustomization {
 		tabSelectionBar.setFloatable(false);
 		tabSelectionBar.setOpaque(false);
 		tabSelectionBar.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+	}
+	
+	/**
+	 * This method is used to manage the look and feel of the main tab button.
+	 */
+	public static void customizeMainTabButton() {
+		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
+		final Color buttonColor = new Color(125, 215, 230);
+		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		mainTabButton.setForeground(buttonColor);
+		mainTabButton.setText("Main");
+		mainTabButton.setFont(buttonFont);
+		mainTabButton.setOpaque(false);
+		mainTabButton.setContentAreaFilled(false);
+		mainTabButton.setFocusPainted(false);
+		mainTabButton.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+		mainTabButton.setPropertyValue("isSelected", "true");
+	}
+	
+	/**
+	 * This method is used to manage the look and feel of the servers tab button.
+	 */
+	public static void customizeServersTabButton() {
+		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
+		final Color buttonColor = new Color(125, 215, 230);
+		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		serversTabButton.setForeground(buttonColor);
+		serversTabButton.setText("Servers");
+		serversTabButton.setFont(buttonFont);
+		serversTabButton.setOpaque(false);
+		serversTabButton.setContentAreaFilled(false);
+		serversTabButton.setFocusPainted(false);
+		serversTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
+		serversTabButton.setPropertyValue("isSelected", "false");
+	}
+	
+	/**
+	 * This method is used to manage the look and feel of the settings tab button.
+	 */
+	public static void customizeSettingsTabButton() {
+		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
+		final Color buttonColor = new Color(125, 215, 230);
+		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		settingsTabButton.setForeground(buttonColor);
+		settingsTabButton.setText("Settings");
+		settingsTabButton.setFont(buttonFont);
+		settingsTabButton.setOpaque(false);
+		settingsTabButton.setContentAreaFilled(false);
+		settingsTabButton.setFocusPainted(false);
+		settingsTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
+		settingsTabButton.setPropertyValue("isSelected", "false");
+	}
+	
+	/**
+	 * This method is used to manage the look and feel of the tab panel.
+	 */
+	public static void customizeTabPanel() {
+		final JPanel actionPanel = ComponentReference.TAB_PANEL;
+		actionPanel.setOpaque(false);
+		actionPanel.setVisible(true);
 	}
 }
