@@ -35,6 +35,6 @@ jar {
 		}
 	}
 	manifest { 
-		attributes 'Main-Class': 'eu.aggelowe.projects.tbsm.TBSM' 
+		attributes 'Main-Class': 'eu.aggelowe.projects.mbsm.MBSM' 
 	}
 }

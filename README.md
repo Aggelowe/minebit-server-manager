@@ -1,4 +1,4 @@
-# Thunderbolt Server Manager
+# Minebit Server Manager
 
 ### Info
 - This application is used to create and manage Minecraft servers of various versions and types.
