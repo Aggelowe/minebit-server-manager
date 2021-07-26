@@ -110,7 +110,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupWindowOperationBarLayout() {
 		final JToolBar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
-		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.ACTION_PANEL_SIZE.height / 80 * 25);
+		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, 25);
 		windowOperationBar.setOrientation(JToolBar.HORIZONTAL);
 		windowOperationBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		AppUtils.setFinalComponentSize(windowOperationBar, barSize);
@@ -135,7 +135,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupTabSelectionBarLayout() {
 		final JToolBar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
-		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, 55);
 		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL);
 		AppUtils.setFinalComponentSize(tabSelectionBar, barSize);
 		GuiComponentCustomization.customizeTabSelectionBar();
@@ -155,7 +155,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupMainTabButtonLayout() {
 		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 85, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		final Dimension buttonDimension = new Dimension(85, 55);
 		AppUtils.setFinalComponentSize(mainTabButton, buttonDimension);
 		GuiComponentCustomization.customizeMainTabButton();
 	}
@@ -166,7 +166,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupServersTabButtonLayout() {
 		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 125, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		final Dimension buttonDimension = new Dimension(125, 55);
 		AppUtils.setFinalComponentSize(serversTabButton, buttonDimension);
 		GuiComponentCustomization.customizeServersTabButton();
 	}
@@ -177,7 +177,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupSettingsTabButtonLayout() {
 		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(ComponentData.WINDOW_SIZE.width / 1200 * 135, ComponentData.ACTION_PANEL_SIZE.height / 80 * 55);
+		final Dimension buttonDimension = new Dimension(135, 55);
 		AppUtils.setFinalComponentSize(settingsTabButton, buttonDimension);
 		GuiComponentCustomization.customizeSettingsTabButton();
 	}

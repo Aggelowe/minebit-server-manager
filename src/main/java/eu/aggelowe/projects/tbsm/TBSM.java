@@ -1,8 +1,9 @@
 package eu.aggelowe.projects.tbsm;
 
+
 import eu.aggelowe.projects.tbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.tbsm.storage.StorageInit;
-import eu.aggelowe.projects.tbsm.storage.StorageReference.ApplicationPreferences;
+import eu.aggelowe.projects.tbsm.storage.StorageReference.ApplicationPrimaryData;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.Reference;
 
@@ -42,7 +43,7 @@ public final class TBSM {
 		if (status == ExitStatus.GRACEFUL) {
 			try {
 				StorageInit.STORAGE_LOGGER.debug("Saving...");
-				ApplicationPreferences.get().save();
+				ApplicationPrimaryData.get().save();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());

@@ -148,17 +148,17 @@ public final class ComponentReference {
 		/**
 		 * The action panel's size.
 		 */
-		public static final Dimension ACTION_PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.WINDOW_SIZE.height / 675 * 80);
+		public static final Dimension ACTION_PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width, 80);
 
 		/**
 		 * The size of the window operation buttons.
 		 */
-		public static final Dimension WINDOW_OPERATION_BUTTON_SIZE = new Dimension(ComponentData.ACTION_PANEL_SIZE.height / 80 * 16, ComponentData.ACTION_PANEL_SIZE.height / 80 * 16);
+		public static final Dimension WINDOW_OPERATION_BUTTON_SIZE = new Dimension(16, 16);
 
 		/**
 		 * The action panel's size.
 		 */
-		public static final Dimension TAB_PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width, ComponentData.WINDOW_SIZE.height / 675 * 595);
+		public static final Dimension TAB_PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width, 595);
 
 	}
 

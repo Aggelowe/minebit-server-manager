@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.aggelowe.projects.tbsm.TBSM;
-import eu.aggelowe.projects.tbsm.storage.StorageReference.ApplicationPreferences;
+import eu.aggelowe.projects.tbsm.storage.StorageReference.ApplicationPrimaryData;
 import eu.aggelowe.projects.tbsm.util.AppUtils;
 import eu.aggelowe.projects.tbsm.util.ExitStatus;
 import eu.aggelowe.projects.tbsm.util.exceptions.InvalidFileTypeException;
@@ -33,7 +33,7 @@ public final class StorageInit {
 			TBSM.exit(ExitStatus.FATAL);
 		}
 		try {
-			StorageInit.setupApplicationPreferences();
+			StorageInit.setupApplicationPrimaryData();
 		} catch (Exception e) {
 			e.printStackTrace();
 			TBSM.exit(ExitStatus.FATAL);
@@ -41,28 +41,31 @@ public final class StorageInit {
 	}
 
 	/**
-	 * This method sets up the application preferences serialised file of the
+	 * This method sets up the application primary data serialised file of the
 	 * application.
 	 * 
 	 * @throws Exception
 	 */
-	private static void setupApplicationPreferences() throws Exception {
-		StorageInit.setApplicationPreferencesDefaults();
-		if (!ApplicationPreferences.get().getFile().exists()) {
-			StorageInit.STORAGE_LOGGER.debug("Application preferences file doesn't exist! Creating a new one...");
-			ApplicationPreferences.get().save();
+	private static void setupApplicationPrimaryData() throws Exception {
+		StorageInit.setApplicationPrimaryDataDefaults();
+		if (!ApplicationPrimaryData.get().getFile().exists()) {
+			StorageInit.STORAGE_LOGGER.debug("Application primary data file doesn't exist! Creating a new one...");
+			ApplicationPrimaryData.get().save();
 		} else {
-			StorageInit.STORAGE_LOGGER.debug("Loading application preferences...");
-			ApplicationPreferences.get().load();
+			StorageInit.STORAGE_LOGGER.debug("Loading application primary data...");
+			ApplicationPrimaryData.get().load();
 		}
 	}
 
 	/**
-	 * This method sets all the default values of the application preferences
+	 * This method sets all the default values of the application primary data
 	 * serialised file.
 	 */
-	private static void setApplicationPreferencesDefaults() {
-		ApplicationPreferences.get().setPropertyValue("size_multiplier", ApplicationPreferences.DEFAULT_SIZE_MULTIPLIER);
-	}
+	private static void setApplicationPrimaryDataDefaults() {
+		final String[][] defaultPrimaryData = { { "x", "y" } };
+		for (String[] defaultProperty : defaultPrimaryData) {
+			ApplicationPrimaryData.get().setPropertyValue(defaultProperty[0], defaultProperty[1]);
+		}
 
+	}
 }
