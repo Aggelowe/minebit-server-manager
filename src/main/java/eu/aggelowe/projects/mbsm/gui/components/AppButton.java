@@ -67,7 +67,7 @@ public class AppButton extends JButton implements ActionListener, IPropertized {
 	public AppButton(String text, Icon icon, IAction... actions) {
 		super(text, icon);
 		this.actions = actions;
-		this.addActionListener(this);							
+		this.addActionListener(this);
 	}
 
 	@Override

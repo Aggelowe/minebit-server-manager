@@ -74,9 +74,9 @@ public final class AppFrame extends JFrame {
 	 */
 	public AppFrame(String title, GraphicsConfiguration graphicsConfiguration, IAction... closeActions) {
 		super(title, graphicsConfiguration);
-		this.closeActions = closeActions;
+		this.closeActions = closeActions; 
 	}
-
+ 
 	@Override
 	protected final void processWindowEvent(WindowEvent e) {
 		if (e.getID() == WindowEvent.WINDOW_CLOSING) {

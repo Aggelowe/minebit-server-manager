@@ -5,12 +5,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 import javax.swing.border.MatteBorder;
 
 import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
+import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
 import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
@@ -32,7 +33,7 @@ public final class ComponentReference {
 
 	public static final JPanel ACTION_PANEL = new JPanel();
 
-	public static final JToolBar WINDOW_OPERATIONS_BAR = new JToolBar();
+	public static final AppDraggableToolbar WINDOW_OPERATIONS_BAR = new AppDraggableToolbar();
 
 	public static final AppButton CLOSE_BUTTON = new AppButton(new IAction() {
 		@Override
@@ -40,8 +41,16 @@ public final class ComponentReference {
 			MBSM.exit(ExitStatus.GRACEFUL);
 		}
 	});
+	
+	public static final AppButton MINIMISE_BUTTON = new AppButton(new IAction() {
+		@Override
+		public void execute() {
+			WINDOW.setState(JFrame.ICONIFIED);
+		}
+	});
 
-	public static final JToolBar TAB_SELECTION_BAR = new JToolBar();
+
+	public static final AppDraggableToolbar TAB_SELECTION_BAR = new AppDraggableToolbar();
 
 	public static final AppButton MAIN_TAB_BUTTON = new AppButton(new IAction() {
 		@Override
@@ -54,7 +63,7 @@ public final class ComponentReference {
 				SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
 				SERVERS_TAB_BUTTON.setPropertyValue("isSelected", "false");
 				SERVERS_TAB_PANEL.setVisible(false);
-				SERVERS_TAB_PANEL.setPropertyValue("isShowing", "false");
+				SERVERS_TAB_PANEL.setPropertyValue("isShowing", "false"); 
 				SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
 				SETTINGS_TAB_BUTTON.setPropertyValue("isSelected", "false");
 				SETTINGS_TAB_PANEL.setVisible(false);

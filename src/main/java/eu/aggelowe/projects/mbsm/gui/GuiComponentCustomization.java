@@ -6,13 +6,13 @@ import java.awt.Window.Type;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
+import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.Reference;
@@ -38,7 +38,7 @@ public class GuiComponentCustomization {
 		window.setFont(ComponentData.MAIN_FONT);
 		window.getContentPane().setBackground(ComponentData.MAIN_COLOR);
 		window.setLocationRelativeTo(null);
-		window.setType(Type.POPUP);
+		window.setType(Type.NORMAL);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class GuiComponentCustomization {
 	 * This method is used to manage the look and feel of the action panel.
 	 */
 	public static void customizeWindowOperationBar() {
-		final JToolBar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
+		final AppDraggableToolbar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
 		windowOperationBar.setFloatable(false);
 		windowOperationBar.setOpaque(false);
 		windowOperationBar.setBorder(new LineBorder(new Color(0, 0, 0), 0));
@@ -86,15 +86,27 @@ public class GuiComponentCustomization {
 	}
 
 	/**
+	 * This method is used to manage the look and feel of the minimise button.
+	 */
+	public static void customizeMinimiseButton() {
+		final AppButton minimiseButton = ComponentReference.MINIMISE_BUTTON;
+		minimiseButton.setIcon(AppUtils.resizeImageIcon(new ImageIcon(AppUtils.getResource("assets/gui/minimise_button.png")), ComponentData.WINDOW_OPERATION_BUTTON_SIZE));
+		minimiseButton.setOpaque(false);
+		minimiseButton.setContentAreaFilled(false);
+		minimiseButton.setBorderPainted(false);
+		minimiseButton.setFocusPainted(false); 
+	}
+
+	/**
 	 * This method is used to manage the look and feel of the action panel.
 	 */
 	public static void customizeTabSelectionBar() {
-		final JToolBar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
+		final AppDraggableToolbar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
 		tabSelectionBar.setFloatable(false);
 		tabSelectionBar.setOpaque(false);
 		tabSelectionBar.setBorder(new LineBorder(new Color(0, 0, 0), 0));
 	}
-	
+
 	/**
 	 * This method is used to manage the look and feel of the main tab button.
 	 */
@@ -111,7 +123,7 @@ public class GuiComponentCustomization {
 		mainTabButton.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
 		mainTabButton.setPropertyValue("isSelected", "true");
 	}
-	
+
 	/**
 	 * This method is used to manage the look and feel of the servers tab button.
 	 */
@@ -128,7 +140,7 @@ public class GuiComponentCustomization {
 		serversTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
 		serversTabButton.setPropertyValue("isSelected", "false");
 	}
-	
+
 	/**
 	 * This method is used to manage the look and feel of the settings tab button.
 	 */
@@ -145,7 +157,7 @@ public class GuiComponentCustomization {
 		settingsTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
 		settingsTabButton.setPropertyValue("isSelected", "false");
 	}
-	
+
 	/**
 	 * This method is used to manage the look and feel of the tab panel.
 	 */

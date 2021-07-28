@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
+import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
 import eu.aggelowe.projects.mbsm.gui.tabs.MainTab;
 import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
@@ -57,6 +58,7 @@ public final class GuiLayoutSetup {
 		GuiLayoutSetup.setupActionPanelLayout();
 		GuiLayoutSetup.setupWindowOperationBarLayout();
 		GuiLayoutSetup.setupCloseButtonLayout();
+		GuiLayoutSetup.setupMinimiseButtonLayout();
 		GuiLayoutSetup.setupTabSelectionBarLayout();
 		GuiLayoutSetup.setupMainTabButtonLayout();
 		GuiLayoutSetup.setupServersTabButtonLayout();
@@ -109,7 +111,7 @@ public final class GuiLayoutSetup {
 	 * look and feel.
 	 */
 	private static void setupWindowOperationBarLayout() {
-		final JToolBar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
+		final AppDraggableToolbar windowOperationBar = ComponentReference.WINDOW_OPERATIONS_BAR;
 		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, 25);
 		windowOperationBar.setOrientation(JToolBar.HORIZONTAL);
 		windowOperationBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -117,6 +119,8 @@ public final class GuiLayoutSetup {
 		GuiComponentCustomization.customizeWindowOperationBar();
 		windowOperationBar.addSeparator(new Dimension(4, 25));
 		windowOperationBar.add(ComponentReference.CLOSE_BUTTON);
+		windowOperationBar.addSeparator(new Dimension(8, 25));
+		windowOperationBar.add(ComponentReference.MINIMISE_BUTTON);
 	}
 
 	/**
@@ -130,13 +134,23 @@ public final class GuiLayoutSetup {
 	}
 
 	/**
+	 * This method is used to manage the close button and to set up it's look and
+	 * feel.
+	 */
+	private static void setupMinimiseButtonLayout() {
+		final AppButton minimiseButton = ComponentReference.MINIMISE_BUTTON;
+		AppUtils.setFinalComponentSize(minimiseButton, ComponentData.WINDOW_OPERATION_BUTTON_SIZE);
+		GuiComponentCustomization.customizeMinimiseButton();
+	}
+
+	/**
 	 * This method is used to manage the tab selection bar and to set up it's look
 	 * and feel.
 	 */
 	private static void setupTabSelectionBarLayout() {
-		final JToolBar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
+		final AppDraggableToolbar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
 		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, 55);
-		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL);
+		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL); 
 		AppUtils.setFinalComponentSize(tabSelectionBar, barSize);
 		GuiComponentCustomization.customizeTabSelectionBar();
 		tabSelectionBar.addSeparator(new Dimension(4, 25));
