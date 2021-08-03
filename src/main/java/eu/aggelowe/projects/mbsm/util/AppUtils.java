@@ -1,18 +1,16 @@
 package eu.aggelowe.projects.mbsm.util;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
-
-import eu.aggelowe.projects.mbsm.storage.StorageReference;
-import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
 
 /**
  * This class contains a lot of very useful utilities for the application which
@@ -40,6 +38,15 @@ public final class AppUtils {
 	}
 
 	/**
+	 * This method transforms a {@link Double} to an {@link Integer} using rounding.
+	 * 
+	 * @return
+	 */
+	public static int truncateDouble(double input) {
+		return Integer.valueOf(new DecimalFormat("#").format(input));
+	}
+
+	/**
 	 * This method returns the given {@link ImageIcon} resized to the given size;
 	 * 
 	 * @param inputImage The initial image.
@@ -54,27 +61,34 @@ public final class AppUtils {
 		graphics.drawImage(sourceImage, 0, 0, size.width, size.height, null);
 		return new ImageIcon(outputImage);
 	}
-	
+
+	/**
+	 * This method sets the final size of the given component.
+	 * 
+	 * @param component The component of which the size is going to be changed.
+	 * @param sizeThe   new size of the component.
+	 */
 	public static void setFinalComponentSize(Component component, Dimension size) {
 		component.setMaximumSize(size);
 		component.setPreferredSize(size);
 		component.setMinimumSize(size);
 	}
-	
+
 	/**
-	 * This method checks if the application directory exists and creates the folder
-	 * if it doesn't or throws an {@link InvalidFileTypeException} if a file with
-	 * the same name exists in it's position.
+	 * This method generates a new {@link ImageIcon} which is fully filled with the
+	 * color given.
 	 * 
-	 * @throws InvalidFileTypeException
+	 * @param size  The size of the generated image.
+	 * @param color The color of the generated image.
+	 * @return The generated {@link ImageIcon}.
 	 */
-	public static void initStorageLocation() throws InvalidFileTypeException {
-		final File applicationDirectory = new File(StorageReference.APPLICATION_FILE_PATH);
-		if (!applicationDirectory.exists()) {
-			applicationDirectory.mkdir();
-		} else if (!applicationDirectory.isDirectory()) {
-			throw new InvalidFileTypeException();
-		}
+	public static ImageIcon getColorImageIcon(Dimension size, Color color) {
+		BufferedImage image = new BufferedImage(AppUtils.truncateDouble(size.getWidth()), AppUtils.truncateDouble(size.getHeight()), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = image.createGraphics();
+		graphics.setPaint(color);
+		graphics.fillRect(0, 0, AppUtils.truncateDouble(size.getWidth()), AppUtils.truncateDouble(size.getHeight()));
+		graphics.dispose();
+		return new ImageIcon(image);
 	}
 
 }

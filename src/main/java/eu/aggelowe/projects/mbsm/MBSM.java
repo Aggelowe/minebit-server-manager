@@ -1,9 +1,9 @@
 package eu.aggelowe.projects.mbsm;
 
 
+import eu.aggelowe.projects.mbsm.files.FileInit;
+import eu.aggelowe.projects.mbsm.files.FileReference;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
-import eu.aggelowe.projects.mbsm.storage.StorageInit;
-import eu.aggelowe.projects.mbsm.storage.StorageReference.ApplicationPrimaryData;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.Reference;
 
@@ -26,7 +26,7 @@ public final class MBSM {
 	public static void main(String[] args) throws Throwable {
 		Reference.MAIN_LOGGER.info("Starting the application...");
 		Reference.MAIN_LOGGER.debug("Calling the storage manager...");
-		StorageInit.setupStorage();
+		FileInit.initFiles();
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
 		GuiLayoutSetup.initGui();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
@@ -42,8 +42,8 @@ public final class MBSM {
 	public static void exit(ExitStatus status) {
 		if (status == ExitStatus.GRACEFUL) {
 			try {
-				StorageInit.STORAGE_LOGGER.debug("Saving...");
-				ApplicationPrimaryData.get().save();
+				FileReference.FILES_LOGGER.debug("Saving...");
+				FileInit.saveFiles();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());

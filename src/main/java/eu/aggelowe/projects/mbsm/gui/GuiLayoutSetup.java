@@ -78,6 +78,7 @@ public final class GuiLayoutSetup {
 		AppUtils.setFinalComponentSize(window, ComponentData.WINDOW_SIZE);
 		GuiComponentCustomization.customizeWindow();
 		window.getContentPane().add(ComponentReference.MAINFRAME);
+		window.setResizable(false);
 	}
 
 	/**

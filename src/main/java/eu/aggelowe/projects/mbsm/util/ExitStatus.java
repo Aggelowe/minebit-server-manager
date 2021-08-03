@@ -9,7 +9,7 @@ package eu.aggelowe.projects.mbsm.util;
  */
 public enum ExitStatus {
 
-	GRACEFUL("Exiting application...", 0), ERROR("An error occured. Forcing application to exit...", 1), FATAL("A fatal error occured. Stopping all operations imidiately...", 2);
+	GRACEFUL("Exiting application...", 0), ERROR("An error occured. Forcing application to exit...", 1), FATAL("A fatal error occured. Stopping all operations...", 2);
 
 	private final String outMessage;
 	private final int exitCode;

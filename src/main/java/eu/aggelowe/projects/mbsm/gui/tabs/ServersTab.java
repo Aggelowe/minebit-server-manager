@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -19,6 +20,7 @@ import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
 import eu.aggelowe.projects.mbsm.gui.components.AppList;
 import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
+import eu.aggelowe.projects.mbsm.gui.components.AppScrollBarUI;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
 
@@ -126,11 +128,14 @@ public final class ServersTab {
 		final JScrollPane serverSelectionPane = ServersTabReference.SERVER_SELECTION_PANE;
 		AppUtils.setFinalComponentSize(serverSelectionPane, new Dimension(ServersTabReference.SERVER_SELECTION_PANEL.getWidth(), ComponentData.TAB_PANEL_SIZE.height - 25));
 		serverSelectionPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		serverSelectionPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		serverSelectionPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		serverSelectionPane.setOpaque(false);
 		serverSelectionPane.getViewport().setOpaque(false);
 		serverSelectionPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		serverSelectionPane.setViewportView(ServersTabReference.SERVER_SELECTION_TOOLBAR);
+		serverSelectionPane.getVerticalScrollBar().setUI(new AppScrollBarUI(new Color(0, 50, 140), ComponentData.ACTION_PANEL_COLOR, new Color(30, 45, 65), 2));
+		serverSelectionPane.getVerticalScrollBar().setBackground(new Color(0, 50, 140));
+		serverSelectionPane.getVerticalScrollBar().setUnitIncrement(16);
 	}
 
 	/**
@@ -138,7 +143,7 @@ public final class ServersTab {
 	 */
 	private static void setupServerSelectionToolbar() {
 		final AppList serverSelectionToolbar = ServersTabReference.SERVER_SELECTION_TOOLBAR;
-		AppUtils.setFinalComponentSize(serverSelectionToolbar, new Dimension(ServersTabReference.SERVER_SELECTION_PANE.getViewport().getWidth(), ComponentData.TAB_PANEL_SIZE.height - 25));
+		AppUtils.setFinalComponentSize(serverSelectionToolbar, new Dimension(ServersTabReference.SERVER_SELECTION_PANE.getWidth(), ComponentData.TAB_PANEL_SIZE.height - 25));
 		serverSelectionToolbar.setFloatable(false);
 		serverSelectionToolbar.setOpaque(false);
 		serverSelectionToolbar.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -183,7 +188,10 @@ public final class ServersTab {
 		public static final AppButton ADD_SERVER_BUTTON = new AppButton(new IAction() {
 			@Override
 			public void execute() {
-				SERVER_SELECTION_TOOLBAR.add(new AppButton("LOL"));
+				AppButton b = new AppButton("LOL");
+				AppUtils.setFinalComponentSize(b, new Dimension(SERVER_SELECTION_PANEL.getWidth(), 30));
+				b.setHorizontalAlignment(SwingConstants.LEFT);
+				SERVER_SELECTION_TOOLBAR.add(b);
 				SERVER_SELECTION_TOOLBAR.updateSize();
 			}
 		});
