@@ -2,7 +2,8 @@ package eu.aggelowe.projects.mbsm.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
 import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
-import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
+import eu.aggelowe.projects.mbsm.gui.components.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
@@ -52,73 +53,84 @@ public final class ComponentReference {
 
 	public static final AppDraggableToolbar TAB_SELECTION_BAR = new AppDraggableToolbar();
 
-	public static final AppButton MAIN_TAB_BUTTON = new AppButton(new IAction() {
-		@Override
-		public void execute() {
-			if (MAIN_TAB_BUTTON.getPropertyValue("isSelected") == "false") {
-				MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
-				MAIN_TAB_BUTTON.setPropertyValue("isSelected", "true");
-				MAIN_TAB_PANEL.setVisible(true);
-				MAIN_TAB_PANEL.setPropertyValue("isShowing", "true");
-				SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				SERVERS_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				SERVERS_TAB_PANEL.setVisible(false);
-				SERVERS_TAB_PANEL.setPropertyValue("isShowing", "false"); 
-				SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				SETTINGS_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				SETTINGS_TAB_PANEL.setVisible(false);
-				SETTINGS_TAB_PANEL.setPropertyValue("isShowing", "false");
-			}
-		}
-	});
+	public static final List<AppSingleSelectionButton> TAB_BUTTONS = new ArrayList<AppSingleSelectionButton>();
 
-	public static final AppButton SERVERS_TAB_BUTTON = new AppButton(new IAction() {
+	public static final AppSingleSelectionButton MAIN_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
+		
 		@Override
-		public void execute() {
-			if (SERVERS_TAB_BUTTON.getPropertyValue("isSelected") == "false") {
-				SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
-				SERVERS_TAB_BUTTON.setPropertyValue("isSelected", "true");
-				SERVERS_TAB_PANEL.setVisible(true);
-				SERVERS_TAB_PANEL.setPropertyValue("isShowing", "true");
-				MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				MAIN_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				MAIN_TAB_PANEL.setVisible(false);
-				MAIN_TAB_PANEL.setPropertyValue("isShowing", "false");
-				SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				SETTINGS_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				SETTINGS_TAB_PANEL.setVisible(false);
-				SETTINGS_TAB_PANEL.setPropertyValue("isShowing", "false");
-			}
+		protected void onButtonSelected() {
+			MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
+			MAIN_TAB_PANEL.setVisible(true);
 		}
-	});
+		
+		@Override
+		protected void onButtonDeselected() {
+			MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
+			MAIN_TAB_PANEL.setVisible(false);
+		}
+		
+		@Override
+		protected boolean isDefaultSelected() {
+			return true;
+		}
+		
+		private static final long serialVersionUID = 673637536380188767L;
 
-	public static final AppButton SETTINGS_TAB_BUTTON = new AppButton(new IAction() {
+	};
+
+	public static final AppSingleSelectionButton SERVERS_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
+		
 		@Override
-		public void execute() {
-			if (SETTINGS_TAB_BUTTON.getPropertyValue("isSelected") == "false") {
-				SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
-				SETTINGS_TAB_BUTTON.setPropertyValue("isSelected", "true");
-				SETTINGS_TAB_PANEL.setVisible(true);
-				SETTINGS_TAB_PANEL.setPropertyValue("isShowing", "true");
-				MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				MAIN_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				MAIN_TAB_PANEL.setVisible(false);
-				MAIN_TAB_PANEL.setPropertyValue("isShowing", "false");
-				SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-				SERVERS_TAB_BUTTON.setPropertyValue("isSelected", "false");
-				SERVERS_TAB_PANEL.setVisible(false);
-				SERVERS_TAB_PANEL.setPropertyValue("isShowing", "false");
-			}
+		protected void onButtonSelected() {
+			SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
+			SERVERS_TAB_PANEL.setVisible(true);
 		}
-	});
+		
+		@Override
+		protected void onButtonDeselected() {
+			SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
+			SERVERS_TAB_PANEL.setVisible(false);
+		}
+		
+		@Override
+		protected boolean isDefaultSelected() {
+			return false;
+		}
+		
+		private static final long serialVersionUID = 7010237715276254039L;
+
+	};
+	
+	public static final AppSingleSelectionButton SETTINGS_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
+		
+		@Override
+		protected void onButtonSelected() {
+			SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
+			SETTINGS_TAB_PANEL.setVisible(true);
+		}
+		
+		@Override
+		protected void onButtonDeselected() {
+			SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
+			SETTINGS_TAB_PANEL.setVisible(false);
+		}
+		
+		@Override
+		protected boolean isDefaultSelected() {
+			return false;
+		}
+		
+		private static final long serialVersionUID = -353924712070637614L;
+
+	};
 
 	public static final JPanel TAB_PANEL = new JPanel();
 
-	public static final AppPanel MAIN_TAB_PANEL = new AppPanel();
+	public static final JPanel MAIN_TAB_PANEL = new JPanel();
 
-	public static final AppPanel SERVERS_TAB_PANEL = new AppPanel();
+	public static final JPanel SERVERS_TAB_PANEL = new JPanel();
 
-	public static final AppPanel SETTINGS_TAB_PANEL = new AppPanel();
+	public static final JPanel SETTINGS_TAB_PANEL = new JPanel();
 
 	/**
 	 * This class contains a lot of component data important for the application to
@@ -147,7 +159,7 @@ public final class ComponentReference {
 		/**
 		 * The application's main font.
 		 */
-		public static final Font MAIN_FONT = Font.getFont("FreeMono");
+		public static final String MAIN_FONT = "Noto Serif";
 
 		/**
 		 * The action panel's background color.

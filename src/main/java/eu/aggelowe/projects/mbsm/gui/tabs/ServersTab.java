@@ -19,7 +19,6 @@ import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
 import eu.aggelowe.projects.mbsm.gui.components.AppList;
-import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
 import eu.aggelowe.projects.mbsm.gui.components.AppScrollBarUI;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
@@ -47,14 +46,13 @@ public final class ServersTab {
 	 * This method is used to configure the servers tab panel.
 	 */
 	private static void configureComponent() {
-		final AppPanel serversTabPanel = ComponentReference.SERVERS_TAB_PANEL;
+		final JPanel serversTabPanel = ComponentReference.SERVERS_TAB_PANEL;
 		final Color panelColor = new Color(0, 50, 140);
 		AppUtils.setFinalComponentSize(serversTabPanel, ComponentData.TAB_PANEL_SIZE);
 		serversTabPanel.setOpaque(true);
 		serversTabPanel.setBackground(panelColor);
 		serversTabPanel.setVisible(false);
 		serversTabPanel.setLayout(new BorderLayout());
-		serversTabPanel.setPropertyValue("isShowing", "false");
 		serversTabPanel.add(ServersTabReference.SERVER_SELECTION_PANEL, BorderLayout.WEST);
 		serversTabPanel.add(ServersTabReference.TOOL_SELECTION_PANEL, BorderLayout.CENTER);
 		serversTabPanel.add(ServersTabReference.TOOL_VIEW_PANEL, BorderLayout.EAST);
@@ -191,6 +189,10 @@ public final class ServersTab {
 				AppButton b = new AppButton("LOL");
 				AppUtils.setFinalComponentSize(b, new Dimension(SERVER_SELECTION_PANEL.getWidth(), 30));
 				b.setHorizontalAlignment(SwingConstants.LEFT);
+				b.setBorderPainted(false);
+				b.setFocusPainted(false);
+				b.setContentAreaFilled(false);
+				b.setForeground(new Color(125, 215, 230));
 				SERVER_SELECTION_TOOLBAR.add(b);
 				SERVER_SELECTION_TOOLBAR.updateSize();
 			}

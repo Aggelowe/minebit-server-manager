@@ -1,9 +1,10 @@
 package eu.aggelowe.projects.mbsm.gui.tabs;
 
+import javax.swing.JPanel;
+
 import eu.aggelowe.projects.mbsm.gui.ComponentReference;
-import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
-import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
+import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 
 /**
@@ -29,11 +30,10 @@ public final class MainTab {
 	 * This method is used to configure the main tab panel.
 	 */
 	private static void configureComponent() {
-		final AppPanel mainTabPanel = ComponentReference.MAIN_TAB_PANEL;
+		final JPanel mainTabPanel = ComponentReference.MAIN_TAB_PANEL;
 		AppUtils.setFinalComponentSize(mainTabPanel, ComponentData.TAB_PANEL_SIZE);
 		mainTabPanel.setOpaque(false);
 		mainTabPanel.setVisible(false);
-		mainTabPanel.setPropertyValue("isShowing", "true");
 	}
 
 	/**

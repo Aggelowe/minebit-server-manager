@@ -16,7 +16,7 @@ import eu.aggelowe.projects.mbsm.util.properties.IPropertized;
  * @author Aggelowe
  *
  */
-public class AppButton extends JButton implements ActionListener, IPropertized {
+public class AppButton extends JButton implements ActionListener {
 
 	private final IAction[] actions;
 
@@ -80,4 +80,5 @@ public class AppButton extends JButton implements ActionListener, IPropertized {
 	}
 	
 	private static final long serialVersionUID = 268902900084298268L;
+	
 }

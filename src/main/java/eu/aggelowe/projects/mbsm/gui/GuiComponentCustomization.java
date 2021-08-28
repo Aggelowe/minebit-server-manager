@@ -35,7 +35,6 @@ public class GuiComponentCustomization {
 		window.setName(Reference.FULL_NAME);
 		window.setIconImage(ComponentData.APP_LOGO.getImage());
 		window.setUndecorated(true);
-		window.setFont(ComponentData.MAIN_FONT);
 		window.getContentPane().setBackground(ComponentData.MAIN_COLOR);
 		window.setLocationRelativeTo(null);
 		window.setType(Type.NORMAL);
@@ -113,15 +112,13 @@ public class GuiComponentCustomization {
 	public static void customizeMainTabButton() {
 		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
 		final Color buttonColor = new Color(125, 215, 230);
-		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		mainTabButton.setForeground(buttonColor);
 		mainTabButton.setText("Main");
 		mainTabButton.setFont(buttonFont);
 		mainTabButton.setOpaque(false);
 		mainTabButton.setContentAreaFilled(false);
 		mainTabButton.setFocusPainted(false);
-		mainTabButton.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
-		mainTabButton.setPropertyValue("isSelected", "true");
 	}
 
 	/**
@@ -130,15 +127,13 @@ public class GuiComponentCustomization {
 	public static void customizeServersTabButton() {
 		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
 		final Color buttonColor = new Color(125, 215, 230);
-		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		serversTabButton.setForeground(buttonColor);
 		serversTabButton.setText("Servers");
 		serversTabButton.setFont(buttonFont);
 		serversTabButton.setOpaque(false);
 		serversTabButton.setContentAreaFilled(false);
 		serversTabButton.setFocusPainted(false);
-		serversTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-		serversTabButton.setPropertyValue("isSelected", "false");
 	}
 
 	/**
@@ -147,15 +142,13 @@ public class GuiComponentCustomization {
 	public static void customizeSettingsTabButton() {
 		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
 		final Color buttonColor = new Color(125, 215, 230);
-		final Font buttonFont = new Font("FreeMono", Font.PLAIN, 24);
+		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		settingsTabButton.setForeground(buttonColor);
 		settingsTabButton.setText("Settings");
 		settingsTabButton.setFont(buttonFont);
 		settingsTabButton.setOpaque(false);
 		settingsTabButton.setContentAreaFilled(false);
 		settingsTabButton.setFocusPainted(false);
-		settingsTabButton.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-		settingsTabButton.setPropertyValue("isSelected", "false");
 	}
 
 	/**

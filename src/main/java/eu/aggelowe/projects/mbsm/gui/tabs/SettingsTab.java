@@ -1,9 +1,10 @@
 package eu.aggelowe.projects.mbsm.gui.tabs;
 
+import javax.swing.JPanel;
+
 import eu.aggelowe.projects.mbsm.gui.ComponentReference;
-import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
-import eu.aggelowe.projects.mbsm.gui.components.AppPanel;
+import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 
 /**
@@ -29,11 +30,10 @@ public final class SettingsTab {
 	 * This method is used to configure the settings tab panel.
 	 */
 	private static void configureComponent() {
-		final AppPanel settingsTabPanel = ComponentReference.SETTINGS_TAB_PANEL;
+		final JPanel settingsTabPanel = ComponentReference.SETTINGS_TAB_PANEL;
 		AppUtils.setFinalComponentSize(settingsTabPanel, ComponentData.TAB_PANEL_SIZE);
 		settingsTabPanel.setOpaque(false);
 		settingsTabPanel.setVisible(false);
-		settingsTabPanel.setPropertyValue("isShowing", "false");
 	}
 
 	/**
