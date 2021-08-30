@@ -17,7 +17,9 @@ import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
 import eu.aggelowe.projects.mbsm.gui.components.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
+import eu.aggelowe.projects.mbsm.util.RepetitiveProcess;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
+import eu.aggelowe.projects.mbsm.util.interfaces.IDynamicObject;
 
 /**
  * This class contains the most major components of the application as they must
@@ -42,7 +44,7 @@ public final class ComponentReference {
 			MBSM.exit(ExitStatus.GRACEFUL);
 		}
 	});
-	
+
 	public static final AppButton MINIMISE_BUTTON = new AppButton(new IAction() {
 		@Override
 		public void execute() {
@@ -50,76 +52,159 @@ public final class ComponentReference {
 		}
 	});
 
-
 	public static final AppDraggableToolbar TAB_SELECTION_BAR = new AppDraggableToolbar();
 
 	public static final List<AppSingleSelectionButton> TAB_BUTTONS = new ArrayList<AppSingleSelectionButton>();
 
 	public static final AppSingleSelectionButton MAIN_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
-		
+
 		@Override
 		protected void onButtonSelected() {
-			MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
-			MAIN_TAB_PANEL.setVisible(true);
+			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			if (MAIN_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (MAIN_TAB_PANEL == null) {
+							return false;
+						}
+						MAIN_TAB_PANEL.setVisible(true);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				MAIN_TAB_PANEL.setVisible(true);
+			}
 		}
-		
+
 		@Override
 		protected void onButtonDeselected() {
-			MAIN_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
-			MAIN_TAB_PANEL.setVisible(false);
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
+			if (MAIN_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (MAIN_TAB_PANEL == null) {
+							return false;
+						}
+						MAIN_TAB_PANEL.setVisible(false);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				MAIN_TAB_PANEL.setVisible(false);
+			}
 		}
-		
+
 		@Override
 		protected boolean isDefaultSelected() {
 			return true;
 		}
-		
+
 		private static final long serialVersionUID = 673637536380188767L;
 
 	};
 
 	public static final AppSingleSelectionButton SERVERS_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
-		
+
 		@Override
 		protected void onButtonSelected() {
-			SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
-			SERVERS_TAB_PANEL.setVisible(true);
+			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			if (SERVERS_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (SERVERS_TAB_PANEL == null) {
+							return false;
+						}
+						SERVERS_TAB_PANEL.setVisible(true);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				SERVERS_TAB_PANEL.setVisible(true);
+			}
 		}
-		
+
 		@Override
 		protected void onButtonDeselected() {
-			SERVERS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
-			SERVERS_TAB_PANEL.setVisible(false);
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
+			if (SERVERS_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (SERVERS_TAB_PANEL == null) {
+							return false;
+						}
+						SERVERS_TAB_PANEL.setVisible(false);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				SERVERS_TAB_PANEL.setVisible(false);
+			}
 		}
-		
+
 		@Override
 		protected boolean isDefaultSelected() {
 			return false;
 		}
-		
+
 		private static final long serialVersionUID = 7010237715276254039L;
 
 	};
-	
+
 	public static final AppSingleSelectionButton SETTINGS_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
 		
 		@Override
 		protected void onButtonSelected() {
-			SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));		
-			SETTINGS_TAB_PANEL.setVisible(true);
+			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			if (SETTINGS_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (SETTINGS_TAB_PANEL == null) {
+							return false;
+						}
+						SETTINGS_TAB_PANEL.setVisible(true);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				SETTINGS_TAB_PANEL.setVisible(true);
+			}
 		}
-		
+
 		@Override
 		protected void onButtonDeselected() {
-			SETTINGS_TAB_BUTTON.setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));			
-			SETTINGS_TAB_PANEL.setVisible(false);
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
+			if (SETTINGS_TAB_PANEL == null) {
+				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
+					@Override
+					public Boolean obtain() {
+						if (SETTINGS_TAB_PANEL == null) {
+							return false;
+						}
+						SETTINGS_TAB_PANEL.setVisible(false);
+						return true;
+					}
+				});
+				process.start();
+			} else {
+				SETTINGS_TAB_PANEL.setVisible(false);
+			}
 		}
-		
+
 		@Override
 		protected boolean isDefaultSelected() {
 			return false;
 		}
-		
+
 		private static final long serialVersionUID = -353924712070637614L;
 
 	};
@@ -159,7 +244,7 @@ public final class ComponentReference {
 		/**
 		 * The application's main font.
 		 */
-		public static final String MAIN_FONT = "Noto Serif";
+		public static final String MAIN_FONT = "DejaVu Sans";
 
 		/**
 		 * The action panel's background color.

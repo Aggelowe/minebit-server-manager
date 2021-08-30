@@ -6,9 +6,9 @@ package eu.aggelowe.projects.mbsm.util.interfaces;
  * 
  * @author Aggelowe
  *
- * @param <ObjectType> The type of object which is going to be obtained.
+ * @param <OutputObjectType> The type of object which is going to be obtained.
  */
-public interface IDynamicObject<InputObjectType, OutputObjectType> {
+public interface IDynamicObject<OutputObjectType> {
 
 	/**
 	 * This class is used to return an object of which the type is given on the
@@ -17,6 +17,6 @@ public interface IDynamicObject<InputObjectType, OutputObjectType> {
 	 * @param inputObject The object given used for the processing of the application
 	 * @return The object returned from running this method.
 	 */
-	public OutputObjectType obtain(InputObjectType inputObject);
+	public OutputObjectType obtain();
 
 }

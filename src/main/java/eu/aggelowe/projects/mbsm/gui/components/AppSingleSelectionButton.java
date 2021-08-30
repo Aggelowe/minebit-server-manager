@@ -78,29 +78,17 @@ public abstract class AppSingleSelectionButton extends AppButton {
 		this.buttonGroup = buttonGroup;
 		if (isDefaultSelected() == true) {
 			this.isSelected = true;
+			this.onButtonSelected();
 			for (AppSingleSelectionButton button : buttonGroup) {
-				if ((button != null) && (button.isSelected == false)) {
+				if (button != null) {
 					button.isSelected = false;
+					button.onButtonDeselected();
 				}
 			}
+		} else {
+			onButtonDeselected();
 		}
 		buttonGroup.add(this);
-	}
-
-	/**
-	 * This method should be called when all the members of the given group have
-	 * been constructed in order to initialise them.
-	 * 
-	 * @param buttonGroup The group to initialise.
-	 */
-	public static void initGroup(List<AppSingleSelectionButton> buttonGroup) {
-		for (AppSingleSelectionButton button : buttonGroup) {
-			if (button.isSelected()) {
-				button.onButtonSelected();
-			} else {
-				button.onButtonDeselected();
-			}
-		}
 	}
 
 	/**
@@ -140,7 +128,7 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	public final void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
-
+	
 	private static final long serialVersionUID = -5736815643631198779L;
 
 }

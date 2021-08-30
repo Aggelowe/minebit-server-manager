@@ -7,7 +7,6 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
-import eu.aggelowe.projects.mbsm.util.properties.IPropertized;
 
 /**
  * This class represents a {@link JButton} shaped for this application as it

@@ -17,7 +17,6 @@ import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
 import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
-import eu.aggelowe.projects.mbsm.gui.components.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.gui.tabs.MainTab;
 import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
 import eu.aggelowe.projects.mbsm.gui.tabs.SettingsTab;
@@ -64,7 +63,6 @@ public final class GuiLayoutSetup {
 		GuiLayoutSetup.setupMainTabButtonLayout();
 		GuiLayoutSetup.setupServersTabButtonLayout();
 		GuiLayoutSetup.setupSettingsTabButtonLayout();
-		AppSingleSelectionButton.initGroup(ComponentReference.TAB_BUTTONS);
 		GuiLayoutSetup.setupTabPanelLayout();
 		MainTab.setupMainTab();
 		ServersTab.setupServersTab();
