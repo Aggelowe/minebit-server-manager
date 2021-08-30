@@ -17,7 +17,7 @@ import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.components.AppButton;
 import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
-import eu.aggelowe.projects.mbsm.gui.tabs.MainTab;
+import eu.aggelowe.projects.mbsm.gui.tabs.LatestTab;
 import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
 import eu.aggelowe.projects.mbsm.gui.tabs.SettingsTab;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
@@ -60,11 +60,11 @@ public final class GuiLayoutSetup {
 		GuiLayoutSetup.setupCloseButtonLayout();
 		GuiLayoutSetup.setupMinimiseButtonLayout();
 		GuiLayoutSetup.setupTabSelectionBarLayout();
-		GuiLayoutSetup.setupMainTabButtonLayout();
+		GuiLayoutSetup.setupLatestTabButtonLayout();
 		GuiLayoutSetup.setupServersTabButtonLayout();
 		GuiLayoutSetup.setupSettingsTabButtonLayout();
 		GuiLayoutSetup.setupTabPanelLayout();
-		MainTab.setupMainTab();
+		LatestTab.setupLatestTab();
 		ServersTab.setupServersTab();
 		SettingsTab.setupSettingsTab();
 	}
@@ -159,20 +159,20 @@ public final class GuiLayoutSetup {
 		AppUtils.setFinalComponentSize(barIcon, new Dimension(barSize.height, barSize.height));
 		tabSelectionBar.add(barIcon);
 		tabSelectionBar.addSeparator(new Dimension(8, 25));
-		tabSelectionBar.add(ComponentReference.MAIN_TAB_BUTTON);
+		tabSelectionBar.add(ComponentReference.LATEST_TAB_BUTTON);
 		tabSelectionBar.add(ComponentReference.SERVERS_TAB_BUTTON);
 		tabSelectionBar.add(ComponentReference.SETTINGS_TAB_BUTTON);
 	}
 
 	/**
-	 * This method is used to manage the main tab button and to set up it's look and
+	 * This method is used to manage the latest tab button and to set up it's look and
 	 * feel.
 	 */
-	private static void setupMainTabButtonLayout() {
-		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(85, 55);
-		AppUtils.setFinalComponentSize(mainTabButton, buttonDimension);
-		GuiComponentCustomization.customizeMainTabButton();
+	private static void setupLatestTabButtonLayout() {
+		final AppButton latestTabButton = ComponentReference.LATEST_TAB_BUTTON;
+		final Dimension buttonDimension = new Dimension(110, 55);
+		AppUtils.setFinalComponentSize(latestTabButton, buttonDimension);
+		GuiComponentCustomization.customizeLatestTabButton();
 	}
 
 	/**
@@ -181,7 +181,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupServersTabButtonLayout() {
 		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(125, 55);
+		final Dimension buttonDimension = new Dimension(110, 55);
 		AppUtils.setFinalComponentSize(serversTabButton, buttonDimension);
 		GuiComponentCustomization.customizeServersTabButton();
 	}
@@ -192,7 +192,7 @@ public final class GuiLayoutSetup {
 	 */
 	private static void setupSettingsTabButtonLayout() {
 		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
-		final Dimension buttonDimension = new Dimension(135, 55);
+		final Dimension buttonDimension = new Dimension(110, 55);
 		AppUtils.setFinalComponentSize(settingsTabButton, buttonDimension);
 		GuiComponentCustomization.customizeSettingsTabButton();
 	}
@@ -205,7 +205,7 @@ public final class GuiLayoutSetup {
 		AppUtils.setFinalComponentSize(tabPanel, ComponentData.TAB_PANEL_SIZE);
 		tabPanel.setLayout(new OverlayLayout(tabPanel));
 		GuiComponentCustomization.customizeTabPanel();
-		tabPanel.add(ComponentReference.MAIN_TAB_PANEL);
+		tabPanel.add(ComponentReference.LATEST_TAB_PANEL);
 		tabPanel.add(ComponentReference.SERVERS_TAB_PANEL);
 		tabPanel.add(ComponentReference.SETTINGS_TAB_PANEL);
 	}

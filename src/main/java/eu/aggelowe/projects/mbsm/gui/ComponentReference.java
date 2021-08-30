@@ -56,45 +56,45 @@ public final class ComponentReference {
 
 	public static final List<AppSingleSelectionButton> TAB_BUTTONS = new ArrayList<AppSingleSelectionButton>();
 
-	public static final AppSingleSelectionButton MAIN_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
+	public static final AppSingleSelectionButton LATEST_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
 
 		@Override
 		protected void onButtonSelected() {
 			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
-			if (MAIN_TAB_PANEL == null) {
+			if (LATEST_TAB_PANEL == null) {
 				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
 					@Override
 					public Boolean obtain() {
-						if (MAIN_TAB_PANEL == null) {
+						if (LATEST_TAB_PANEL == null) {
 							return false;
 						}
-						MAIN_TAB_PANEL.setVisible(true);
+						LATEST_TAB_PANEL.setVisible(true);
 						return true;
 					}
 				});
 				process.start();
 			} else {
-				MAIN_TAB_PANEL.setVisible(true);
+				LATEST_TAB_PANEL.setVisible(true);
 			}
 		}
 
 		@Override
 		protected void onButtonDeselected() {
 			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.ACTION_PANEL_COLOR));
-			if (MAIN_TAB_PANEL == null) {
+			if (LATEST_TAB_PANEL == null) {
 				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
 					@Override
 					public Boolean obtain() {
-						if (MAIN_TAB_PANEL == null) {
+						if (LATEST_TAB_PANEL == null) {
 							return false;
 						}
-						MAIN_TAB_PANEL.setVisible(false);
+						LATEST_TAB_PANEL.setVisible(false);
 						return true;
 					}
 				});
 				process.start();
 			} else {
-				MAIN_TAB_PANEL.setVisible(false);
+				LATEST_TAB_PANEL.setVisible(false);
 			}
 		}
 
@@ -211,7 +211,7 @@ public final class ComponentReference {
 
 	public static final JPanel TAB_PANEL = new JPanel();
 
-	public static final JPanel MAIN_TAB_PANEL = new JPanel();
+	public static final JPanel LATEST_TAB_PANEL = new JPanel();
 
 	public static final JPanel SERVERS_TAB_PANEL = new JPanel();
 

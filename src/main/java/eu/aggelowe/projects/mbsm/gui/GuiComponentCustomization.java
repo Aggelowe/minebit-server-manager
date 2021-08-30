@@ -107,18 +107,18 @@ public class GuiComponentCustomization {
 	}
 
 	/**
-	 * This method is used to manage the look and feel of the main tab button.
+	 * This method is used to manage the look and feel of the latest tab button.
 	 */
-	public static void customizeMainTabButton() {
-		final AppButton mainTabButton = ComponentReference.MAIN_TAB_BUTTON;
+	public static void customizeLatestTabButton() {
+		final AppButton latestTabButton = ComponentReference.LATEST_TAB_BUTTON;
 		final Color buttonColor = new Color(125, 215, 230);
 		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
-		mainTabButton.setForeground(buttonColor);
-		mainTabButton.setText("Main");
-		mainTabButton.setFont(buttonFont);
-		mainTabButton.setOpaque(false);
-		mainTabButton.setContentAreaFilled(false);
-		mainTabButton.setFocusPainted(false);
+		latestTabButton.setForeground(buttonColor);
+		latestTabButton.setText("Latest");
+		latestTabButton.setFont(buttonFont);
+		latestTabButton.setOpaque(false);
+		latestTabButton.setContentAreaFilled(false);
+		latestTabButton.setFocusPainted(false);
 	}
 
 	/**
