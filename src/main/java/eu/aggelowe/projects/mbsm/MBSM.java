@@ -1,6 +1,5 @@
 package eu.aggelowe.projects.mbsm;
 
-
 import eu.aggelowe.projects.mbsm.files.FileInit;
 import eu.aggelowe.projects.mbsm.files.FileReference;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;

@@ -1,7 +1,15 @@
 package eu.aggelowe.projects.mbsm.files;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.Reference;
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
@@ -14,6 +22,8 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
  */
 public class FileInit {
 
+	public static PropertyFile generalSettings;
+
 	/**
 	 * This method is used to initialise the management of the application's files.
 	 */
@@ -25,7 +35,12 @@ public class FileInit {
 			e.printStackTrace();
 			Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());
 			System.exit(ExitStatus.FATAL.getExitCode());
+
 		}
+		FileReference.FILES_LOGGER.debug("Constructing files..");
+		constructFiles();
+		FileReference.FILES_LOGGER.debug("Loading files..");
+		loadFiles();
 	}
 
 	/**
@@ -43,13 +58,126 @@ public class FileInit {
 			throw new InvalidFileTypeException("\"" + FileReference.APPLICATION_FOLDER_PATH + "\" already exists and it is a file.");
 		}
 	}
-	
+
+	/**
+	 * This method constructs all files of the application.
+	 */
+	private static void constructFiles() {
+		generalSettings = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");
+	}
+
+	/**
+	 * This method saves all important changes to their files.
+	 */
+	public static void loadFiles() {
+		generalSettings.load();
+	}
 
 	/**
 	 * This method saves all important changes to their files.
 	 */
 	public static void saveFiles() {
+		generalSettings.save();
+	}
 
+	/**
+	 * This method is used to remove all the text from the given text file.
+	 */
+	public static final void emptyTextFile(String file) {
+		try {
+			FileWriter outputStream = new FileWriter(file);
+			outputStream.write("");
+			outputStream.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+	}
+
+	/**
+	 * This method is used to remove all the text from the given text file.
+	 */
+	public static final void emptyTextFile(File file) {
+		try {
+			FileWriter outputStream = new FileWriter(file);
+			outputStream.write("");
+			outputStream.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+	}
+
+	/**
+	 * This method is used to generate a new {@link InputStream} which is used to
+	 * read data from the file given at the constructor.
+	 * 
+	 * @return The generated {@link FileInputStream}
+	 */
+	public static final FileInputStream getFileInputStream(String inputFile) {
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(inputFile);
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+		return inputStream;
+	}
+
+	/**
+	 * This method is used to generate a new {@link InputStream} which is used to
+	 * read data from the file given at the constructor.
+	 * 
+	 * @return The generated {@link FileInputStream}
+	 */
+	public static final FileInputStream getFileInputStream(File inputFile) {
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(inputFile);
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+		return inputStream;
+	}
+
+	/**
+	 * This method is used to generate a new {@link OutputStream} which is used to
+	 * write data to the file given at the constructor.
+	 * 
+	 * @return The generated {@link FileOutputStream}
+	 */
+	public static final FileOutputStream getFileOutputStream(String outputFile) {
+		FileOutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(outputFile, true);
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+		return outputStream;
+	}
+
+	/**
+	 * This method is used to generate a new {@link OutputStream} which is used to
+	 * write data to the file given at the constructor.
+	 * 
+	 * @return The generated {@link FileOutputStream}
+	 */
+	public static final FileOutputStream getFileOutputStream(File outputFile) {
+		FileOutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(outputFile, true);
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+		return outputStream;
+	}
+
+	public static PropertyFile getGeneralSettings() {
+		return generalSettings;
 	}
 
 }

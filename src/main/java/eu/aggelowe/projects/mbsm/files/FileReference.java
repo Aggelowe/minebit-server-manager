@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 public class FileReference {
 
 	public static final Logger FILES_LOGGER = LogManager.getLogger("FileManager");
-	
+
 	public static final String APPLICATION_FOLDER_PATH = System.getProperty("user.home") + "/.mbsm";
 
 }

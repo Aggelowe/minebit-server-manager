@@ -186,7 +186,7 @@ public final class ServersTab {
 		public static final AppButton ADD_SERVER_BUTTON = new AppButton(new IAction() {
 			@Override
 			public void execute() {
-				AppButton b = new AppButton("LOL");
+				AppButton b = new AppButton("New Server");
 				AppUtils.setFinalComponentSize(b, new Dimension(SERVER_SELECTION_PANEL.getWidth(), 30));
 				b.setHorizontalAlignment(SwingConstants.LEFT);
 				b.setBorderPainted(false);

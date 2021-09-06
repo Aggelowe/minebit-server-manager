@@ -17,6 +17,7 @@ sourceSets {
         }
         resources {
             srcDirs 'src/main/resource'
+            srcDirs 'src/main/configs' 
         }
     }
 }

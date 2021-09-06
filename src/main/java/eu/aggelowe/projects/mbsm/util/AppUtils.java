@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 
@@ -35,6 +36,21 @@ public final class AppUtils {
 			return null;
 		}
 		return Thread.currentThread().getContextClassLoader().getResource(resource);
+	}
+
+	/**
+	 * This method returns the given resource as an {@link InputStream} based on the
+	 * information got from the input {@link String}.
+	 * 
+	 * @param resource The resource which is going to be obtained from the resources
+	 *                 folder.
+	 * @return The actual resource as an {@link InputStream}
+	 */
+	public static InputStream getResourceAsStream(String resource) {
+		if (resource == null) {
+			return null;
+		}
+		return Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
 	}
 
 	/**
