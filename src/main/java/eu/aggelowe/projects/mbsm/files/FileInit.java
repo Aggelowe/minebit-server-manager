@@ -22,7 +22,7 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
  */
 public class FileInit {
 
-	public static PropertyFile generalSettings;
+	public static PropertyFile generalSettings = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");;
 
 	/**
 	 * This method is used to initialise the management of the application's files.
@@ -31,14 +31,12 @@ public class FileInit {
 		FileReference.FILES_LOGGER.info("Initializing application's folder..");
 		try {
 			FileInit.initStorageFolder();
-		} catch (InvalidFileTypeException e) {
-			e.printStackTrace();
+		} catch (InvalidFileTypeException exception) {
+			exception.printStackTrace();
 			Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());
 			System.exit(ExitStatus.FATAL.getExitCode());
 
 		}
-		FileReference.FILES_LOGGER.debug("Constructing files..");
-		constructFiles();
 		FileReference.FILES_LOGGER.debug("Loading files..");
 		loadFiles();
 	}
@@ -57,13 +55,6 @@ public class FileInit {
 		} else if (!applicationDirectory.isDirectory()) {
 			throw new InvalidFileTypeException("\"" + FileReference.APPLICATION_FOLDER_PATH + "\" already exists and it is a file.");
 		}
-	}
-
-	/**
-	 * This method constructs all files of the application.
-	 */
-	private static void constructFiles() {
-		generalSettings = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");
 	}
 
 	/**

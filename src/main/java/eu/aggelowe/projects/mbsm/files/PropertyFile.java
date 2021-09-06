@@ -91,13 +91,6 @@ public class PropertyFile implements IFile {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.ERROR);
 		}
-		for (Object object : Collections.list(propertiesFile.keys())) {
-			if (object instanceof String) {
-				String key = (String) object;
-				String value = propertiesFile.getProperty(key);
-				System.out.println(key + "=" + value);
-			}
-		}
 	}
 
 	/**
