@@ -3,6 +3,7 @@ package eu.aggelowe.projects.mbsm;
 import eu.aggelowe.projects.mbsm.files.FileInit;
 import eu.aggelowe.projects.mbsm.files.FileReference;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
+import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.Reference;
 
@@ -42,12 +43,15 @@ public final class MBSM {
 		if (status == ExitStatus.GRACEFUL) {
 			try {
 				FileReference.FILES_LOGGER.debug("Saving...");
+				ServerUtil.stopServers(false);
 				FileInit.saveFiles();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());
 				System.exit(ExitStatus.FATAL.getExitCode());
 			}
+		} else {
+			ServerUtil.stopServers(true);
 		}
 		Reference.MAIN_LOGGER.info(status.getOutputMessage());
 		System.exit(status.getExitCode());

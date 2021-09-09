@@ -10,8 +10,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import eu.aggelowe.projects.mbsm.MBSM;
+import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
+import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
-import eu.aggelowe.projects.mbsm.util.Reference;
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
 
 /**
@@ -22,7 +23,7 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
  */
 public class FileInit {
 
-	public static PropertyFile generalSettings = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");;
+	public static final PropertyFile GENERAL_SETTINGS = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");;
 
 	/**
 	 * This method is used to initialise the management of the application's files.
@@ -30,30 +31,31 @@ public class FileInit {
 	public static void initFiles() {
 		FileReference.FILES_LOGGER.info("Initializing application's folder..");
 		try {
-			FileInit.initStorageFolder();
-		} catch (InvalidFileTypeException exception) {
+			FileInit.initFolder(FileReference.APPLICATION_FOLDER_PATH);
+			FileInit.initFolder(ServerReference.SERVER_PATH);
+			MinecraftServer m = new MinecraftServer("lol");
+			m.init();
+			m.start();
+		} catch (Exception exception) {
 			exception.printStackTrace();
-			Reference.MAIN_LOGGER.info(ExitStatus.FATAL.getOutputMessage());
-			System.exit(ExitStatus.FATAL.getExitCode());
-
+			MBSM.exit(ExitStatus.FATAL);
 		}
 		FileReference.FILES_LOGGER.debug("Loading files..");
 		loadFiles();
 	}
 
 	/**
-	 * This method checks if the application directory exists and creates the folder
-	 * if it doesn't or throws an {@link InvalidFileTypeException} if a file with
-	 * the same name exists in it's position.
+	 * This method checks if the given directory exists and creates the folder if it
+	 * doesn't.
 	 * 
 	 * @throws InvalidFileTypeException
 	 */
-	private static void initStorageFolder() throws InvalidFileTypeException {
-		final File applicationDirectory = new File(FileReference.APPLICATION_FOLDER_PATH);
-		if (!applicationDirectory.exists()) {
-			applicationDirectory.mkdir();
-		} else if (!applicationDirectory.isDirectory()) {
-			throw new InvalidFileTypeException("\"" + FileReference.APPLICATION_FOLDER_PATH + "\" already exists and it is a file.");
+	public static void initFolder(String path) throws InvalidFileTypeException {
+		final File serverDirectory = new File(path);
+		if (!serverDirectory.exists()) {
+			serverDirectory.mkdir();
+		} else if (!serverDirectory.isDirectory()) {
+			throw new InvalidFileTypeException("\"" + serverDirectory + "\" already exists and it is a file.");
 		}
 	}
 
@@ -61,14 +63,14 @@ public class FileInit {
 	 * This method saves all important changes to their files.
 	 */
 	public static void loadFiles() {
-		generalSettings.load();
+		GENERAL_SETTINGS.load();
 	}
 
 	/**
 	 * This method saves all important changes to their files.
 	 */
 	public static void saveFiles() {
-		generalSettings.save();
+		GENERAL_SETTINGS.save();
 	}
 
 	/**
@@ -165,10 +167,6 @@ public class FileInit {
 			MBSM.exit(ExitStatus.ERROR);
 		}
 		return outputStream;
-	}
-
-	public static PropertyFile getGeneralSettings() {
-		return generalSettings;
 	}
 
 }
