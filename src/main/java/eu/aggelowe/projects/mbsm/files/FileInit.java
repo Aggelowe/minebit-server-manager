@@ -8,10 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import eu.aggelowe.projects.mbsm.MBSM;
-import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
 import eu.aggelowe.projects.mbsm.servers.ServerReference;
+import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
 
@@ -23,7 +25,9 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
  */
 public class FileInit {
 
-	public static final PropertyFile GENERAL_SETTINGS = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "/general.properties", "defaults/general.properties");;
+	public static final List<IFile> REGISTERED_FILES = new ArrayList<IFile>();
+
+	public static final PropertyFile GENERAL_SETTINGS = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "general.properties", "defaults/general.properties");
 
 	/**
 	 * This method is used to initialise the management of the application's files.
@@ -33,13 +37,12 @@ public class FileInit {
 		try {
 			FileInit.initFolder(FileReference.APPLICATION_FOLDER_PATH);
 			FileInit.initFolder(ServerReference.SERVER_PATH);
-			MinecraftServer m = new MinecraftServer("lol");
-			m.init();
-			m.start();
+			ServerUtil.loadServer("survival");
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.FATAL);
 		}
+		registerFiles();
 		FileReference.FILES_LOGGER.debug("Loading files..");
 		loadFiles();
 	}
@@ -60,17 +63,33 @@ public class FileInit {
 	}
 
 	/**
+	 * This method registers all files.
+	 */
+	public static void registerFiles() {
+		REGISTERED_FILES.add(GENERAL_SETTINGS);
+		REGISTERED_FILES.add(ServerReference.SERVERS_LIST);
+	}
+
+	/**
 	 * This method saves all important changes to their files.
 	 */
 	public static void loadFiles() {
-		GENERAL_SETTINGS.load();
+		for (IFile file : FileInit.REGISTERED_FILES) {
+			if (file != null) {
+				file.load();
+			}
+		}
 	}
 
 	/**
 	 * This method saves all important changes to their files.
 	 */
 	public static void saveFiles() {
-		GENERAL_SETTINGS.save();
+		for (IFile file : FileInit.REGISTERED_FILES) {
+			if (file != null) {
+				file.save();
+			}
+		}
 	}
 
 	/**

@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import eu.aggelowe.projects.mbsm.MBSM;
@@ -71,6 +73,18 @@ public class PropertyFile implements IFile {
 		}
 	}
 
+	public List<DataSet<String>> getProperties() {
+		List<DataSet<String>> properties = new ArrayList<DataSet<String>>();
+		for (Object object : Collections.list(propertiesFile.keys())) {
+			if (object instanceof String) {
+				String key = (String) object;
+				String value = propertiesFile.getProperty(key);
+				properties.add(new DataSet<String>(key, value));
+			}
+		}
+		return properties;
+	}
+	
 	public String getDataValue(String value) {
 		return propertiesFile.getProperty(value);
 	}

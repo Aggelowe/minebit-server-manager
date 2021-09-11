@@ -10,8 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
+
+import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
+import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
 
 /**
  * This class contains a lot of very useful utilities for the application which
@@ -107,4 +111,39 @@ public final class AppUtils {
 		return new ImageIcon(image);
 	}
 
+	/**
+	 * This method generates a new random id which can be used to identify different
+	 * objects.
+	 * 
+	 * @param chars The number of characters of the id
+	 * @return The generated id
+	 */
+	public static String getRandomID(int chars) {
+		if (chars <= 0) {
+			new InvalidParameterException("The number of characters must be more than zero");
+		}
+		String id = "";
+		Random random = new Random();
+		for (int counter = 0; counter < chars; counter++) {
+			id = id + random.nextInt(9);
+		}
+		return id;
+	}
+
+	/**
+	 * This method adds a new {@link IAction} to be executed when the application
+	 * exits.
+	 * 
+	 * @param action The action to execute
+	 */
+	public static void addActionOnShutdown(IAction action) {
+		Thread thread = new Thread("Shutdown-thread" + getRandomID(4)) {
+			public void run() {
+				if (action != null) {
+					action.execute();
+				}
+			};
+		};
+		Runtime.getRuntime().addShutdownHook(thread);
+	}
 }

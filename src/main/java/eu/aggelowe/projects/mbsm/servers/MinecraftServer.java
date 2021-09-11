@@ -16,30 +16,19 @@ public final class MinecraftServer implements INamed {
 
 	private final ProcessBuilder command;
 	private final String path;
-	
+	private final AllocatableMemory memory;
+
 	private boolean isDeleted = false;
 	private boolean isInitialised = false;
 	private String name;
 	private Process process = null;
 
-	public MinecraftServer(String name) {
-		this(name, null);
-	}
-
-	@Deprecated
-	public MinecraftServer(String name, String path) {
+	public MinecraftServer(String name, AllocatableMemory memory) {
 		this.name = name;
-		if (path != null) {
-			if (path.endsWith("/")) {
-				this.path = path;
-			} else {
-				this.path = path + "/";
-			}
-		} else {
-			this.path = FileReference.APPLICATION_FOLDER_PATH + "servers/" + name + "/";
-		}
-		this.command = new ProcessBuilder("java", "-jar", this.path + "server.jar");
+		this.path = FileReference.APPLICATION_FOLDER_PATH + "servers/" + name + "/";
+		this.command = new ProcessBuilder("java", "-Xmx" + memory + "M", "-jar", this.path + "server.jar", "nogui");
 		this.command.directory(new File(this.path));
+		this.memory = memory;
 		ServerReference.SERVERS.add(this);
 	}
 
@@ -107,7 +96,10 @@ public final class MinecraftServer implements INamed {
 	}
 
 	public boolean isRunning() {
-		return process.isAlive();
+		if (process != null) {
+			return process.isAlive();
+		}
+		return false;
 	}
 
 	public InputStream getServerOutputStream() throws StreamUnavailableException, ServerException {
@@ -153,6 +145,10 @@ public final class MinecraftServer implements INamed {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public AllocatableMemory getMemory() {
+		return memory;
 	}
 
 }
