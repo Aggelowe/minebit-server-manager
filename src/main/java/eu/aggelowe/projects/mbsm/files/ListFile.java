@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.aggelowe.projects.mbsm.MBSM;
+import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
 
@@ -30,7 +32,7 @@ public class ListFile implements IFile {
 	 *
 	 * @param file The file
 	 */
-	public ListFile(String file) {
+	public ListFile(String file, String defaultFile) {
 		this.file = file;
 		if (new File(file).isDirectory()) {
 			new InvalidParameterException("The given file is a directory").printStackTrace();
@@ -39,6 +41,22 @@ public class ListFile implements IFile {
 		if (!new File(file).exists()) {
 			try {
 				new File(file).createNewFile();
+				if (defaultFile != null) {
+					InputStreamReader reader = new InputStreamReader(AppUtils.getResourceAsStream(defaultFile));
+					String fileText = "";
+					int charData;
+					while ((charData = reader.read()) != -1) {
+						fileText = fileText + (char) charData;
+					}
+					fileText = fileText.replaceAll("\n", "");
+					reader.close();
+					String[] elements = fileText.split(", ");
+					for (String element : elements) {
+						if (!this.contains(element) && element != "") {
+							this.elements.add(element);
+						}
+					}
+				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
 				MBSM.exit(ExitStatus.ERROR);
@@ -105,7 +123,7 @@ public class ListFile implements IFile {
 			reader.close();
 			String[] elements = fileText.split(", ");
 			for (String element : elements) {
-				if (!this.contains(element)) {
+				if (!this.contains(element) && element != "") {
 					this.elements.add(element);
 				}
 			}
@@ -124,9 +142,9 @@ public class ListFile implements IFile {
 		FileInit.emptyTextFile(file);
 		try {
 			FileWriter writer = new FileWriter(new File(file));
-			String fileText = null;
+			String fileText = "";
 			for (String element : elements) {
-				if (fileText == null) {
+				if (fileText == "") {
 					fileText = element;
 				} else {
 					fileText = fileText + ", " + element;

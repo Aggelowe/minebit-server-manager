@@ -146,4 +146,18 @@ public final class AppUtils {
 		};
 		Runtime.getRuntime().addShutdownHook(thread);
 	}
+
+	/**
+	 * This method makes the first letter of the {@link String} object to upper case.
+	 * 
+	 * @param string The object mentioned above
+	 * 
+	 * @return The changed string
+	 */
+	public static String capitaliseFirstLetter(String string) {
+		String firstLetter = string.substring(0, 1);
+		String unchangedString = string.substring(1);
+		return firstLetter.toUpperCase() + unchangedString;
+		
+	}
 }

@@ -8,15 +8,21 @@ import eu.aggelowe.projects.mbsm.files.ListFile;
 import eu.aggelowe.projects.mbsm.util.NamedArrayList;
 
 public final class ServerReference {
-	
-	public static final ListFile SERVERS_LIST = new ListFile(FileReference.APPLICATION_FOLDER_PATH + "servers.list");
-	
+
 	public static final NamedArrayList<MinecraftServer> SERVERS = new NamedArrayList<MinecraftServer>();
-	
+
 	public static final Logger SERVER_LOGGER = LogManager.getLogger("Servers");
-	
+
 	public static final String SERVER_PATH = FileReference.APPLICATION_FOLDER_PATH + "servers/";
+
+	public static final String DEFAULT_SERVER_FILE = "defaults/example.server";
+
+	public static final ListFile VERSIONS_LIST = new ListFile(FileReference.APPLICATION_FOLDER_PATH + "versions.list", "defaults/versions.list");
+
+	public static final NamedArrayList<ReleaseVersion> VERSIONS = new NamedArrayList<ReleaseVersion>();
 	
-	public static final String DEFAULT_SERVER_FILE = "defaults/servers.properties";
+	public static final ListFile VERSION_TYPE_LIST = new ListFile(FileReference.APPLICATION_FOLDER_PATH + "version_types.list", "defaults/version_types.list");
+
+	public static final NamedArrayList<VersionType> VERSION_TYPES = new NamedArrayList<VersionType>();
 	
 }

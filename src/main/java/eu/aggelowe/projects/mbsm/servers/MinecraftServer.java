@@ -151,4 +151,12 @@ public final class MinecraftServer implements INamed {
 		return memory;
 	}
 
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public boolean isInitialised() {
+		return isInitialised;
+	}
+
 }

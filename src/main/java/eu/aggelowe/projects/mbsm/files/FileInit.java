@@ -37,7 +37,7 @@ public class FileInit {
 		try {
 			FileInit.initFolder(FileReference.APPLICATION_FOLDER_PATH);
 			FileInit.initFolder(ServerReference.SERVER_PATH);
-			ServerUtil.loadServer("survival");
+			ServerUtil.loadServers();
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.FATAL);
@@ -45,6 +45,8 @@ public class FileInit {
 		registerFiles();
 		FileReference.FILES_LOGGER.debug("Loading files..");
 		loadFiles();
+		ServerUtil.loadReleaseVersions();
+		ServerUtil.loadVersionTypes();
 	}
 
 	/**
@@ -67,7 +69,8 @@ public class FileInit {
 	 */
 	public static void registerFiles() {
 		REGISTERED_FILES.add(GENERAL_SETTINGS);
-		REGISTERED_FILES.add(ServerReference.SERVERS_LIST);
+		REGISTERED_FILES.add(ServerReference.VERSIONS_LIST);
+		REGISTERED_FILES.add(ServerReference.VERSION_TYPE_LIST);
 	}
 
 	/**
