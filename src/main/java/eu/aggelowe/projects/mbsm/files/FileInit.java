@@ -37,6 +37,7 @@ public class FileInit {
 		try {
 			FileInit.initFolder(FileReference.APPLICATION_FOLDER_PATH);
 			FileInit.initFolder(ServerReference.SERVER_PATH);
+			FileInit.initFolder(FileReference.DATA_PATH);
 			ServerUtil.loadServers();
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -71,6 +72,7 @@ public class FileInit {
 		REGISTERED_FILES.add(GENERAL_SETTINGS);
 		REGISTERED_FILES.add(ServerReference.VERSIONS_LIST);
 		REGISTERED_FILES.add(ServerReference.VERSION_TYPE_LIST);
+		REGISTERED_FILES.add(ServerReference.RUNNABLE_VERSION_FILE);
 	}
 
 	/**

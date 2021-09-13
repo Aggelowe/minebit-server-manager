@@ -119,8 +119,8 @@ public class ListFile implements IFile {
 			while ((charData = reader.read()) != -1) {
 				fileText = fileText + (char) charData;
 			}
-			fileText = fileText.replaceAll("\n", "");
 			reader.close();
+			fileText = fileText.replaceAll("\n", "");
 			String[] elements = fileText.split(", ");
 			for (String element : elements) {
 				if (!this.contains(element) && element != "") {

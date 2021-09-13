@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import eu.aggelowe.projects.mbsm.files.FileReference;
 import eu.aggelowe.projects.mbsm.files.ListFile;
+import eu.aggelowe.projects.mbsm.files.TextObjectFile;
 import eu.aggelowe.projects.mbsm.util.NamedArrayList;
 
 public final class ServerReference {
@@ -17,12 +18,14 @@ public final class ServerReference {
 
 	public static final String DEFAULT_SERVER_FILE = "defaults/example.server";
 
-	public static final ListFile VERSIONS_LIST = new ListFile(FileReference.APPLICATION_FOLDER_PATH + "versions.list", "defaults/versions.list");
+	public static final ListFile VERSIONS_LIST = new ListFile(FileReference.DATA_PATH+ "versions.list", "defaults/versions.list");
 
 	public static final NamedArrayList<ReleaseVersion> VERSIONS = new NamedArrayList<ReleaseVersion>();
 	
-	public static final ListFile VERSION_TYPE_LIST = new ListFile(FileReference.APPLICATION_FOLDER_PATH + "version_types.list", "defaults/version_types.list");
+	public static final ListFile VERSION_TYPE_LIST = new ListFile(FileReference.DATA_PATH + "version_types.list", "defaults/version_types.list");
 
 	public static final NamedArrayList<VersionType> VERSION_TYPES = new NamedArrayList<VersionType>();
+	
+	public static final TextObjectFile RUNNABLE_VERSION_FILE = new TextObjectFile(FileReference.DATA_PATH + "runnable_versions.tof", null);
 	
 }

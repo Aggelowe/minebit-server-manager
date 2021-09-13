@@ -8,7 +8,7 @@ package eu.aggelowe.projects.mbsm.util;
  * @param <DataType> The data of the property
  *
  */
-public class DataSet<DataType> {
+public class DataSet<DataType> implements INamed {
 
 	private final String name;
 	private DataType data;

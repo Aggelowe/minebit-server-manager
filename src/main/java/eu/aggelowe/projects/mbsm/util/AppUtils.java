@@ -158,6 +158,5 @@ public final class AppUtils {
 		String firstLetter = string.substring(0, 1);
 		String unchangedString = string.substring(1);
 		return firstLetter.toUpperCase() + unchangedString;
-		
 	}
 }
