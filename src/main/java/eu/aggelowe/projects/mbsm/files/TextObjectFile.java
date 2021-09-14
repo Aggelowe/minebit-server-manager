@@ -2,6 +2,7 @@ package eu.aggelowe.projects.mbsm.files;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,13 +124,30 @@ public class TextObjectFile implements IFile {
 					if ((objectName.split("\\)", -1).length - 1) != 0) {
 						throw new FileStructureException("The structure of the given file is invalid");
 					}
+					while (objectName.startsWith(" ")) {
+						objectName = objectName.substring(1);
+					}
+					while (objectName.endsWith(" ")) {
+						objectName = objectName.substring(0, objectName.length() - 1);
+					}
 					String objectParameterString = objectData[1];
 					if (!objectParameterString.endsWith(")")) {
 						throw new FileStructureException("The structure of the given file is invalid");
 					}
 					objectParameterString = objectParameterString.substring(0, objectParameterString.length() - 1);
-					String[] objectParameters = objectParameterString.split(", ");
-					this.elements.add(new DataSet<String[]>(objectName, objectParameters));
+					List<String> objectParameters = new ArrayList<String>();
+					for (final String parameter : objectParameterString.split(",")) {
+						String changedParameter = parameter;
+						while (changedParameter.startsWith(" ")) {
+							changedParameter = changedParameter.substring(1);
+						}
+						while (changedParameter.endsWith(" ")) {
+							changedParameter = changedParameter.substring(0, objectName.length() - 1);
+						}
+						objectParameters.add(changedParameter);
+					}
+					String[] parametersArray = {};
+					this.elements.add(new DataSet<String[]>(objectName, objectParameters.toArray(parametersArray)));
 				}
 			}
 		} catch (IOException | FileStructureException exception) {
@@ -144,7 +162,31 @@ public class TextObjectFile implements IFile {
 	 */
 	@Override
 	public void save() {
-
+		FileInit.emptyTextFile(file);
+		try {
+			FileWriter writer = new FileWriter(new File(file));
+			String fileText = "";
+			for (DataSet<String[]> element : elements) {
+				String parameters = "";
+				for (String parameter : element.getData()) {
+					if (parameters == "") {
+						parameters = parameters + parameter;
+					} else {
+						parameters = parameters + ", " + parameter;
+					}
+				}
+				if (fileText.equals("")) {
+					fileText = fileText + element.getName() + "(" + parameters + ");";
+				} else {
+					fileText = fileText + "\n" + element.getName() + "(" + parameters + ");";
+				}
+			}
+			writer.write(fileText);
+			writer.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
 	}
 
 	@Override

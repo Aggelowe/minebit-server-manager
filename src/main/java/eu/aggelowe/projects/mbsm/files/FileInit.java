@@ -11,7 +11,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.core.jmx.Server;
+
 import eu.aggelowe.projects.mbsm.MBSM;
+import eu.aggelowe.projects.mbsm.servers.RunnableVersion;
 import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -38,6 +41,7 @@ public class FileInit {
 			FileInit.initFolder(FileReference.APPLICATION_FOLDER_PATH);
 			FileInit.initFolder(ServerReference.SERVER_PATH);
 			FileInit.initFolder(FileReference.DATA_PATH);
+			FileInit.initFolder(ServerReference.RUNNABLES_PATH);
 			ServerUtil.loadServers();
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -48,6 +52,11 @@ public class FileInit {
 		loadFiles();
 		ServerUtil.loadReleaseVersions();
 		ServerUtil.loadVersionTypes();
+		ServerUtil.loadRunnableVersions();
+		ServerUtil.downloadRunnables();
+		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
+			System.out.println(version.getName() + "," + version.getType().getName() + "," + version.getVersion().getName() + "," + version.getDownloadUrl());
+		}
 	}
 
 	/**

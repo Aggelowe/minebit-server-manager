@@ -28,4 +28,7 @@ public final class ServerReference {
 	
 	public static final TextObjectFile RUNNABLE_VERSION_FILE = new TextObjectFile(FileReference.DATA_PATH + "runnable_versions.tof", null);
 	
+	public static final NamedArrayList<RunnableVersion> RUNNABLE_VERSIONS = new NamedArrayList<RunnableVersion>();
+	
+	public static final String RUNNABLES_PATH = FileReference.DATA_PATH + "runnables/";
 }

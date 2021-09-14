@@ -17,16 +17,23 @@ import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
  */
 public final class MBSM {
 
+	private static ExitStatus exitStatus = ExitStatus.GRACEFUL;
+
 	private static final IAction SHUTDOWN_ACTION = new IAction() {
 		@Override
 		public void execute() {
-			Reference.MAIN_LOGGER.debug("Stopping servers...");
-			ServerUtil.stopServers(false);
-			Reference.MAIN_LOGGER.debug("Saving files...");
-			FileInit.saveFiles();
+			if (exitStatus == ExitStatus.GRACEFUL) {
+				Reference.MAIN_LOGGER.debug("Stopping servers...");
+				ServerUtil.stopServers(false);
+				Reference.MAIN_LOGGER.debug("Saving files...");
+				FileInit.saveFiles();
+			} else {
+				Reference.MAIN_LOGGER.debug("Force stopping servers...");
+				ServerUtil.stopServers(true);
+			}
 		}
-	}; 
-	
+	};
+
 	/**
 	 * This class is the main method of the project and is used to call all the
 	 * important methods for the application to run and is being called when the
@@ -52,6 +59,7 @@ public final class MBSM {
 	 * @throws Exception
 	 */
 	public static void exit(ExitStatus status) {
+		exitStatus = status;
 		Reference.MAIN_LOGGER.info(status.getOutputMessage());
 		System.exit(status.getExitCode());
 	}

@@ -22,13 +22,15 @@ public final class MinecraftServer implements INamed {
 	private boolean isInitialised = false;
 	private String name;
 	private Process process = null;
+	private RunnableVersion version = null;
 
-	public MinecraftServer(String name, AllocatableMemory memory) {
+	public MinecraftServer(String name, AllocatableMemory memory, RunnableVersion version) {
 		this.name = name;
 		this.path = FileReference.APPLICATION_FOLDER_PATH + "servers/" + name + "/";
-		this.command = new ProcessBuilder("java", "-Xmx" + memory + "M", "-jar", this.path + "server.jar", "nogui");
+		this.command = new ProcessBuilder("java", "-Xmx" + memory + "M", "-jar", ServerReference.RUNNABLES_PATH + version.getName() + ".jar", "nogui");
 		this.command.directory(new File(this.path));
 		this.memory = memory;
+		this.version = version;
 		ServerReference.SERVERS.add(this);
 	}
 
@@ -142,8 +144,22 @@ public final class MinecraftServer implements INamed {
 	public String getName() {
 		return name;
 	}
+	
+	public RunnableVersion getVersion() {
+		return version;
+	}
 
-	public void setName(String name) {
+	public void setVersion(RunnableVersion version) throws ServerException {
+		if (isRunning()) {
+			throw new ServerException("The server is currently running");
+		}
+		this.version = version;
+	}
+
+	public void setName(String name) throws ServerException {
+		if (isRunning()) {
+			throw new ServerException("The server is currently running");
+		}
 		this.name = name;
 	}
 

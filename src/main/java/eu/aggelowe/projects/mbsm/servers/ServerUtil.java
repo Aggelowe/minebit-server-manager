@@ -4,9 +4,12 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.files.PropertyFile;
 import eu.aggelowe.projects.mbsm.util.DataSet;
+import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.INamed;
+import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
 import eu.aggelowe.projects.mbsm.util.exceptions.ServerException;
 
 /**
@@ -107,6 +110,43 @@ public final class ServerUtil {
 	}
 
 	/**
+	 * This method is used to load all the {@link RunnableVersion} objects from the
+	 * <i>runnable_versions</i> file.
+	 */
+	public static void loadRunnableVersions() {
+		for (DataSet<String[]> runnableVersion : ServerReference.RUNNABLE_VERSION_FILE.getElements()) {
+			String name = runnableVersion.getName();
+			if (runnableVersion.getData().length != 3) {
+				new InvalidParameterException("Too many parameters are contained in the " + name + " runnable version text object.").printStackTrace();
+				MBSM.exit(ExitStatus.ERROR);
+			}
+			String type = runnableVersion.getData()[0];
+			if (!ServerReference.VERSION_TYPES.containsNamedObject(type)) {
+				new InvalidParameterException("The version type " + type + " doesn't exist").printStackTrace();
+				MBSM.exit(ExitStatus.ERROR);
+			}
+			String version = runnableVersion.getData()[1];
+			if (!ServerReference.VERSIONS.containsNamedObject(version)) {
+				new InvalidParameterException("The release version " + version + " doesn't exist").printStackTrace();
+				MBSM.exit(ExitStatus.ERROR);
+			}
+			String downloadUrl = runnableVersion.getData()[2];
+			ServerReference.RUNNABLE_VERSIONS.add(new RunnableVersion(name, new VersionType(type), new ReleaseVersion(version), downloadUrl));
+		}
+	}
+	
+	/**
+	 * This method is used to download all the runnables from the {@link RunnableVersion} objects.
+	 */
+	public static void downloadRunnables() {
+		for (RunnableVersion runnableVersion : ServerReference.RUNNABLE_VERSIONS) {
+			if (runnableVersion != null) {
+				runnableVersion.download();
+			}
+		}
+	}
+
+	/**
 	 * This method loads the properties of the given server and creates specific
 	 * files if necessary.
 	 * 
@@ -122,7 +162,12 @@ public final class ServerUtil {
 			memory = AllocatableMemory.ALLOCATE_4096M;
 			serverFile.setDataValue(new DataSet<String>("general.memory", "4096"));
 		}
-		MinecraftServer server = new MinecraftServer(name, memory);
+		RunnableVersion version = (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.getNamedObject(serverFile.getDataValue("general.version"));
+		if (version == null) {
+			version = (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.get(0);
+			serverFile.setDataValue(new DataSet<String>("general.version", version.getName()));
+		}
+		MinecraftServer server = new MinecraftServer(name, memory, version);
 		server.init();
 	}
 
