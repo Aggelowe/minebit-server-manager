@@ -2,13 +2,16 @@ package eu.aggelowe.projects.mbsm.servers;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.files.PropertyFile;
+import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.DataSet;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.INamed;
+import eu.aggelowe.projects.mbsm.util.VersionComparator;
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
 import eu.aggelowe.projects.mbsm.util.exceptions.ServerException;
 
@@ -24,11 +27,12 @@ public final class ServerUtil {
 	/**
 	 * This method is used to initialise all the existing minecraft servers.
 	 */
-	@Deprecated
 	public static void initServers() {
 		for (MinecraftServer server : ServerReference.SERVERS) {
 			try {
-				server.init();
+				if (!server.isInitialised()) {
+					server.init();
+				}
 			} catch (ServerException exception) {
 				exception.printStackTrace();
 			}
@@ -86,27 +90,47 @@ public final class ServerUtil {
 	}
 
 	/**
-	 * This method is used to load all the {@link ReleaseVersion} objects from the
+	 * This method is used to load all the release versions from the
 	 * <i>versions</i> file.
 	 */
-	public static void loadReleaseVersions() {
-		for (String version : ServerReference.VERSIONS_LIST.getElements()) {
-			if (version != null) {
-				ServerReference.VERSIONS.add(new ReleaseVersion(version));
+	private static void loadReleaseVersions() {
+		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
+			if (version != null && version.getVersion() != null) {
+				boolean canAdd = true;
+				checkLoop: for (String releaseVersion : ServerReference.RELEASE_VERSIONS) {
+					if (releaseVersion != null && version.getVersion().equals(releaseVersion)) {
+						canAdd = false;
+						break checkLoop;
+					}
+				}
+				if (canAdd == true) {
+					ServerReference.RELEASE_VERSIONS.add(version.getVersion());
+				}
 			}
 		}
+		sortVersions();
 	}
 
 	/**
-	 * This method is used to load all the {@link VersionType} objects from the
-	 * <i>version_types</i> file.
+	 * This method is used to load all the version types from the
+	 * <i>versions</i> file.
 	 */
-	public static void loadVersionTypes() {
-		for (String versionType : ServerReference.VERSION_TYPE_LIST.getElements()) {
-			if (versionType != null) {
-				ServerReference.VERSION_TYPES.add(new VersionType(versionType));
+	private static void loadVersionTypes() {
+		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
+			if (version != null && version.getType() != null) {
+				boolean canAdd = true;
+				checkLoop: for (String versionType : ServerReference.VERSION_TYPES) {
+					if (versionType != null && version.getType().equalsIgnoreCase(versionType)) {
+						canAdd = false;
+						break checkLoop;
+					}
+				}
+				if (canAdd == true) {
+					ServerReference.VERSION_TYPES.add(version.getType().toLowerCase());
+				}
 			}
 		}
+		AppUtils.sortAlphabetically(ServerReference.VERSION_TYPES);
 	}
 
 	/**
@@ -121,29 +145,12 @@ public final class ServerUtil {
 				MBSM.exit(ExitStatus.ERROR);
 			}
 			String type = runnableVersion.getData()[0];
-			if (!ServerReference.VERSION_TYPES.containsNamedObject(type)) {
-				new InvalidParameterException("The version type " + type + " doesn't exist").printStackTrace();
-				MBSM.exit(ExitStatus.ERROR);
-			}
 			String version = runnableVersion.getData()[1];
-			if (!ServerReference.VERSIONS.containsNamedObject(version)) {
-				new InvalidParameterException("The release version " + version + " doesn't exist").printStackTrace();
-				MBSM.exit(ExitStatus.ERROR);
-			}
 			String downloadUrl = runnableVersion.getData()[2];
-			ServerReference.RUNNABLE_VERSIONS.add(new RunnableVersion(name, new VersionType(type), new ReleaseVersion(version), downloadUrl));
+			ServerReference.RUNNABLE_VERSIONS.add(new RunnableVersion(name, type, version, downloadUrl));
 		}
-	}
-	
-	/**
-	 * This method is used to download all the runnables from the {@link RunnableVersion} objects.
-	 */
-	public static void downloadRunnables() {
-		for (RunnableVersion runnableVersion : ServerReference.RUNNABLE_VERSIONS) {
-			if (runnableVersion != null) {
-				runnableVersion.download();
-			}
-		}
+		ServerUtil.loadReleaseVersions();
+		ServerUtil.loadVersionTypes();
 	}
 
 	/**
@@ -192,6 +199,15 @@ public final class ServerUtil {
 		AllocatableMemory memory = server.getMemory();
 		serverFile.setDataValue(new DataSet<String>("general.memory", memory.toString()));
 		serverFile.save();
+	}
+
+	/**
+	 * This method sorts the given versions.
+	 * 
+	 * @param versions The versions given
+	 */
+	public static void sortVersions() {
+		Collections.sort(ServerReference.RELEASE_VERSIONS, new VersionComparator());
 	}
 
 }

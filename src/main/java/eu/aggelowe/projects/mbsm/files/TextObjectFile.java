@@ -43,8 +43,53 @@ public class TextObjectFile implements IFile {
 			try {
 				new File(file).createNewFile();
 				if (defaultFile != null) {
+					FileReader reader = new FileReader(new File(defaultFile));
+					String fileText = "";
+					int charData;
+					while ((charData = reader.read()) != -1) {
+						fileText = fileText + (char) charData;
+					}
+					reader.close();
+					fileText = fileText.replaceAll("\n", "");
+					String[] elements = fileText.split(";");
+					for (String element : elements) {
+						if (element != "") {
+							String[] objectData = element.split("\\(");
+							if (objectData.length != 2) {
+								throw new FileStructureException("The structure of the given file is invalid");
+							}
+							String objectName = objectData[0];
+							if ((objectName.split("\\)", -1).length - 1) != 0) {
+								throw new FileStructureException("The structure of the given file is invalid");
+							}
+							while (objectName.startsWith(" ")) {
+								objectName = objectName.substring(1);
+							}
+							while (objectName.endsWith(" ")) {
+								objectName = objectName.substring(0, objectName.length() - 1);
+							}
+							String objectParameterString = objectData[1];
+							if (!objectParameterString.endsWith(")")) {
+								throw new FileStructureException("The structure of the given file is invalid");
+							}
+							objectParameterString = objectParameterString.substring(0, objectParameterString.length() - 1);
+							List<String> objectParameters = new ArrayList<String>();
+							for (final String parameter : objectParameterString.split(",")) {
+								String changedParameter = parameter;
+								while (changedParameter.startsWith(" ")) {
+									changedParameter = changedParameter.substring(1);
+								}
+								while (changedParameter.endsWith(" ")) {
+									changedParameter = changedParameter.substring(0, changedParameter.length() - 1);
+								}
+								objectParameters.add(changedParameter);
+							}
+							String[] parametersArray = {};
+							this.elements.add(new DataSet<String[]>(objectName, objectParameters.toArray(parametersArray)));
+						}
+					}
 				}
-			} catch (IOException exception) {
+			} catch (IOException | FileStructureException exception) {
 				exception.printStackTrace();
 				MBSM.exit(ExitStatus.ERROR);
 			}
@@ -142,7 +187,7 @@ public class TextObjectFile implements IFile {
 							changedParameter = changedParameter.substring(1);
 						}
 						while (changedParameter.endsWith(" ")) {
-							changedParameter = changedParameter.substring(0, objectName.length() - 1);
+							changedParameter = changedParameter.substring(0, changedParameter.length() - 1);
 						}
 						objectParameters.add(changedParameter);
 					}

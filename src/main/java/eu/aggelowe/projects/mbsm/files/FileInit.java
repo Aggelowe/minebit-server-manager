@@ -11,10 +11,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.core.jmx.Server;
-
 import eu.aggelowe.projects.mbsm.MBSM;
-import eu.aggelowe.projects.mbsm.servers.RunnableVersion;
 import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -50,13 +47,8 @@ public class FileInit {
 		registerFiles();
 		FileReference.FILES_LOGGER.debug("Loading files..");
 		loadFiles();
-		ServerUtil.loadReleaseVersions();
-		ServerUtil.loadVersionTypes();
+		FileReference.FILES_LOGGER.info("Loading runnable versions...");	
 		ServerUtil.loadRunnableVersions();
-		ServerUtil.downloadRunnables();
-		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
-			System.out.println(version.getName() + "," + version.getType().getName() + "," + version.getVersion().getName() + "," + version.getDownloadUrl());
-		}
 	}
 
 	/**
@@ -79,8 +71,6 @@ public class FileInit {
 	 */
 	public static void registerFiles() {
 		REGISTERED_FILES.add(GENERAL_SETTINGS);
-		REGISTERED_FILES.add(ServerReference.VERSIONS_LIST);
-		REGISTERED_FILES.add(ServerReference.VERSION_TYPE_LIST);
 		REGISTERED_FILES.add(ServerReference.RUNNABLE_VERSION_FILE);
 	}
 

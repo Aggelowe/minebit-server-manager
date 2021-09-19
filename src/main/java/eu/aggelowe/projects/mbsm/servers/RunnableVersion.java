@@ -18,8 +18,8 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidFileTypeException;
 public class RunnableVersion implements INamed {
 
 	private final String name;
-	private final VersionType type;
-	private final ReleaseVersion version;
+	private final String type;
+	private final String version;
 	private final String downloadUrl;
 
 	/**
@@ -31,7 +31,7 @@ public class RunnableVersion implements INamed {
 	 * @param downloadUrl The executable's download url
 	 *
 	 */
-	public RunnableVersion(String name, VersionType type, ReleaseVersion version, String downloadUrl) {
+	public RunnableVersion(String name, String type, String version, String downloadUrl) {
 		this.name = name;
 		this.type = type;
 		this.version = version;
@@ -66,11 +66,11 @@ public class RunnableVersion implements INamed {
 		return name;
 	}
 
-	public VersionType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public ReleaseVersion getVersion() {
+	public String getVersion() {
 		return version;
 	}
 

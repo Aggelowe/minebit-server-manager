@@ -10,6 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -148,7 +152,8 @@ public final class AppUtils {
 	}
 
 	/**
-	 * This method makes the first letter of the {@link String} object to upper case.
+	 * This method makes the first letter of the {@link String} object to upper
+	 * case.
 	 * 
 	 * @param string The object mentioned above
 	 * 
@@ -159,4 +164,94 @@ public final class AppUtils {
 		String unchangedString = string.substring(1);
 		return firstLetter.toUpperCase() + unchangedString;
 	}
+
+	/**
+	 * This method is used to sort alphabetically the elements of the given
+	 * {@link List}.
+	 * 
+	 * @param names The elements of the {@link List}
+	 */
+	public static void sortAlphabetically(List<String> names) {
+		Collections.sort(names, new Comparator<String>() {
+			@Override
+			public int compare(String input1, String input2) {
+				return input1.compareToIgnoreCase(input2);
+			}
+		});
+	}
+
+	/**
+	 * This method is used to sort numerically the elements of the given
+	 * {@link List}.
+	 * 
+	 * @param ints The elements of the {@link List}
+	 */
+	public static void sortNumerically(List<Integer> ints) {
+		Collections.sort(ints, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer input1, Integer input2) {
+				return input1.compareTo(input2);
+			}
+		});
+	}
+
+	/**
+	 * This method returns the maximum number from the given array.
+	 * 
+	 * @param ints The given array
+	 * 
+	 * @return The maximum number
+	 */
+	public static int getMaxNumber(Integer... ints) {
+		return getMaxNumber(Arrays.asList(ints));
+	}
+	
+	/**
+	 * This method returns the maximum number from the given {@link List}.
+	 * 
+	 * @param ints The given {@link List}
+	 * 
+	 * @return The maximum number
+	 */
+	public static int getMaxNumber(List<Integer> ints) {
+		int maximumInt = ints.get(0);
+		for (int processInt : ints) {
+			if (processInt > maximumInt) {
+				maximumInt = processInt;
+			}
+		}
+		return maximumInt;
+	}
+	
+	/**
+	 * This method returns the minimum number from the given array.
+	 * 
+	 * @param ints The given array
+	 * 
+	 * @return The minimum number
+	 */
+	public static int getMinNumber(Integer... ints) {
+		return getMinNumber(Arrays.asList(ints));
+	}
+	
+	/**
+	 * This method returns the minimum number from the given {@link List}.
+	 * 
+	 * @param ints The given {@link List}
+	 * 
+	 * @return The minimum number
+	 */
+	public static int getMinNumber(List<Integer> ints) {
+		if (ints.size() == 0) {
+			return 0;
+		}
+		int minimumInt = ints.get(0);
+		for (int processInt : ints) {
+			if (processInt < minimumInt) {
+				minimumInt = processInt;
+			}
+		}
+		return minimumInt;
+	}
+
 }
