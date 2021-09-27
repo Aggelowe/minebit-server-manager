@@ -61,7 +61,7 @@ public class NamedArrayList<NamedType extends INamed> extends ArrayList<NamedTyp
 		for (Object object : this) {
 			if (object instanceof INamed) {
 				INamed namedObject = (INamed) object;
-				if (namedObject.getName().equals(name)) {
+				if (namedObject.getObjectName().equals(name)) {
 					return true;
 				}
 			}
@@ -80,7 +80,7 @@ public class NamedArrayList<NamedType extends INamed> extends ArrayList<NamedTyp
 		for (Object object : this) {
 			if (object instanceof INamed) {
 				INamed namedObject = (INamed) object;
-				if (namedObject.getName().equals(name)) {
+				if (namedObject.getObjectName().equals(name)) {
 					return namedObject;
 				}
 			}

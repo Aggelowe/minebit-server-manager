@@ -104,7 +104,7 @@ public class TextObjectFile implements IFile {
 	 */
 	public void addElement(String element, String... data) throws InvalidParameterException {
 		for (DataSet<String[]> containedElement : this.elements) {
-			if (containedElement.getName().equals(element)) {
+			if (containedElement.getObjectName().equals(element)) {
 				throw new InvalidParameterException("The element " + element + " already exists.");
 			}
 		}
@@ -120,7 +120,7 @@ public class TextObjectFile implements IFile {
 	 */
 	public void removeElement(String element) throws InvalidParameterException {
 		for (DataSet<String[]> containedElement : this.elements) {
-			if (containedElement.getName().equals(element)) {
+			if (containedElement.getObjectName().equals(element)) {
 				this.elements.remove(containedElement);
 				return;
 			}
@@ -136,7 +136,7 @@ public class TextObjectFile implements IFile {
 	 */
 	public boolean contains(String element) {
 		for (DataSet<String[]> containedElement : this.elements) {
-			if (containedElement.getName().equals(element)) {
+			if (containedElement.getObjectName().equals(element)) {
 				return true;
 			}
 		}
@@ -221,9 +221,9 @@ public class TextObjectFile implements IFile {
 					}
 				}
 				if (fileText.equals("")) {
-					fileText = fileText + element.getName() + "(" + parameters + ");";
+					fileText = fileText + element.getObjectName() + "(" + parameters + ");";
 				} else {
-					fileText = fileText + "\n" + element.getName() + "(" + parameters + ");";
+					fileText = fileText + "\n" + element.getObjectName() + "(" + parameters + ");";
 				}
 			}
 			writer.write(fileText);

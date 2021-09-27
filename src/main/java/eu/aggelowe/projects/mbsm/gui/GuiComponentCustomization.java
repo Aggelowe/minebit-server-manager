@@ -11,9 +11,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
-import eu.aggelowe.projects.mbsm.gui.components.AppButton;
-import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
-import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
+import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppDraggableToolbar;
+import eu.aggelowe.projects.mbsm.gui.additives.AppFrame;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.Reference;
 

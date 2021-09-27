@@ -62,7 +62,7 @@ public class RunnableVersion implements INamed {
 	}
 
 	@Override
-	public String getName() {
+	public String getObjectName() {
 		return name;
 	}
 

@@ -27,6 +27,8 @@ public class FileInit {
 
 	public static final List<IFile> REGISTERED_FILES = new ArrayList<IFile>();
 
+	public static final IntegerFile LAST_SESSION = new IntegerFile(FileReference.DATA_PATH + "session.int", 0);
+	
 	public static final PropertyFile GENERAL_SETTINGS = new PropertyFile("MBSM General Properties", FileReference.APPLICATION_FOLDER_PATH + "general.properties", "defaults/general.properties");
 
 	/**
@@ -39,7 +41,6 @@ public class FileInit {
 			FileInit.initFolder(ServerReference.SERVER_PATH);
 			FileInit.initFolder(FileReference.DATA_PATH);
 			FileInit.initFolder(ServerReference.RUNNABLES_PATH);
-			ServerUtil.loadServers();
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.FATAL);
@@ -70,6 +71,7 @@ public class FileInit {
 	 * This method registers all files.
 	 */
 	public static void registerFiles() {
+		REGISTERED_FILES.add(LAST_SESSION);
 		REGISTERED_FILES.add(GENERAL_SETTINGS);
 		REGISTERED_FILES.add(ServerReference.RUNNABLE_VERSION_FILE);
 	}
@@ -83,6 +85,7 @@ public class FileInit {
 				file.load();
 			}
 		}
+		ServerUtil.loadServers();
 	}
 
 	/**
@@ -94,6 +97,7 @@ public class FileInit {
 				file.save();
 			}
 		}
+		ServerUtil.saveServers();
 	}
 
 	/**

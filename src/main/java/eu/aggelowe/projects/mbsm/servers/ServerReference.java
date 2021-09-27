@@ -29,4 +29,7 @@ public final class ServerReference {
 	public static final String RUNNABLES_PATH = FileReference.DATA_PATH + "runnables/";
 	
 	public static final List<String> RELEASE_VERSIONS = new ArrayList<String>();
+	
+	public static final RunnableVersion FALLBACK_VERSION = new RunnableVersion("vanilla_1.17.1", "vanilla", "1.17.1", "https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar");
+
 }

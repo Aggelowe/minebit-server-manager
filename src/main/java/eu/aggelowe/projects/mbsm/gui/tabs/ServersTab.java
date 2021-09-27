@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -17,9 +20,12 @@ import javax.swing.border.MatteBorder;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
-import eu.aggelowe.projects.mbsm.gui.components.AppButton;
-import eu.aggelowe.projects.mbsm.gui.components.AppList;
-import eu.aggelowe.projects.mbsm.gui.components.AppScrollBarUI;
+import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppList;
+import eu.aggelowe.projects.mbsm.gui.additives.AppScrollBarUI;
+import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
+import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
+import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
 
@@ -39,7 +45,6 @@ public final class ServersTab {
 		GuiLayoutSetup.GUI_LOGGER.debug("Setting up servers tab components...");
 		ServersTab.configureComponent();
 		ServersTab.initServerTabComponents();
-
 	}
 
 	/**
@@ -171,6 +176,46 @@ public final class ServersTab {
 	}
 
 	/**
+	 * This method adds a new {@link AppSingleSelectionButton} which represents a
+	 * specific server.
+	 * 
+	 * @param name The name of the server
+	 */
+	public static void addServerButton(MinecraftServer server) {
+		JScrollBar verticalScrollBar = ServersTabReference.SERVER_SELECTION_PANE.getVerticalScrollBar();
+		AppSingleSelectionButton serverButton = new AppSingleSelectionButton(server.getName(), ServersTabReference.SERVER_BUTTONS) {
+
+			@Override
+			protected boolean isDefaultSelected() {
+				return true;
+			}
+
+			@Override
+			protected void onButtonDeselected() {
+				this.setBackground(ServersTabReference.TAB_BACKGROUND_COLOR);
+			}
+
+			@Override
+			protected void onButtonSelected() {
+				this.setBackground(ComponentData.MAIN_COLOR);
+			}
+
+			private static final long serialVersionUID = -3467532756216305521L;
+
+		};
+		AppUtils.setFinalComponentSize(serverButton, new Dimension(ServersTabReference.SERVER_SELECTION_PANEL.getWidth(), 30));
+		serverButton.setHorizontalAlignment(SwingConstants.LEFT);
+		serverButton.setBorderPainted(false);
+		serverButton.setFocusPainted(false);
+		serverButton.setContentAreaFilled(false);
+		serverButton.setForeground(new Color(125, 215, 230));
+		serverButton.setOpaque(true);
+		ServersTabReference.SERVER_SELECTION_TOOLBAR.add(serverButton, 0);
+		ServersTabReference.SERVER_SELECTION_TOOLBAR.updateSize();
+		verticalScrollBar.setValue(0);
+	}
+
+	/**
 	 * This class contains all the important components and data for the servers tab
 	 * to work properly.
 	 * 
@@ -179,6 +224,8 @@ public final class ServersTab {
 	 */
 	public static final class ServersTabReference {
 
+		public static final List<AppSingleSelectionButton> SERVER_BUTTONS = new ArrayList<AppSingleSelectionButton>();
+
 		public static final JPanel SERVER_SELECTION_PANEL = new JPanel();
 
 		public static final JToolBar SERVER_MANAGEMENT_BAR = new JToolBar();
@@ -186,15 +233,7 @@ public final class ServersTab {
 		public static final AppButton ADD_SERVER_BUTTON = new AppButton(new IAction() {
 			@Override
 			public void execute() {
-				AppButton b = new AppButton("Server #" + AppUtils.getRandomID(8));
-				AppUtils.setFinalComponentSize(b, new Dimension(SERVER_SELECTION_PANEL.getWidth(), 30));
-				b.setHorizontalAlignment(SwingConstants.LEFT);
-				b.setBorderPainted(false);
-				b.setFocusPainted(false);
-				b.setContentAreaFilled(false);
-				b.setForeground(new Color(125, 215, 230));
-				SERVER_SELECTION_TOOLBAR.add(b);
-				SERVER_SELECTION_TOOLBAR.updateSize();
+				ServerUtil.consctructNewServer();
 			}
 		});
 
@@ -205,6 +244,8 @@ public final class ServersTab {
 		public static final JPanel TOOL_SELECTION_PANEL = new JPanel();
 
 		public static final JPanel TOOL_VIEW_PANEL = new JPanel();
+
+		public static final Color TAB_BACKGROUND_COLOR = new Color(0, 50, 140);
 
 	}
 

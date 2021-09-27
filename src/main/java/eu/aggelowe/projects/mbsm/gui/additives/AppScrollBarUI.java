@@ -1,4 +1,4 @@
-package eu.aggelowe.projects.mbsm.gui.components;
+package eu.aggelowe.projects.mbsm.gui.additives;
 
 import java.awt.Color;
 import java.awt.Dimension;

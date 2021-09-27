@@ -14,6 +14,6 @@ public interface INamed {
 	 * 
 	 * @return The name of the object
 	 */
-	public String getName();
+	public String getObjectName();
 
 }

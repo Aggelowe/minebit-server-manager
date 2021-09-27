@@ -90,7 +90,7 @@ public class PropertyFile implements IFile {
 	}
 
 	public void setDataValue(DataSet<String> dataSet) {
-		propertiesFile.setProperty(dataSet.getName(), dataSet.getData());
+		propertiesFile.setProperty(dataSet.getObjectName(), dataSet.getData());
 	}
 
 	/**

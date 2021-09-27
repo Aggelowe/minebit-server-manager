@@ -120,6 +120,27 @@ public final class AppUtils {
 	 * objects.
 	 * 
 	 * @param chars The number of characters of the id
+	 * @param charSets The number of character sets separated by a "-"
+	 * 
+	 * @return The generated id
+	 */
+	public static String getRandomID(int chars, int charSets) {
+		String serverId = "";
+		for (int counter = 0; counter < charSets; counter++) {
+			if (serverId.equals("")) {
+				serverId = getRandomID(chars);
+			} else {
+				serverId = serverId + "-" + getRandomID(chars);
+			}
+		}
+		return serverId;
+	}
+	
+	/**
+	 * This method generates a new random id which can be used to identify different
+	 * objects.
+	 * 
+	 * @param chars The number of characters of the id
 	 * @return The generated id
 	 */
 	public static String getRandomID(int chars) {
@@ -129,7 +150,7 @@ public final class AppUtils {
 		String id = "";
 		Random random = new Random();
 		for (int counter = 0; counter < chars; counter++) {
-			id = id + random.nextInt(9);
+			id = id + random.nextInt(10);
 		}
 		return id;
 	}

@@ -1,3 +1,4 @@
 #Minecraft Server Defaults
+general.name=Unnamed Server
 general.memory=4096
-general.version=latest
+general.version=vanilla_1.17.1

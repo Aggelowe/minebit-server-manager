@@ -1,6 +1,5 @@
-package eu.aggelowe.projects.mbsm.gui.components;
+package eu.aggelowe.projects.mbsm.gui.additives;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JToolBar;
@@ -17,7 +16,8 @@ import eu.aggelowe.projects.mbsm.util.AppUtils;
 public class AppList extends JToolBar {
 
 	private int listWidth;
-
+	private int componentHeight = 30;
+	
 	/**
 	 * This constructor constructs a new {@link JToolBar} which can be used as a
 	 * never ending vertical list with a specific width.
@@ -65,21 +65,24 @@ public class AppList extends JToolBar {
 	 * this {@link AppList}.
 	 */
 	public void updateSize() {
-		int componentHeight = 0;
-		for (Component component : this.getComponents()) {
-			if (component != null) {
-				componentHeight = componentHeight + component.getHeight();
-			}
-		}
-		AppUtils.setFinalComponentSize(this, new Dimension(listWidth, componentHeight));
+		AppUtils.setFinalComponentSize(this, new Dimension(listWidth, this.getComponents().length * componentHeight));
+		this.validate();
 	}
 
 	public int getListWidth() {
 		return listWidth;
 	}
+	
+	public int getComponentHeight() {
+		return componentHeight;
+	}
 
 	public void setListWidth(int listWidth) {
 		this.listWidth = listWidth;
+	}
+	
+	public void setComponentHeight(int componentHeight) {
+		this.componentHeight = componentHeight;
 	}
 
 	private static final long serialVersionUID = 7666719126678653815L;

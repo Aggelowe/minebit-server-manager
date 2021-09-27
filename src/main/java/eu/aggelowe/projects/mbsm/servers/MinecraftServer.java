@@ -17,18 +17,22 @@ public final class MinecraftServer implements INamed {
 	private final ProcessBuilder command;
 	private final String path;
 	private final AllocatableMemory memory;
+	private final String id;
 
 	private boolean isDeleted = false;
 	private boolean isInitialised = false;
-	private String name;
+	private String name = "Unnamed Server";
 	private Process process = null;
 	private RunnableVersion version = null;
 
-	public MinecraftServer(String name, AllocatableMemory memory, RunnableVersion version) {
-		this.name = name;
-		this.path = FileReference.APPLICATION_FOLDER_PATH + "servers/" + name + "/";
-		this.command = new ProcessBuilder("java", "-Xmx" + memory + "M", "-jar", ServerReference.RUNNABLES_PATH + version.getName() + ".jar", "nogui");
+	public MinecraftServer(String name, String id, AllocatableMemory memory, RunnableVersion version) {
+		this.id = id;
+		this.path = FileReference.APPLICATION_FOLDER_PATH + "servers/" + id + "/";
+		this.command = new ProcessBuilder("java", "-Xmx" + memory + "M", "-jar", ServerReference.RUNNABLES_PATH + version.getObjectName() + ".jar", "nogui");
 		this.command.directory(new File(this.path));
+		if (name != null && !name.equals("")) {
+			this.name = name;
+		}
 		this.memory = memory;
 		this.version = version;
 		ServerReference.SERVERS.add(this);
@@ -44,7 +48,7 @@ public final class MinecraftServer implements INamed {
 			FileInit.initFolder(this.path);
 		} catch (InvalidFileTypeException exception) {
 			exception.printStackTrace();
-			ServerReference.SERVER_LOGGER.error("The server " + name + " failed to construct.");
+			ServerReference.SERVER_LOGGER.error("The server " + id + " failed to construct.");
 		}
 		this.isInitialised = true;
 	}
@@ -69,7 +73,7 @@ public final class MinecraftServer implements INamed {
 			process = command.start();
 		} catch (IOException exception) {
 			exception.printStackTrace();
-			ServerReference.SERVER_LOGGER.error("The server " + name + " failed to launch.");
+			ServerReference.SERVER_LOGGER.error("The server " + id + " failed to launch.");
 		}
 	}
 
@@ -141,8 +145,8 @@ public final class MinecraftServer implements INamed {
 		return path;
 	}
 
-	public String getName() {
-		return name;
+	public String getObjectName() {
+		return id;
 	}
 	
 	public RunnableVersion getVersion() {
@@ -161,6 +165,10 @@ public final class MinecraftServer implements INamed {
 			throw new ServerException("The server is currently running");
 		}
 		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public AllocatableMemory getMemory() {

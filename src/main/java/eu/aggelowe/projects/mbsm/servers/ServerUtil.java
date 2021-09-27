@@ -7,6 +7,7 @@ import java.util.List;
 
 import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.files.PropertyFile;
+import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.DataSet;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -63,6 +64,7 @@ public final class ServerUtil {
 	 * <i>servers</i> directory.
 	 */
 	public static void loadServers() {
+		ServerReference.SERVER_LOGGER.info("Loading servers...");
 		File serversDirectory = new File(ServerReference.SERVER_PATH);
 		File[] directoryElements = serversDirectory.listFiles();
 		for (File directoryElement : directoryElements) {
@@ -89,6 +91,24 @@ public final class ServerUtil {
 		}
 	}
 
+	/**
+	 * This method is used to save all the {@link MinecraftServer} objects to the
+	 * <i>servers</i> directory.
+	 */
+	public static void saveServers() {
+		ServerReference.SERVER_LOGGER.info("Saving servers...");
+		try {
+		for (MinecraftServer server : ServerReference.SERVERS)  {
+			if (server != null) {
+				saveServer(server.getObjectName());
+			}
+		}
+	} catch (ServerException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+	}
+	
 	/**
 	 * This method is used to load all the release versions from the
 	 * <i>versions</i> file.
@@ -139,7 +159,7 @@ public final class ServerUtil {
 	 */
 	public static void loadRunnableVersions() {
 		for (DataSet<String[]> runnableVersion : ServerReference.RUNNABLE_VERSION_FILE.getElements()) {
-			String name = runnableVersion.getName();
+			String name = runnableVersion.getObjectName();
 			if (runnableVersion.getData().length != 3) {
 				new InvalidParameterException("Too many parameters are contained in the " + name + " runnable version text object.").printStackTrace();
 				MBSM.exit(ExitStatus.ERROR);
@@ -161,9 +181,15 @@ public final class ServerUtil {
 	 * 
 	 * @throws ServerException
 	 */
-	public static void loadServer(String name) throws ServerException {
-		PropertyFile serverFile = new PropertyFile("Server settings of the server: " + name, ServerReference.SERVER_PATH + name + ".server", ServerReference.DEFAULT_SERVER_FILE);
+	public static void loadServer(String id) throws ServerException {
+		ServerReference.SERVER_LOGGER.debug("Loading server: " + id);
+		PropertyFile serverFile = new PropertyFile("Server settings of the server: " + id, ServerReference.SERVER_PATH + id + ".server", ServerReference.DEFAULT_SERVER_FILE);
 		serverFile.load();
+		String name = serverFile.getDataValue("general.name");
+		if (name == null || name.equals("")) {
+			name = "Unnamed Server";
+			serverFile.setDataValue(new DataSet<String>("general.name", "Unnamed Server"));
+		}
 		AllocatableMemory memory = AllocatableMemory.fromString(serverFile.getDataValue("general.memory"));
 		if (memory == null) {
 			memory = AllocatableMemory.ALLOCATE_4096M;
@@ -171,10 +197,10 @@ public final class ServerUtil {
 		}
 		RunnableVersion version = (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.getNamedObject(serverFile.getDataValue("general.version"));
 		if (version == null) {
-			version = (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.get(0);
-			serverFile.setDataValue(new DataSet<String>("general.version", version.getName()));
+			version = ServerReference.RUNNABLE_VERSIONS.size() > 0 ? (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.get(0) : ServerReference.FALLBACK_VERSION;
+			serverFile.setDataValue(new DataSet<String>("general.version", version.getObjectName()));
 		}
-		MinecraftServer server = new MinecraftServer(name, memory, version);
+		MinecraftServer server = new MinecraftServer(name, id, memory, version);
 		server.init();
 	}
 
@@ -186,9 +212,10 @@ public final class ServerUtil {
 	 * 
 	 * @throws ServerException
 	 */
-	public static void saveServer(String name) throws ServerException {
-		PropertyFile serverFile = new PropertyFile("Server settings of the server: " + name, ServerReference.SERVER_PATH + name + ".server", ServerReference.DEFAULT_SERVER_FILE);
-		INamed named = ServerReference.SERVERS.getNamedObject(name);
+	public static void saveServer(String id) throws ServerException {
+		ServerReference.SERVER_LOGGER.debug("Saving server: " + id);
+		PropertyFile serverFile = new PropertyFile("Server settings of the server: " + id, ServerReference.SERVER_PATH + id + ".server", ServerReference.DEFAULT_SERVER_FILE);
+		INamed named = ServerReference.SERVERS.getNamedObject(id);
 		MinecraftServer server = null;
 		if (named instanceof MinecraftServer) {
 			server = (MinecraftServer) named;
@@ -196,8 +223,12 @@ public final class ServerUtil {
 		if (server.isDeleted()) {
 			throw new ServerException("The given server has been deleted.");
 		}
+		RunnableVersion version = server.getVersion();
+		serverFile.setDataValue(new DataSet<String>("general.version", version.getObjectName()));
 		AllocatableMemory memory = server.getMemory();
 		serverFile.setDataValue(new DataSet<String>("general.memory", memory.toString()));
+		String name = server.getName();
+		serverFile.setDataValue(new DataSet<String>("general.name", name));
 		serverFile.save();
 	}
 
@@ -208,6 +239,25 @@ public final class ServerUtil {
 	 */
 	public static void sortVersions() {
 		Collections.sort(ServerReference.RELEASE_VERSIONS, new VersionComparator());
+	}
+	
+	/**
+	 * 	This method constructs a new server
+	 */
+	public static void consctructNewServer() {
+		String id = AppUtils.getRandomID(4, 4);
+		while (ServerReference.SERVERS.containsNamedObject(id)) {
+			id = AppUtils.getRandomID(4, 4);
+		}
+		MinecraftServer newServer = new MinecraftServer("Unnamed Server", AppUtils.getRandomID(4, 4), AllocatableMemory.ALLOCATE_2048M, ServerReference.RUNNABLE_VERSIONS.size() > 0 ? ServerReference.RUNNABLE_VERSIONS.get(0) : ServerReference.FALLBACK_VERSION);
+		try {
+			newServer.init();
+			saveServer(newServer.getObjectName());
+		} catch (ServerException exception) {
+			exception.printStackTrace();
+			MBSM.exit(ExitStatus.ERROR);
+		}
+		ServersTab.addServerButton(newServer);
 	}
 
 }

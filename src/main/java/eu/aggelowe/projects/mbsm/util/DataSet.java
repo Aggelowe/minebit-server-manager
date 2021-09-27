@@ -25,7 +25,7 @@ public class DataSet<DataType> implements INamed {
 		this.data = data;
 	}
 
-	public String getName() {
+	public String getObjectName() {
 		return name;
 	}
 

@@ -1,4 +1,4 @@
-package eu.aggelowe.projects.mbsm.gui.components;
+package eu.aggelowe.projects.mbsm.gui.additives;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -99,12 +99,16 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	/**
 	 * This method is called when the button gets selected.
 	 */
-	protected abstract void onButtonSelected();
+	protected void onButtonSelected() {
+		
+	}
 
 	/**
 	 * This method is called when the button gets deselected.
 	 */
-	protected abstract void onButtonDeselected();
+	protected void onButtonDeselected() {
+		
+	}
 
 	@Override
 	public final void actionPerformed(ActionEvent e) {

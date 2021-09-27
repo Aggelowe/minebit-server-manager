@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
 import eu.aggelowe.projects.mbsm.MBSM;
-import eu.aggelowe.projects.mbsm.gui.components.AppButton;
-import eu.aggelowe.projects.mbsm.gui.components.AppDraggableToolbar;
-import eu.aggelowe.projects.mbsm.gui.components.AppFrame;
-import eu.aggelowe.projects.mbsm.gui.components.AppSingleSelectionButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppDraggableToolbar;
+import eu.aggelowe.projects.mbsm.gui.additives.AppFrame;
+import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.RepetitiveProcess;
