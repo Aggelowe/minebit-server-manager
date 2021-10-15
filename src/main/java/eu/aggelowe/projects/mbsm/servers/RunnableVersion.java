@@ -70,7 +70,7 @@ public class RunnableVersion implements INamed {
 		return type;
 	}
 
-	public String getVersion() {
+	public String getMinecraftVersion() {
 		return version;
 	}
 

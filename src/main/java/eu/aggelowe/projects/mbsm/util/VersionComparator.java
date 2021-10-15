@@ -16,7 +16,7 @@ import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
  */
 public final class VersionComparator implements Comparator<String> {
 
-	private final SortingDirection sortingDirection;
+	private final ComparisonDirection sortingDirection;
 
 	/**
 	 * This constructor constructs a new {@link Comparator} which is used to sort
@@ -24,7 +24,7 @@ public final class VersionComparator implements Comparator<String> {
 	 *
 	 */
 	public VersionComparator() {
-		this(SortingDirection.NEWEST_TO_OLDEST);
+		this(ComparisonDirection.NORMAL);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public final class VersionComparator implements Comparator<String> {
 	 *
 	 * @param sortingDirection The direction the {@link Comparator} will be sorting.
 	 */
-	public VersionComparator(SortingDirection sortingDirection) {
+	public VersionComparator(ComparisonDirection sortingDirection) {
 		this.sortingDirection = sortingDirection;
 	}
 
@@ -51,18 +51,18 @@ public final class VersionComparator implements Comparator<String> {
 				return 0;
 			}
 			if (firstVersionElements.size() == counter) {
-				return sortingDirection == SortingDirection.NEWEST_TO_OLDEST ? 1 : -1;
+				return sortingDirection == ComparisonDirection.NORMAL ? 1 : -1;
 			}
 			if (secondVersionElements.size() == counter) {
-				return sortingDirection == SortingDirection.NEWEST_TO_OLDEST ? -1 : 1;
+				return sortingDirection == ComparisonDirection.NORMAL ? -1 : 1;
 			}
 			int firstIntElement = Integer.valueOf(firstVersionElements.get(counter));
 			int secondIntElement = Integer.valueOf(secondVersionElements.get(counter));
 			if (firstIntElement < secondIntElement) {
-				return sortingDirection == SortingDirection.NEWEST_TO_OLDEST ? 1 : -1;
+				return sortingDirection == ComparisonDirection.NORMAL ? 1 : -1;
 			}
 			if (firstIntElement > secondIntElement) {
-				return sortingDirection == SortingDirection.NEWEST_TO_OLDEST ? -1 : 1;
+				return sortingDirection == ComparisonDirection.NORMAL ? -1 : 1;
 			}
 		}
 		return 0;
@@ -85,10 +85,6 @@ public final class VersionComparator implements Comparator<String> {
 			versionCopy = versionCopy.replace(character, "");
 		}
 		return versionCopy.equals("");
-	}
-
-	public static enum SortingDirection {
-		NEWEST_TO_OLDEST, OLDEST_TO_NEWEST;
 	}
 
 }

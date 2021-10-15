@@ -37,14 +37,27 @@ public final class MBSM {
 			}
 		}
 	};
-	
-	private static final RepetitiveProcess SESSION_UPDATER = new RepetitiveProcess(new IDynamicObject<Boolean>() {			
+
+	private static final RepetitiveProcess SESSION_UPDATER = new RepetitiveProcess("Session Manager", new IDynamicObject<Boolean>() {
 		@Override
 		public Boolean obtain() {
-			long sec = 1000;
-			FileInit.LAST_SESSION.setInteger(System.currentTimeMillis());
-			FileInit.LAST_SESSION.save();
 			try {
+				long sec = 1000;
+				FileInit.LAST_SESSION.setInteger(System.currentTimeMillis());
+				FileInit.LAST_SESSION.save();
+				Thread.sleep(sec * 5);
+			} catch (InterruptedException exception) {
+			}
+			return false;
+		}
+	});
+
+	private static final RepetitiveProcess GARBAGE_COLLECTOR = new RepetitiveProcess("Garbage Collector", new IDynamicObject<Boolean>() {
+		@Override
+		public Boolean obtain() {
+			try {
+				long sec = 1000;
+				System.gc();
 				Thread.sleep(sec * 10);
 			} catch (InterruptedException exception) {
 			}
@@ -83,7 +96,11 @@ public final class MBSM {
 		Reference.MAIN_LOGGER.info(status.getOutputMessage());
 		System.exit(status.getExitCode());
 	}
-	
+
+	/**
+	 * This method checks if the application is already running, and if not it will
+	 * start the application and create a new session file.
+	 */
 	private static void manageSession() {
 		long lastUpdated = FileInit.LAST_SESSION.getInteger();
 		long timeDifference = System.currentTimeMillis() - lastUpdated;
@@ -94,7 +111,9 @@ public final class MBSM {
 			MBSM.exit(ExitStatus.FATAL);
 		}
 		FileInit.LAST_SESSION.getFile().deleteOnExit();
+		GARBAGE_COLLECTOR.setPriority(Thread.MAX_PRIORITY);
+		SESSION_UPDATER.setPriority(Thread.MAX_PRIORITY);
 		SESSION_UPDATER.start();
 	}
-	
+
 }

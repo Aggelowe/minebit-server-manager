@@ -16,14 +16,15 @@ public final class MinecraftServer implements INamed {
 
 	private final ProcessBuilder command;
 	private final String path;
-	private final AllocatableMemory memory;
 	private final String id;
 
+	private AllocatableMemory memory = AllocatableMemory.ALLOCATE_2048M;
 	private boolean isDeleted = false;
 	private boolean isInitialised = false;
 	private String name = "Unnamed Server";
 	private Process process = null;
 	private RunnableVersion version = null;
+	private long lastUsed = 0;
 
 	public MinecraftServer(String name, String id, AllocatableMemory memory, RunnableVersion version) {
 		this.id = id;
@@ -75,6 +76,7 @@ public final class MinecraftServer implements INamed {
 			exception.printStackTrace();
 			ServerReference.SERVER_LOGGER.error("The server " + id + " failed to launch.");
 		}
+		this.lastUsed = System.currentTimeMillis();
 	}
 
 	public void stop() throws ServerException {
@@ -181,6 +183,18 @@ public final class MinecraftServer implements INamed {
 
 	public boolean isInitialised() {
 		return isInitialised;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public long getlastUsed() {
+		return lastUsed;
+	}
+
+	public void setLastUsed(long lastUsed) {
+		this.lastUsed = lastUsed;
 	}
 
 }

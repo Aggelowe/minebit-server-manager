@@ -7,7 +7,7 @@ import java.util.List;
 
 import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.files.PropertyFile;
-import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServerList;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.DataSet;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -96,35 +96,36 @@ public final class ServerUtil {
 	 * <i>servers</i> directory.
 	 */
 	public static void saveServers() {
+		
 		ServerReference.SERVER_LOGGER.info("Saving servers...");
 		try {
-		for (MinecraftServer server : ServerReference.SERVERS)  {
-			if (server != null) {
-				saveServer(server.getObjectName());
+			for (MinecraftServer server : ServerReference.SERVERS) {
+				if (server != null) {
+					saveServer(server.getObjectName());
+				}
 			}
-		}
-	} catch (ServerException exception) {
+		} catch (ServerException exception) {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.ERROR);
 		}
 	}
-	
+
 	/**
-	 * This method is used to load all the release versions from the
-	 * <i>versions</i> file.
+	 * This method is used to load all the release versions from the <i>versions</i>
+	 * file.
 	 */
 	private static void loadReleaseVersions() {
 		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
-			if (version != null && version.getVersion() != null) {
+			if (version != null && version.getMinecraftVersion() != null) {
 				boolean canAdd = true;
 				checkLoop: for (String releaseVersion : ServerReference.RELEASE_VERSIONS) {
-					if (releaseVersion != null && version.getVersion().equals(releaseVersion)) {
+					if (releaseVersion != null && version.getMinecraftVersion().equals(releaseVersion)) {
 						canAdd = false;
 						break checkLoop;
 					}
 				}
 				if (canAdd == true) {
-					ServerReference.RELEASE_VERSIONS.add(version.getVersion());
+					ServerReference.RELEASE_VERSIONS.add(version.getMinecraftVersion());
 				}
 			}
 		}
@@ -132,8 +133,8 @@ public final class ServerUtil {
 	}
 
 	/**
-	 * This method is used to load all the version types from the
-	 * <i>versions</i> file.
+	 * This method is used to load all the version types from the <i>versions</i>
+	 * file.
 	 */
 	private static void loadVersionTypes() {
 		for (RunnableVersion version : ServerReference.RUNNABLE_VERSIONS) {
@@ -200,7 +201,14 @@ public final class ServerUtil {
 			version = ServerReference.RUNNABLE_VERSIONS.size() > 0 ? (RunnableVersion) ServerReference.RUNNABLE_VERSIONS.get(0) : ServerReference.FALLBACK_VERSION;
 			serverFile.setDataValue(new DataSet<String>("general.version", version.getObjectName()));
 		}
+		long lastUsed = 0;
+		try {
+			lastUsed = Long.valueOf(serverFile.getDataValue("general.lastUsed"));
+		} catch (NumberFormatException e) {
+			serverFile.setDataValue(new DataSet<String>("general.lastUsed", String.valueOf(0)));
+		}
 		MinecraftServer server = new MinecraftServer(name, id, memory, version);
+		server.setLastUsed(lastUsed);
 		server.init();
 	}
 
@@ -213,7 +221,6 @@ public final class ServerUtil {
 	 * @throws ServerException
 	 */
 	public static void saveServer(String id) throws ServerException {
-		ServerReference.SERVER_LOGGER.debug("Saving server: " + id);
 		PropertyFile serverFile = new PropertyFile("Server settings of the server: " + id, ServerReference.SERVER_PATH + id + ".server", ServerReference.DEFAULT_SERVER_FILE);
 		INamed named = ServerReference.SERVERS.getNamedObject(id);
 		MinecraftServer server = null;
@@ -229,6 +236,8 @@ public final class ServerUtil {
 		serverFile.setDataValue(new DataSet<String>("general.memory", memory.toString()));
 		String name = server.getName();
 		serverFile.setDataValue(new DataSet<String>("general.name", name));
+		long lastUsed = server.getlastUsed();
+		serverFile.setDataValue(new DataSet<String>("general.lastUsed", String.valueOf(lastUsed)));
 		serverFile.save();
 	}
 
@@ -240,9 +249,9 @@ public final class ServerUtil {
 	public static void sortVersions() {
 		Collections.sort(ServerReference.RELEASE_VERSIONS, new VersionComparator());
 	}
-	
+
 	/**
-	 * 	This method constructs a new server
+	 * This method constructs a new server
 	 */
 	public static void consctructNewServer() {
 		String id = AppUtils.getRandomID(4, 4);
@@ -252,12 +261,13 @@ public final class ServerUtil {
 		MinecraftServer newServer = new MinecraftServer("Unnamed Server", AppUtils.getRandomID(4, 4), AllocatableMemory.ALLOCATE_2048M, ServerReference.RUNNABLE_VERSIONS.size() > 0 ? ServerReference.RUNNABLE_VERSIONS.get(0) : ServerReference.FALLBACK_VERSION);
 		try {
 			newServer.init();
+			newServer.setLastUsed(System.currentTimeMillis());
 			saveServer(newServer.getObjectName());
 		} catch (ServerException exception) {
 			exception.printStackTrace();
 			MBSM.exit(ExitStatus.ERROR);
 		}
-		ServersTab.addServerButton(newServer);
+		ServerList.addServerButton(newServer);
 	}
 
 }

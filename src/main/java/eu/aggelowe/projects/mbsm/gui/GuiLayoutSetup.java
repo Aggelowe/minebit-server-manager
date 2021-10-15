@@ -17,9 +17,10 @@ import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
 import eu.aggelowe.projects.mbsm.gui.additives.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.additives.AppFrame;
-import eu.aggelowe.projects.mbsm.gui.tabs.LatestTab;
-import eu.aggelowe.projects.mbsm.gui.tabs.ServersTab;
-import eu.aggelowe.projects.mbsm.gui.tabs.SettingsTab;
+import eu.aggelowe.projects.mbsm.gui.tabs.latest.LatestTab;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServerList;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServersTab;
+import eu.aggelowe.projects.mbsm.gui.tabs.settings.SettingsTab;
 import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
 import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
@@ -50,7 +51,7 @@ public final class GuiLayoutSetup {
 		GUI_LOGGER.debug("Showing buttons...");
 		for (MinecraftServer server : ServerReference.SERVERS) {
 			if (server != null) {
-				ServersTab.addServerButton(server);
+				ServerList.addServerButton(server);
 			}
 		}
 		GUI_LOGGER.info("Gui drawn sucessfully!");

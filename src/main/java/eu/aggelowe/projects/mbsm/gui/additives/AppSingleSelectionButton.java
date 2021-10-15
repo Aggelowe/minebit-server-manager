@@ -76,17 +76,21 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	public AppSingleSelectionButton(String name, Icon icon, List<AppSingleSelectionButton> buttonGroup) {
 		super(name, icon);
 		this.buttonGroup = buttonGroup;
-		if (isDefaultSelected() == true) {
-			this.isSelected = true;
-			this.onButtonSelected();
-			for (AppSingleSelectionButton button : buttonGroup) {
-				if (button != null) {
-					button.isSelected = false;
-					button.onButtonDeselected();
+		if (buttonGroup.size() > 0) {
+			if (isDefaultSelected() == true) {
+				this.isSelected = true;
+				this.onButtonSelected();
+				for (AppSingleSelectionButton button : buttonGroup) {
+					if (button != null) {
+						button.isSelected = false;
+						button.onButtonDeselected();
+					}
 				}
+			} else {
+				onButtonDeselected();
 			}
 		} else {
-			onButtonDeselected();
+			onButtonSelected();
 		}
 		buttonGroup.add(this);
 	}
@@ -100,14 +104,14 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	 * This method is called when the button gets selected.
 	 */
 	protected void onButtonSelected() {
-		
+
 	}
 
 	/**
 	 * This method is called when the button gets deselected.
 	 */
 	protected void onButtonDeselected() {
-		
+
 	}
 
 	@Override
@@ -132,7 +136,7 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	public final void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
-	
+
 	private static final long serialVersionUID = -5736815643631198779L;
 
 }

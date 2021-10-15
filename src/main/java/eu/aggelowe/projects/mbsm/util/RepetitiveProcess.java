@@ -12,9 +12,9 @@ import eu.aggelowe.projects.mbsm.util.interfaces.IDynamicObject;
 public final class RepetitiveProcess {
 
 	private boolean isStopping = false;
-	
+
 	private final IDynamicObject<Boolean> repetitiveAction;
-	
+
 	private final Thread process = new Thread(new Runnable() {
 		@Override
 		public void run() {
@@ -23,7 +23,7 @@ public final class RepetitiveProcess {
 			isStopping = false;
 		}
 	});
-	
+
 	/**
 	 * This constructor constructs a new Process which repeats the given
 	 * {@link #repetitiveAction} over and over until the action return true.
@@ -34,7 +34,7 @@ public final class RepetitiveProcess {
 	public RepetitiveProcess(IDynamicObject<Boolean> repetitiveAction) {
 		this("Repetitive Process", repetitiveAction);
 	}
-	
+
 	/**
 	 * This constructor constructs a new Process which repeats the given
 	 * {@link #repetitiveAction} over and over until the action return true.
@@ -59,6 +59,24 @@ public final class RepetitiveProcess {
 	 */
 	public void stop() {
 		isStopping = true;
+	}
+
+	/**
+	 * This method sets the priority of the thread.
+	 * 
+	 * @param priority The priority of the thread
+	 */
+	public void setPriority(int priority) {
+		process.setPriority(priority);
+	}
+
+	/**
+	 * This method returns the priority of the thread.
+	 * 
+	 * @return The priority of the thread
+	 */
+	public int getPriority(int priority) {
+		return process.getPriority();
 	}
 
 }

@@ -1,4 +1,4 @@
-package eu.aggelowe.projects.mbsm.gui.tabs;
+package eu.aggelowe.projects.mbsm.gui.tabs.settings;
 
 import javax.swing.JPanel;
 
