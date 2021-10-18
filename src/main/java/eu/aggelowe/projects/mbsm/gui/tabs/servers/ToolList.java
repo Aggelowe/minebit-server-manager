@@ -45,10 +45,13 @@ public class ToolList {
 	 * This method registers all the default buttons of the tool list.
 	 */
 	private static void registerDefaultButtons() {
-		ToolList.addServerButton("Overview");
-		ToolList.addServerButton("Banlist");
-		ToolList.addServerButton("Whitelist");
-		ToolList.addServerButton("Operators");
+		ToolList.addToolButton("Overview");
+		ToolList.addToolButton("Banlist");
+		ToolList.addToolButton("Whitelist");
+		ToolList.addToolButton("Operators");
+		ToolList.addToolButton("Console");
+		ToolList.addToolButton("Configurations");
+		ToolList.addToolButton("Logs");
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class ToolList {
 	 * 
 	 * @param name The name of the server
 	 */
-	public static void addServerButton(String name) {
+	public static void addToolButton(String name) {
 		AppSingleSelectionButton toolButton = new AppSingleSelectionButton(name, ToolListReference.TOOL_BUTTONS) {
 
 			@Override
@@ -154,6 +157,27 @@ public class ToolList {
 	 */
 	public static AppSingleSelectionButton getSelectedButton() {
 		return ToolListReference.selectedButton;
+	}
+
+	/**
+	 * This method sets the currently selected button to the one with the same text
+	 * as the given {@link String}.
+	 * 
+	 * @param button The button to select
+	 */
+	public static void setSelectedButton(String button, boolean updateTab) {
+		for (AppSingleSelectionButton toolButton : ToolListReference.TOOL_BUTTONS) {
+			if (toolButton != null && toolButton.getText() != null && button.equals(toolButton.getText())) {
+				if (updateTab == false) {
+					toolButton.setSingleSelected();
+					toolButton.setBackground(ComponentData.MAIN_COLOR);
+					ToolListReference.selectedButton = toolButton;
+				} else {
+					toolButton.select();
+				}
+				return;
+			}
+		}
 	}
 
 	/**

@@ -158,6 +158,7 @@ public final class ServerList {
 				AppSingleSelectionButton selectedToolButton = ToolList.getSelectedButton();
 				if (selectedToolButton != null && selectedToolButton.getText() != null && this.getName() != null) {
 					ToolViewer.viewToolTab(this.getName(), selectedToolButton.getText());
+					ToolList.setSelectedButton("Overview", false);
 				}
 			}
 

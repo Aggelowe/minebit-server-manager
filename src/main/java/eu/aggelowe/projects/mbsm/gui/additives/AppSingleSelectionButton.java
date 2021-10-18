@@ -123,11 +123,23 @@ public abstract class AppSingleSelectionButton extends AppButton {
 		return isSelected;
 	}
 
+	/**
+	 * This method selects the button.
+	 */
 	public final void select() {
+		setSingleSelected();
+		onButtonSelected();
+
+	}
+
+	/**
+	 * This method selects the button without running the
+	 * {@link #onButtonSelected()} method.
+	 */
+	public final void setSingleSelected() {
 		if (isSelected == true) {
 			return;
 		}
-		onButtonSelected();
 		isSelected = true;
 		for (AppSingleSelectionButton button : buttonGroup) {
 			if ((button != null) && (button != this)) {
