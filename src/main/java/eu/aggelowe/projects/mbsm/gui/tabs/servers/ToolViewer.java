@@ -12,8 +12,8 @@ import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 
 /**
- * This class is used to setup the components of the tool viewer which is part of
- * the servers tab.
+ * This class is used to setup the components of the tool viewer which is part
+ * of the servers tab.
  * 
  * @author Aggelowe
  *
@@ -41,13 +41,20 @@ public class ToolViewer {
 	}
 
 	/**
-	 * This method handles the management of the methods which are part of the
-	 * tool viewer.
+	 * This method handles the management of the methods which are part of the tool
+	 * viewer.
 	 */
 	private static void initToolViewerComponents() {
-		
+
 	}
-	
+
+	/**
+	 * This method changes the currently viewed tab based on the data given.
+	 */
+	public static void viewToolTab(String serverId, String toolName) {
+		System.out.println(serverId + " : " + toolName);
+	}
+
 	/**
 	 * This class contains all the important components and data for the tool viewer
 	 * to work properly.

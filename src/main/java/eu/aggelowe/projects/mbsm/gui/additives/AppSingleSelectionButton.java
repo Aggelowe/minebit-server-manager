@@ -116,6 +116,14 @@ public abstract class AppSingleSelectionButton extends AppButton {
 
 	@Override
 	public final void actionPerformed(ActionEvent e) {
+		this.select();
+	}
+
+	public final boolean isSelected() {
+		return isSelected;
+	}
+
+	public final void select() {
 		if (isSelected == true) {
 			return;
 		}
@@ -127,14 +135,6 @@ public abstract class AppSingleSelectionButton extends AppButton {
 				button.isSelected = false;
 			}
 		}
-	}
-
-	public final boolean isSelected() {
-		return isSelected;
-	}
-
-	public final void setSelected(boolean isSelected) {
-		this.isSelected = isSelected;
 	}
 
 	private static final long serialVersionUID = -5736815643631198779L;

@@ -143,7 +143,7 @@ public final class ServerList {
 
 			@Override
 			protected boolean isDefaultSelected() {
-				return true;
+				return false;
 			}
 
 			@Override
@@ -154,6 +154,11 @@ public final class ServerList {
 			@Override
 			protected void onButtonSelected() {
 				this.setBackground(ComponentData.MAIN_COLOR);
+				ServerListReference.selectedButton = this;
+				AppSingleSelectionButton selectedToolButton = ToolList.getSelectedButton();
+				if (selectedToolButton != null && selectedToolButton.getText() != null && this.getName() != null) {
+					ToolViewer.viewToolTab(this.getName(), selectedToolButton.getText());
+				}
 			}
 
 			private static final long serialVersionUID = -3467532756216305521L;
@@ -167,9 +172,20 @@ public final class ServerList {
 		serverButton.setContentAreaFilled(false);
 		serverButton.setForeground(new Color(125, 215, 230));
 		serverButton.setOpaque(true);
+		serverButton.select();
 		ServerListReference.SERVER_SELECTION_LIST.add(serverButton, 0);
 		ServerListReference.SERVER_SELECTION_LIST.updateSize();
 		ServerListReference.SERVER_SELECTION_PANE.getVerticalScrollBar().setValue(0);
+	}
+
+	/**
+	 * This method returns the currently selected button. If no button is selected
+	 * it will return null.
+	 * 
+	 * @return The currently selected button.
+	 */
+	public static AppSingleSelectionButton getSelectedButton() {
+		return ServerListReference.selectedButton;
 	}
 
 	/**
@@ -201,6 +217,8 @@ public final class ServerList {
 				ServerUtil.consctructNewServer();
 			}
 		});
+
+		private static AppSingleSelectionButton selectedButton = null;
 
 	}
 

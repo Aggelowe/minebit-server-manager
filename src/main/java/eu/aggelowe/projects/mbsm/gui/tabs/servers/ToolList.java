@@ -19,10 +19,8 @@ import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.additives.AppList;
 import eu.aggelowe.projects.mbsm.gui.additives.AppScrollBarUI;
 import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
-import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServerList.ServerListReference;
 import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServersTab.ServersTabReference;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
-import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
 
 /**
  * This class is used to setup the components of the tool list which is part of
@@ -47,10 +45,10 @@ public class ToolList {
 	 * This method registers all the default buttons of the tool list.
 	 */
 	private static void registerDefaultButtons() {
-		ToolList.addServerButton("Overview", null, null);
-		ToolList.addServerButton("Banlist", null, null);
-		ToolList.addServerButton("Whitelist", null, null);
-		ToolList.addServerButton("Operators", null, null);
+		ToolList.addServerButton("Overview");
+		ToolList.addServerButton("Banlist");
+		ToolList.addServerButton("Whitelist");
+		ToolList.addServerButton("Operators");
 	}
 
 	/**
@@ -58,7 +56,7 @@ public class ToolList {
 	 */
 	private static void configureComponent() {
 		final JPanel toolListPanel = ToolListReference.TOOL_LIST_PANEL;
-		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ServerListReference.BORDER_COLOR);
+		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ToolListReference.BORDER_COLOR);
 		AppUtils.setFinalComponentSize(toolListPanel, ToolListReference.PANEL_SIZE);
 		toolListPanel.setOpaque(false);
 		toolListPanel.setBorder(panelBorder);
@@ -110,7 +108,7 @@ public class ToolList {
 	 * 
 	 * @param name The name of the server
 	 */
-	public static void addServerButton(String name, IAction showAction, IAction hideAction) {
+	public static void addServerButton(String name) {
 		AppSingleSelectionButton toolButton = new AppSingleSelectionButton(name, ToolListReference.TOOL_BUTTONS) {
 
 			@Override
@@ -121,23 +119,22 @@ public class ToolList {
 			@Override
 			protected void onButtonDeselected() {
 				this.setBackground(ServersTabReference.TAB_BACKGROUND_COLOR);
-				if (hideAction != null) {
-					hideAction.execute();
-				}
 			}
 
 			@Override
 			protected void onButtonSelected() {
 				this.setBackground(ComponentData.MAIN_COLOR);
-				if (showAction != null) {
-					showAction.execute();
+				ToolListReference.selectedButton = this;
+				AppSingleSelectionButton selectedServerButton = ServerList.getSelectedButton();
+				if (selectedServerButton != null && selectedServerButton.getName() != null && this.getText() != null) {
+					ToolViewer.viewToolTab(selectedServerButton.getName(), this.getText());
 				}
 			}
 
 			private static final long serialVersionUID = -3467532756216305521L;
 
 		};
-		AppUtils.setFinalComponentSize(toolButton, new Dimension(ServerListReference.PANEL_SIZE.width, 30));
+		AppUtils.setFinalComponentSize(toolButton, new Dimension(ToolListReference.PANEL_SIZE.width, 30));
 		toolButton.setHorizontalAlignment(SwingConstants.LEFT);
 		toolButton.setBorderPainted(false);
 		toolButton.setFocusPainted(false);
@@ -147,6 +144,16 @@ public class ToolList {
 		ToolListReference.TOOL_SELECTION_LIST.add(toolButton, -1);
 		ToolListReference.TOOL_SELECTION_LIST.updateSize();
 		ToolListReference.TOOL_SELECTION_PANE.getVerticalScrollBar().setValue(0);
+	}
+
+	/**
+	 * This method returns the currently selected button. If no button is selected
+	 * it will return null.
+	 * 
+	 * @return The currently selected button.
+	 */
+	public static AppSingleSelectionButton getSelectedButton() {
+		return ToolListReference.selectedButton;
 	}
 
 	/**
@@ -169,6 +176,9 @@ public class ToolList {
 		public static final AppList TOOL_SELECTION_LIST = new AppList();
 
 		public static final List<AppSingleSelectionButton> TOOL_BUTTONS = new ArrayList<AppSingleSelectionButton>();
+
+		private static AppSingleSelectionButton selectedButton = null;
+
 	}
 
 }
