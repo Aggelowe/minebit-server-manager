@@ -111,7 +111,7 @@ public class GuiComponentCustomization {
 	 */
 	public static void customizeLatestTabButton() {
 		final AppButton latestTabButton = ComponentReference.LATEST_TAB_BUTTON;
-		final Color buttonColor = new Color(125, 215, 230);
+		final Color buttonColor = ComponentData.MAIN_TEXT_COLOR;
 		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		latestTabButton.setForeground(buttonColor);
 		latestTabButton.setText("Latest");
@@ -126,7 +126,7 @@ public class GuiComponentCustomization {
 	 */
 	public static void customizeServersTabButton() {
 		final AppButton serversTabButton = ComponentReference.SERVERS_TAB_BUTTON;
-		final Color buttonColor = new Color(125, 215, 230);
+		final Color buttonColor = ComponentData.MAIN_TEXT_COLOR;
 		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		serversTabButton.setForeground(buttonColor);
 		serversTabButton.setText("Servers");
@@ -141,7 +141,7 @@ public class GuiComponentCustomization {
 	 */
 	public static void customizeSettingsTabButton() {
 		final AppButton settingsTabButton = ComponentReference.SETTINGS_TAB_BUTTON;
-		final Color buttonColor = new Color(125, 215, 230);
+		final Color buttonColor = ComponentData.MAIN_TEXT_COLOR;
 		final Font buttonFont = new Font(ComponentData.MAIN_FONT, Font.PLAIN, 24);
 		settingsTabButton.setForeground(buttonColor);
 		settingsTabButton.setText("Settings");

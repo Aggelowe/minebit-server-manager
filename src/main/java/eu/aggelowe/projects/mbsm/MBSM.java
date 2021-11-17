@@ -27,6 +27,7 @@ public final class MBSM {
 			if (exitStatus != ExitStatus.FATAL) {
 				Reference.MAIN_LOGGER.debug("Ending session...");
 				SESSION_UPDATER.stop();
+				GARBAGE_COLLECTOR.stop();
 				Reference.MAIN_LOGGER.debug("Stopping servers...");
 				ServerUtil.stopServers(false);
 				Reference.MAIN_LOGGER.debug("Saving files...");
@@ -112,6 +113,8 @@ public final class MBSM {
 		}
 		FileInit.LAST_SESSION.getFile().deleteOnExit();
 		GARBAGE_COLLECTOR.setPriority(Thread.MAX_PRIORITY);
+		GARBAGE_COLLECTOR.start();
+		Reference.MAIN_LOGGER.info("Starting garbage collector...");
 		SESSION_UPDATER.setPriority(Thread.MAX_PRIORITY);
 		SESSION_UPDATER.start();
 	}

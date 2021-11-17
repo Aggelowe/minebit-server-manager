@@ -142,7 +142,7 @@ public class ToolList {
 		toolButton.setBorderPainted(false);
 		toolButton.setFocusPainted(false);
 		toolButton.setContentAreaFilled(false);
-		toolButton.setForeground(new Color(125, 215, 230));
+		toolButton.setForeground(ComponentData.MAIN_TEXT_COLOR);
 		toolButton.setOpaque(true);
 		ToolListReference.TOOL_SELECTION_LIST.add(toolButton, -1);
 		ToolListReference.TOOL_SELECTION_LIST.updateSize();

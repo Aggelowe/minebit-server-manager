@@ -60,7 +60,7 @@ public final class ComponentReference {
 
 		@Override
 		protected void onButtonSelected() {
-			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.MAIN_TEXT_COLOR));
 			if (LATEST_TAB_PANEL == null) {
 				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
 					@Override
@@ -111,7 +111,7 @@ public final class ComponentReference {
 
 		@Override
 		protected void onButtonSelected() {
-			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.MAIN_TEXT_COLOR));
 			if (SERVERS_TAB_PANEL == null) {
 				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
 					@Override
@@ -162,7 +162,7 @@ public final class ComponentReference {
 		
 		@Override
 		protected void onButtonSelected() {
-			setBorder(new MatteBorder(0, 0, 3, 0, new Color(125, 215, 230)));
+			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.MAIN_TEXT_COLOR));
 			if (SETTINGS_TAB_PANEL == null) {
 				RepetitiveProcess process = new RepetitiveProcess(new IDynamicObject<Boolean>() {
 					@Override
@@ -266,6 +266,11 @@ public final class ComponentReference {
 		 */
 		public static final Dimension TAB_PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width, 595);
 
+		/**
+		 * The application's main text color.
+		 */
+		public static final Color MAIN_TEXT_COLOR = new Color(125, 215, 230);
+		
 	}
 
 }

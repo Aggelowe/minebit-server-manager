@@ -155,10 +155,11 @@ public final class ServerList {
 			protected void onButtonSelected() {
 				this.setBackground(ComponentData.MAIN_COLOR);
 				ServerListReference.selectedButton = this;
+				ToolList.setSelectedButton("Overview", false);
 				AppSingleSelectionButton selectedToolButton = ToolList.getSelectedButton();
 				if (selectedToolButton != null && selectedToolButton.getText() != null && this.getName() != null) {
+					ToolViewer.updateTabs();
 					ToolViewer.viewToolTab(this.getName(), selectedToolButton.getText());
-					ToolList.setSelectedButton("Overview", false);
 				}
 			}
 
@@ -171,7 +172,7 @@ public final class ServerList {
 		serverButton.setBorderPainted(false);
 		serverButton.setFocusPainted(false);
 		serverButton.setContentAreaFilled(false);
-		serverButton.setForeground(new Color(125, 215, 230));
+		serverButton.setForeground(ComponentData.MAIN_TEXT_COLOR);
 		serverButton.setOpaque(true);
 		serverButton.select();
 		ServerListReference.SERVER_SELECTION_LIST.add(serverButton, 0);
