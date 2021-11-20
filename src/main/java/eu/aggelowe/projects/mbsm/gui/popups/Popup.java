@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Window.Type;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -88,6 +90,12 @@ public abstract class Popup {
 		POPUP_FRAME.getContentPane().add(BUTTON_BOX);
 		POPUP_FRAME.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 14));
 		POPUP_FRAME.setIconImage(ComponentData.APP_LOGO.getImage());
+		POPUP_FRAME.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				hide();
+			}
+		});
 	}
 
 	/**
@@ -180,7 +188,7 @@ public abstract class Popup {
 	}
 
 	/**
-	 * This shows the pop-up.
+	 * This method shows the pop-up.
 	 */
 	public final void show() {
 		POPUP_FRAME.setVisible(true);
@@ -188,11 +196,20 @@ public abstract class Popup {
 	}
 
 	/**
-	 * This hides the pop-up.
+	 * This method hides the pop-up.
 	 */
 	public final void hide() {
 		POPUP_FRAME.setVisible(false);
 		ComponentReference.WINDOW.setEnabled(true);
+	}
+	
+	/**
+	 * This method returns if the popup is visible to the user.
+	 * 
+	 * @return If the popup is visible.
+	 */
+	public final boolean isVisible() {
+		return POPUP_FRAME.isVisible();
 	}
 
 }

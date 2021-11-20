@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.OverlayLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
@@ -23,6 +25,7 @@ import eu.aggelowe.projects.mbsm.gui.additives.AppPopupButton;
 import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.gui.popups.ConfirmDeletionPopup;
 import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServerList.ServerListReference;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ToolViewer.OverviewToolTab.OverviewToolTabReference;
 import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
 import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.servers.ServerUtil;
@@ -40,6 +43,8 @@ import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
  *
  */
 public class ToolViewer {
+
+	private static boolean changed = false;
 
 	/**
 	 * This method calls all the methods necessary for the tool viewer to work.
@@ -117,13 +122,6 @@ public class ToolViewer {
 		public static void setupOverviewToolTab() {
 			OverviewToolTab.configureComponent();
 			OverviewToolTab.initOverviewTabComponents();
-			OverviewToolTab.setupOverviewLabel();
-			OverviewToolTab.setupNameBox();
-			OverviewToolTab.setupNameField();
-			OverviewToolTab.setupOperationBox();
-			OverviewToolTab.setupSaveButton();
-			OverviewToolTab.setupCopyButton();
-			OverviewToolTab.setupDeleteButton();
 		}
 
 		/**
@@ -158,7 +156,13 @@ public class ToolViewer {
 		 * viewer.
 		 */
 		private static void initOverviewTabComponents() {
-
+			OverviewToolTab.setupOverviewLabel();
+			OverviewToolTab.setupNameBox();
+			OverviewToolTab.setupNameField();
+			OverviewToolTab.setupOperationBox();
+			OverviewToolTab.setupSaveButton();
+			OverviewToolTab.setupCopyButton();
+			OverviewToolTab.setupDeleteButton();
 		}
 
 		/**
@@ -199,6 +203,22 @@ public class ToolViewer {
 			nameField.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 12));
 			nameField.setHorizontalAlignment(JTextField.CENTER);
 			nameField.setCaretColor(ComponentData.MAIN_TEXT_COLOR);
+			nameField.getDocument().addDocumentListener(new DocumentListener() {
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					changed = true;
+
+				}
+
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					changed = true;
+				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+				}
+			});
 		}
 
 		private static void setupOperationBox() {
@@ -320,6 +340,7 @@ public class ToolViewer {
 						ServerUtil.deleteServer(server);
 						ServerListReference.SERVER_SELECTION_LIST.updateSize();
 						ServerListReference.SERVER_SELECTION_PANE.updateUI();
+						ToolViewer.setChanged(false);
 						for (Component component : ServerListReference.SERVER_SELECTION_LIST.getComponents()) {
 							if (component instanceof AppSingleSelectionButton) {
 								((AppSingleSelectionButton) component).select();
@@ -356,6 +377,20 @@ public class ToolViewer {
 		public static final List<JPanel> TOOL_TABS = new ArrayList<JPanel>();
 
 		public static final JPanel OVERVIEW_TOOL_TAB = new JPanel();
+	}
+
+	public static boolean isChanged() {
+		return changed;
+	}
+
+	@Deprecated
+	public static void setChanged(boolean changed) {
+		ToolViewer.changed = changed;
+	}
+
+	public static void save() {
+		OverviewToolTabReference.SAVE_ACTION.execute();
+		changed = false;
 	}
 
 }

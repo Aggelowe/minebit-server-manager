@@ -2,6 +2,7 @@ package eu.aggelowe.projects.mbsm;
 
 import eu.aggelowe.projects.mbsm.files.FileInit;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ToolViewer;
 import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -82,7 +83,10 @@ public final class MBSM {
 		MBSM.manageSession();
 		Reference.MAIN_LOGGER.debug("Calling the gui manager...");
 		GuiLayoutSetup.initGui();
+		Reference.MAIN_LOGGER.debug("Finalizing application boot...");
+		MBSM.finishLoading();
 		Reference.MAIN_LOGGER.info("Application started successfully!");
+
 	}
 
 	/**
@@ -117,6 +121,14 @@ public final class MBSM {
 		Reference.MAIN_LOGGER.info("Starting garbage collector...");
 		SESSION_UPDATER.setPriority(Thread.MAX_PRIORITY);
 		SESSION_UPDATER.start();
+	}
+
+	/**
+	 * This method is used to set certain values after the application has loaded.
+	 */
+	@SuppressWarnings("deprecation")
+	private static void finishLoading() {
+		ToolViewer.setChanged(false);
 	}
 
 }

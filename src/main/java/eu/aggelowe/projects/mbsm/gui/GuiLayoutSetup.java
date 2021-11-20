@@ -89,7 +89,7 @@ public final class GuiLayoutSetup {
 		window.getContentPane().add(ComponentReference.MAINFRAME);
 		window.setResizable(false);
 	}
-
+	
 	/**
 	 * This method is used to manage the layout of the application's main window.
 	 */
@@ -160,7 +160,7 @@ public final class GuiLayoutSetup {
 	private static void setupTabSelectionBarLayout() {
 		final AppDraggableToolbar tabSelectionBar = ComponentReference.TAB_SELECTION_BAR;
 		final Dimension barSize = new Dimension(ComponentData.WINDOW_SIZE.width, 55);
-		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL); 
+		tabSelectionBar.setOrientation(JToolBar.HORIZONTAL);
 		AppUtils.setFinalComponentSize(tabSelectionBar, barSize);
 		GuiComponentCustomization.customizeTabSelectionBar();
 		tabSelectionBar.addSeparator(new Dimension(4, 25));
@@ -174,8 +174,8 @@ public final class GuiLayoutSetup {
 	}
 
 	/**
-	 * This method is used to manage the latest tab button and to set up it's look and
-	 * feel.
+	 * This method is used to manage the latest tab button and to set up it's look
+	 * and feel.
 	 */
 	private static void setupLatestTabButtonLayout() {
 		final AppButton latestTabButton = ComponentReference.LATEST_TAB_BUTTON;

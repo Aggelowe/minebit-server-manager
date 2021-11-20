@@ -19,6 +19,7 @@ import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
 import eu.aggelowe.projects.mbsm.gui.additives.AppList;
+import eu.aggelowe.projects.mbsm.gui.additives.AppSavableSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.gui.additives.AppScrollBarUI;
 import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
 import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServersTab.ServersTabReference;
@@ -132,24 +133,25 @@ public final class ServerList {
 	}
 
 	/**
-	 * This method adds a new {@link AppSingleSelectionButton} which represents a
+	 * This method adds a new {@link AppSavableSingleSelectionButton} which represents a
 	 * specific server.
 	 * 
 	 * @param name The name of the server
 	 */
 	public static void addServerButton(MinecraftServer server) {
-		AppSingleSelectionButton serverButton = new AppSingleSelectionButton(server.getName(), ServerListReference.SERVER_BUTTONS) {
+		AppSavableSingleSelectionButton serverButton = new AppSavableSingleSelectionButton(server.getName(), ServerListReference.SERVER_BUTTONS) {
 
 			@Override
 			protected boolean isDefaultSelected() {
 				return false;
 			}
-
+			
 			@Override
 			protected void onButtonDeselected() {
 				this.setBackground(ServersTabReference.TAB_BACKGROUND_COLOR);
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			protected void onButtonSelected() {
 				this.setBackground(ComponentData.MAIN_COLOR);
@@ -160,6 +162,7 @@ public final class ServerList {
 					ToolViewer.updateTabs();
 					ToolViewer.viewToolTab(this.getName(), selectedToolButton.getText());
 				}
+				ToolViewer.setChanged(false);
 			}
 
 			private static final long serialVersionUID = -3467532756216305521L;
@@ -185,7 +188,7 @@ public final class ServerList {
 	 * 
 	 * @return The currently selected button.
 	 */
-	public static AppSingleSelectionButton getSelectedButton() {
+	public static AppSavableSingleSelectionButton getSelectedButton() {
 		return ServerListReference.selectedButton;
 	}
 
@@ -217,7 +220,7 @@ public final class ServerList {
 			}
 		});
 
-		private static AppSingleSelectionButton selectedButton = null;
+		private static AppSavableSingleSelectionButton selectedButton = null;
 
 	}
 

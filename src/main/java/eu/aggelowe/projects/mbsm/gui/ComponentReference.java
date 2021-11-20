@@ -15,6 +15,8 @@ import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
 import eu.aggelowe.projects.mbsm.gui.additives.AppDraggableToolbar;
 import eu.aggelowe.projects.mbsm.gui.additives.AppFrame;
 import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
+import eu.aggelowe.projects.mbsm.gui.popups.UnsavedObjectPopup;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ToolViewer;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
 import eu.aggelowe.projects.mbsm.util.RepetitiveProcess;
@@ -41,7 +43,26 @@ public final class ComponentReference {
 	public static final AppButton CLOSE_BUTTON = new AppButton(new IAction() {
 		@Override
 		public void execute() {
-			MBSM.exit(ExitStatus.GRACEFUL);
+			if (!ToolViewer.isChanged()) {
+				MBSM.exit(ExitStatus.GRACEFUL);
+			}
+			IAction saveAction = new IAction() {
+
+				@Override
+				public void execute() {
+					ToolViewer.save();
+					MBSM.exit(ExitStatus.GRACEFUL);
+				}
+			};
+			IAction discardAction = new IAction() {
+
+				@Override
+				public void execute() {
+					MBSM.exit(ExitStatus.GRACEFUL);
+				}
+			};
+			UnsavedObjectPopup popup = new UnsavedObjectPopup("server", saveAction, discardAction);
+			popup.show();
 		}
 	});
 
@@ -159,7 +180,7 @@ public final class ComponentReference {
 	};
 
 	public static final AppSingleSelectionButton SETTINGS_TAB_BUTTON = new AppSingleSelectionButton(TAB_BUTTONS) {
-		
+
 		@Override
 		protected void onButtonSelected() {
 			setBorder(new MatteBorder(0, 0, 3, 0, ComponentData.MAIN_TEXT_COLOR));
@@ -270,19 +291,17 @@ public final class ComponentReference {
 		 * The application's main text color.
 		 */
 		public static final Color MAIN_TEXT_COLOR = new Color(125, 215, 230);
-		
+
 		/**
 		 * The application's 'danger' text color.
 		 */
 		public static final Color DANGER_COLOR = new Color(255, 0, 0);
-		
-		
+
 		/**
 		 * The application's default border color.
 		 */
 		public static final Color BORDER_COLOR = new Color(30, 45, 65);
 
-		
 	}
 
 }

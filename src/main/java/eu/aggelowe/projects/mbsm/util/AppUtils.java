@@ -123,7 +123,7 @@ public final class AppUtils {
 	 * This method generates a new random id which can be used to identify different
 	 * objects.
 	 * 
-	 * @param chars The number of characters of the id
+	 * @param chars    The number of characters of the id
 	 * @param charSets The number of character sets separated by a "-"
 	 * 
 	 * @return The generated id
@@ -139,7 +139,7 @@ public final class AppUtils {
 		}
 		return serverId;
 	}
-	
+
 	/**
 	 * This method generates a new random id which can be used to identify different
 	 * objects.
@@ -230,7 +230,7 @@ public final class AppUtils {
 	public static int getMaxNumber(Integer... ints) {
 		return getMaxNumber(Arrays.asList(ints));
 	}
-	
+
 	/**
 	 * This method returns the maximum number from the given {@link List}.
 	 * 
@@ -247,7 +247,7 @@ public final class AppUtils {
 		}
 		return maximumInt;
 	}
-	
+
 	/**
 	 * This method returns the minimum number from the given array.
 	 * 
@@ -258,7 +258,7 @@ public final class AppUtils {
 	public static int getMinNumber(Integer... ints) {
 		return getMinNumber(Arrays.asList(ints));
 	}
-	
+
 	/**
 	 * This method returns the minimum number from the given {@link List}.
 	 * 
@@ -278,7 +278,7 @@ public final class AppUtils {
 		}
 		return minimumInt;
 	}
-	
+
 	/**
 	 * This method centers the text of a {@link JTextPane}.
 	 * 
@@ -289,7 +289,24 @@ public final class AppUtils {
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
 		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+	}
 
+	/**
+	 * This method combines all the given {@link IAction} objects into one.
+	 * 
+	 * @param actions The actions to be combined
+	 * @return The result action
+	 */
+	public static final IAction combineActions(IAction... actions) {
+		IAction result = new IAction() {
+			@Override
+			public void execute() {
+				for (IAction action : actions) {
+					action.execute();
+				}
+			}
+		};
+		return result;
 	}
 
 }

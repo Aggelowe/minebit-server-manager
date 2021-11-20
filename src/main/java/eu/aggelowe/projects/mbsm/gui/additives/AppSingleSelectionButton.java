@@ -76,16 +76,16 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	public AppSingleSelectionButton(String name, Icon icon, List<AppSingleSelectionButton> buttonGroup) {
 		super(name, icon);
 		this.buttonGroup = buttonGroup;
+		init();
+	}
+
+	/**
+	 * This method should initialise the button.
+	 */
+	public void init() {
 		if (buttonGroup.size() > 0) {
 			if (isDefaultSelected() == true) {
-				this.isSelected = true;
-				this.onButtonSelected();
-				for (AppSingleSelectionButton button : buttonGroup) {
-					if (button != null) {
-						button.isSelected = false;
-						button.onButtonDeselected();
-					}
-				}
+				select();
 			} else {
 				onButtonDeselected();
 			}
@@ -126,10 +126,9 @@ public abstract class AppSingleSelectionButton extends AppButton {
 	/**
 	 * This method selects the button.
 	 */
-	public final void select() {
+	public void select() {
 		setSingleSelected();
 		onButtonSelected();
-
 	}
 
 	/**
