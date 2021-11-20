@@ -1,6 +1,6 @@
 package eu.aggelowe.projects.mbsm.gui.tabs.servers;
 
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -15,9 +15,22 @@ import javax.swing.OverlayLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import eu.aggelowe.projects.mbsm.MBSM;
 import eu.aggelowe.projects.mbsm.gui.ComponentReference.ComponentData;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
+import eu.aggelowe.projects.mbsm.gui.additives.AppButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppPopupButton;
+import eu.aggelowe.projects.mbsm.gui.additives.AppSingleSelectionButton;
+import eu.aggelowe.projects.mbsm.gui.popups.ConfirmDeletionPopup;
+import eu.aggelowe.projects.mbsm.gui.tabs.servers.ServerList.ServerListReference;
+import eu.aggelowe.projects.mbsm.servers.MinecraftServer;
+import eu.aggelowe.projects.mbsm.servers.ServerReference;
+import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
+import eu.aggelowe.projects.mbsm.util.ExitStatus;
+import eu.aggelowe.projects.mbsm.util.INamed;
+import eu.aggelowe.projects.mbsm.util.exceptions.ServerException;
+import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
 
 /**
  * This class is used to setup the components of the tool viewer which is part
@@ -107,6 +120,10 @@ public class ToolViewer {
 			OverviewToolTab.setupOverviewLabel();
 			OverviewToolTab.setupNameBox();
 			OverviewToolTab.setupNameField();
+			OverviewToolTab.setupOperationBox();
+			OverviewToolTab.setupSaveButton();
+			OverviewToolTab.setupCopyButton();
+			OverviewToolTab.setupDeleteButton();
 		}
 
 		/**
@@ -131,6 +148,8 @@ public class ToolViewer {
 			toolViewerPanel.add(OverviewToolTabReference.OVERVIEW_LABEL);
 			toolViewerPanel.add(Box.createRigidArea(new Dimension(ToolViewerReference.PANEL_SIZE.width, 7)));
 			toolViewerPanel.add(OverviewToolTabReference.NAME_BOX);
+			toolViewerPanel.add(Box.createRigidArea(new Dimension(ToolViewerReference.PANEL_SIZE.width, 7)));
+			toolViewerPanel.add(OverviewToolTabReference.OPERATION_BOX);
 			ToolViewerReference.TOOL_TABS.add(toolViewerPanel);
 		}
 
@@ -174,14 +193,59 @@ public class ToolViewer {
 		private static void setupNameField() {
 			JTextField nameField = OverviewToolTabReference.NAME_FIELD;
 			AppUtils.setFinalComponentSize(nameField, new Dimension(450, 30));
-			nameField.setBorder(new LineBorder(ToolViewerReference.BORDER_COLOR, 2));
+			nameField.setBorder(new LineBorder(ComponentData.BORDER_COLOR, 2));
 			nameField.setOpaque(false);
 			nameField.setForeground(ComponentData.MAIN_TEXT_COLOR);
 			nameField.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 12));
 			nameField.setHorizontalAlignment(JTextField.CENTER);
 			nameField.setCaretColor(ComponentData.MAIN_TEXT_COLOR);
 		}
-		
+
+		private static void setupOperationBox() {
+			Box operationBox = OverviewToolTabReference.OPERATION_BOX;
+			operationBox.add(OverviewToolTabReference.SAVE_BUTTON);
+			operationBox.add(Box.createRigidArea(new Dimension(15, 30)));
+			operationBox.add(OverviewToolTabReference.COPY_BUTTON);
+			operationBox.add(Box.createRigidArea(new Dimension(15, 30)));
+			operationBox.add(OverviewToolTabReference.DELETE_BUTTON);
+		}
+
+		private static void setupSaveButton() {
+			AppButton saveButton = OverviewToolTabReference.SAVE_BUTTON;
+			AppUtils.setFinalComponentSize(saveButton, new Dimension(140, 30));
+			saveButton.setOpaque(false);
+			saveButton.setContentAreaFilled(false);
+			saveButton.setBorderPainted(true);
+			saveButton.setFocusPainted(false);
+			saveButton.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 12));
+			saveButton.setBorder(new LineBorder(ComponentData.BORDER_COLOR, 2));
+			saveButton.setForeground(ComponentData.MAIN_TEXT_COLOR);
+		}
+
+		private static void setupCopyButton() {
+			AppButton copyButton = OverviewToolTabReference.COPY_BUTTON;
+			AppUtils.setFinalComponentSize(copyButton, new Dimension(140, 30));
+			copyButton.setOpaque(false);
+			copyButton.setContentAreaFilled(false);
+			copyButton.setBorderPainted(true);
+			copyButton.setFocusPainted(false);
+			copyButton.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 12));
+			copyButton.setBorder(new LineBorder(ComponentData.BORDER_COLOR, 2));
+			copyButton.setForeground(ComponentData.MAIN_TEXT_COLOR);
+		}
+
+		private static void setupDeleteButton() {
+			AppButton deleteButton = OverviewToolTabReference.DELETE_BUTTON;
+			AppUtils.setFinalComponentSize(deleteButton, new Dimension(140, 30));
+			deleteButton.setOpaque(false);
+			deleteButton.setContentAreaFilled(false);
+			deleteButton.setBorderPainted(true);
+			deleteButton.setFocusPainted(false);
+			deleteButton.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 12));
+			deleteButton.setBorder(new LineBorder(ComponentData.BORDER_COLOR, 2));
+			deleteButton.setForeground(ComponentData.DANGER_COLOR);
+		}
+
 		/**
 		 * This class contains all the important components and data for the overview
 		 * tool tab to work properly.
@@ -196,7 +260,82 @@ public class ToolViewer {
 			public static final Box NAME_BOX = new Box(BoxLayout.X_AXIS);
 
 			public static final JTextField NAME_FIELD = new JTextField();
-			
+
+			public static final Box OPERATION_BOX = new Box(BoxLayout.X_AXIS);
+
+			public static final IAction SAVE_ACTION = new IAction() {
+
+				@Override
+				public void execute() {
+					String defaultName = "Unnamed Server";
+					INamed named = ServerReference.SERVERS.getNamedObject(ServerList.getSelectedButton().getName());
+					MinecraftServer server = null;
+					if (named instanceof MinecraftServer) {
+						server = (MinecraftServer) named;
+					} else {
+						return;
+					}
+					try {
+						if (NAME_FIELD.getText() != null && !NAME_FIELD.getText().equals("")) {
+							server.setName(NAME_FIELD.getText());
+							ServerList.getSelectedButton().setText(NAME_FIELD.getText());
+						} else {
+							NAME_FIELD.setText(defaultName);
+							server.setName(defaultName);
+							ServerList.getSelectedButton().setText(defaultName);
+						}
+						ServerUtil.saveServer(server.getId());
+					} catch (ServerException exception) {
+						exception.printStackTrace();
+						MBSM.exit(ExitStatus.ERROR);
+					}
+				}
+			};
+
+			public static final AppButton SAVE_BUTTON = new AppButton("Save", SAVE_ACTION);
+
+			public static final IAction COPY_ACTION = new IAction() {
+
+				@Override
+				public void execute() {
+
+				}
+			};
+
+			public static final AppButton COPY_BUTTON = new AppButton("Copy", COPY_ACTION);
+
+			public static final IAction DELETE_ACTION = new IAction() {
+
+				@Override
+				public void execute() {
+					INamed named = ServerReference.SERVERS.getNamedObject(ServerList.getSelectedButton().getName());
+					MinecraftServer server = null;
+					if (named instanceof MinecraftServer) {
+						server = (MinecraftServer) named;
+					} else {
+						return;
+					}
+					try {
+						ServerListReference.SERVER_SELECTION_LIST.remove(ServerList.getSelectedButton());
+						ServerUtil.deleteServer(server);
+						ServerListReference.SERVER_SELECTION_LIST.updateSize();
+						ServerListReference.SERVER_SELECTION_PANE.updateUI();
+						for (Component component : ServerListReference.SERVER_SELECTION_LIST.getComponents()) {
+							if (component instanceof AppSingleSelectionButton) {
+								((AppSingleSelectionButton) component).select();
+								return;
+							}
+						}
+						ServerUtil.consctructNewServer();
+					} catch (ServerException exception) {
+						exception.printStackTrace();
+						MBSM.exit(ExitStatus.ERROR);
+					}
+				}
+			};
+
+			public static final AppPopupButton DELETE_BUTTON = new AppPopupButton("Delete", new ConfirmDeletionPopup("server", DELETE_ACTION));
+
 		}
 
 	}
@@ -214,13 +353,9 @@ public class ToolViewer {
 
 		public static final Dimension PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width / 2, ComponentData.TAB_PANEL_SIZE.height);
 
-		public static final Color BORDER_COLOR = new Color(30, 45, 65);
-
 		public static final List<JPanel> TOOL_TABS = new ArrayList<JPanel>();
 
 		public static final JPanel OVERVIEW_TOOL_TAB = new JPanel();
-		
-		public static final Color DANGER_COLOR = new Color(156, 0, 0);
 	}
 
 }

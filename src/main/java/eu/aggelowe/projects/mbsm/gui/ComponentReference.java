@@ -271,6 +271,18 @@ public final class ComponentReference {
 		 */
 		public static final Color MAIN_TEXT_COLOR = new Color(125, 215, 230);
 		
+		/**
+		 * The application's 'danger' text color.
+		 */
+		public static final Color DANGER_COLOR = new Color(255, 0, 0);
+		
+		
+		/**
+		 * The application's default border color.
+		 */
+		public static final Color BORDER_COLOR = new Color(30, 45, 65);
+
+		
 	}
 
 }

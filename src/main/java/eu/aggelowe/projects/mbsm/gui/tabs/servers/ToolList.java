@@ -1,7 +1,6 @@
 package eu.aggelowe.projects.mbsm.gui.tabs.servers;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class ToolList {
 	 */
 	private static void configureComponent() {
 		final JPanel toolListPanel = ToolListReference.TOOL_LIST_PANEL;
-		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ToolListReference.BORDER_COLOR);
+		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ComponentData.BORDER_COLOR);
 		AppUtils.setFinalComponentSize(toolListPanel, ToolListReference.PANEL_SIZE);
 		toolListPanel.setOpaque(false);
 		toolListPanel.setBorder(panelBorder);
@@ -88,7 +87,7 @@ public class ToolList {
 		toolSelectionPane.getViewport().setOpaque(false);
 		toolSelectionPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		toolSelectionPane.setViewportView(ToolListReference.TOOL_SELECTION_LIST);
-		toolSelectionPane.getVerticalScrollBar().setUI(new AppScrollBarUI(ServersTabReference.TAB_BACKGROUND_COLOR, ComponentData.ACTION_PANEL_COLOR, ToolListReference.BORDER_COLOR, 2));
+		toolSelectionPane.getVerticalScrollBar().setUI(new AppScrollBarUI(ServersTabReference.TAB_BACKGROUND_COLOR, ComponentData.ACTION_PANEL_COLOR, ComponentData.BORDER_COLOR, 2));
 		toolSelectionPane.getVerticalScrollBar().setBackground(ServersTabReference.TAB_BACKGROUND_COLOR);
 		toolSelectionPane.getVerticalScrollBar().setUnitIncrement(16);
 	}
@@ -192,8 +191,6 @@ public class ToolList {
 		public static final JPanel TOOL_LIST_PANEL = new JPanel();
 
 		public static final Dimension PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width / 4, ComponentData.TAB_PANEL_SIZE.height);
-
-		public static final Color BORDER_COLOR = new Color(30, 45, 65);
 
 		public static final JScrollPane TOOL_SELECTION_PANE = new JScrollPane();
 

@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import eu.aggelowe.projects.mbsm.util.exceptions.InvalidParameterException;
 import eu.aggelowe.projects.mbsm.util.interfaces.IAction;
@@ -273,6 +277,19 @@ public final class AppUtils {
 			}
 		}
 		return minimumInt;
+	}
+	
+	/**
+	 * This method centers the text of a {@link JTextPane}.
+	 * 
+	 * @param text The {@link JTextPane} to center it's text.
+	 */
+	public static final void centerText(JTextPane text) {
+		StyledDocument doc = text.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
 	}
 
 }

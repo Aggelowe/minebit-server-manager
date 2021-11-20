@@ -1,7 +1,6 @@
 package eu.aggelowe.projects.mbsm.gui.tabs.servers;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public final class ServerList {
 	 */
 	private static void configureComponent() {
 		final JPanel serverListPanel = ServerListReference.SERVER_LIST_PANEL;
-		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ServerListReference.BORDER_COLOR);
+		final Border panelBorder = new MatteBorder(0, 0, 0, 2, ComponentData.BORDER_COLOR);
 		AppUtils.setFinalComponentSize(serverListPanel, ServerListReference.PANEL_SIZE);
 		serverListPanel.setOpaque(false);
 		serverListPanel.setBorder(panelBorder);
@@ -77,7 +76,7 @@ public final class ServerList {
 	private static void setupServerManagementBar() {
 		final JToolBar serverManagementBar = ServerListReference.SERVER_MANAGEMENT_BAR;
 		final Dimension barSize = new Dimension(ServerListReference.PANEL_SIZE.width, 25);
-		final Border barBorder = new MatteBorder(0, 0, 2, 0, ServerListReference.BORDER_COLOR);
+		final Border barBorder = new MatteBorder(0, 0, 2, 0, ComponentData.BORDER_COLOR);
 		AppUtils.setFinalComponentSize(serverManagementBar, barSize);
 		serverManagementBar.setFloatable(false);
 		serverManagementBar.setOpaque(true);
@@ -115,7 +114,7 @@ public final class ServerList {
 		serverSelectionPane.getViewport().setOpaque(false);
 		serverSelectionPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		serverSelectionPane.setViewportView(ServerListReference.SERVER_SELECTION_LIST);
-		serverSelectionPane.getVerticalScrollBar().setUI(new AppScrollBarUI(ServersTabReference.TAB_BACKGROUND_COLOR, ComponentData.ACTION_PANEL_COLOR, ServerListReference.BORDER_COLOR, 2));
+		serverSelectionPane.getVerticalScrollBar().setUI(new AppScrollBarUI(ServersTabReference.TAB_BACKGROUND_COLOR, ComponentData.ACTION_PANEL_COLOR, ComponentData.BORDER_COLOR, 2));
 		serverSelectionPane.getVerticalScrollBar().setBackground(ServersTabReference.TAB_BACKGROUND_COLOR);
 		serverSelectionPane.getVerticalScrollBar().setUnitIncrement(16);
 	}
@@ -202,8 +201,6 @@ public final class ServerList {
 		public static final JPanel SERVER_LIST_PANEL = new JPanel();
 
 		public static final Dimension PANEL_SIZE = new Dimension(ComponentData.WINDOW_SIZE.width / 4, ComponentData.TAB_PANEL_SIZE.height);
-
-		public static final Color BORDER_COLOR = new Color(30, 45, 65);
 
 		public static final JToolBar SERVER_MANAGEMENT_BAR = new JToolBar();
 

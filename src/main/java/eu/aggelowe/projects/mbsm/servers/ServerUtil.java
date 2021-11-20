@@ -96,7 +96,7 @@ public final class ServerUtil {
 	 * <i>servers</i> directory.
 	 */
 	public static void saveServers() {
-		
+
 		ServerReference.SERVER_LOGGER.info("Saving servers...");
 		try {
 			for (MinecraftServer server : ServerReference.SERVERS) {
@@ -210,6 +210,27 @@ public final class ServerUtil {
 		MinecraftServer server = new MinecraftServer(name, id, memory, version);
 		server.setLastUsed(lastUsed);
 		server.init();
+	}
+
+	/**
+	 * This method loads the properties of the given server and creates specific
+	 * files if necessary.
+	 * 
+	 * @param name The name of the server to load
+	 * 
+	 * @throws ServerException
+	 */
+	public static void deleteServer(MinecraftServer server) throws ServerException {
+		ServerReference.SERVER_LOGGER.debug("Deleting server: " + server.getObjectName());
+		server.delete();
+		File serverFile = new File(ServerReference.SERVER_PATH + server.getId() + ".server");
+		if (serverFile.exists() && serverFile.isFile()) {
+			serverFile.delete();
+		}
+		File serverFolder = new File(ServerReference.SERVER_PATH + server.getId());
+		if (serverFolder.exists() && serverFolder.isDirectory()) {
+			serverFolder.delete();
+		}
 	}
 
 	/**
