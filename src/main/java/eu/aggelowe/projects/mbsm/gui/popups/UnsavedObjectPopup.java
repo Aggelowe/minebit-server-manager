@@ -21,7 +21,7 @@ public class UnsavedObjectPopup extends Popup {
 	 *
 	 */
 	public UnsavedObjectPopup(String target, IAction saveAction, IAction discardAction) {
-		super("Do you want to save the changes on this " + target + "?");
+		super("Do you want to save the changes done to this " + target + "?");
 		this.addButton("Save", saveAction, false);
 		this.addButton("Don't Save", discardAction, true);
 		this.addButton("Cancel", HIDE_POPUP);

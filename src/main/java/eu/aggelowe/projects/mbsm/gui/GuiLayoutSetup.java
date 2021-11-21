@@ -46,8 +46,6 @@ public final class GuiLayoutSetup {
 		GUI_LOGGER.info("Drawing gui...");
 		GUI_LOGGER.debug("Setting up the application's components and layout...");
 		GuiLayoutSetup.setupComponents();
-		GUI_LOGGER.debug("Showing frame...");
-		ComponentReference.WINDOW.setVisible(true);
 		GUI_LOGGER.debug("Showing buttons...");
 		for (MinecraftServer server : ServerReference.SERVERS) {
 			if (server != null) {

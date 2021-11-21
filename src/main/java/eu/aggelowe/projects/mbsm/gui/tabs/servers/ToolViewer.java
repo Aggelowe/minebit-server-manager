@@ -309,6 +309,7 @@ public class ToolViewer {
 						exception.printStackTrace();
 						MBSM.exit(ExitStatus.ERROR);
 					}
+					ToolViewer.setChanged(false);
 				}
 			};
 

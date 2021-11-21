@@ -85,8 +85,9 @@ public abstract class Popup {
 		POPUP_FRAME.getContentPane().setBackground(ComponentData.MAIN_COLOR);
 		POPUP_FRAME.setLocationRelativeTo(ComponentReference.WINDOW);
 		POPUP_FRAME.setLayout(new BoxLayout(POPUP_FRAME.getContentPane(), BoxLayout.Y_AXIS));
-		POPUP_FRAME.getContentPane().add(Box.createRigidArea(new Dimension(POPUP_SIZE.width, 20)));
+		POPUP_FRAME.getContentPane().add(Box.createRigidArea(new Dimension(POPUP_SIZE.width, 10)));
 		POPUP_FRAME.getContentPane().add(MESSAGE_BOX);
+		POPUP_FRAME.getContentPane().add(Box.createRigidArea(new Dimension(POPUP_SIZE.width, 10)));
 		POPUP_FRAME.getContentPane().add(BUTTON_BOX);
 		POPUP_FRAME.setFont(new Font(ComponentData.MAIN_FONT, Font.BOLD, 14));
 		POPUP_FRAME.setIconImage(ComponentData.APP_LOGO.getImage());

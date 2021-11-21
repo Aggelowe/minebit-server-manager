@@ -1,8 +1,10 @@
 package eu.aggelowe.projects.mbsm;
 
 import eu.aggelowe.projects.mbsm.files.FileInit;
+import eu.aggelowe.projects.mbsm.gui.ComponentReference;
 import eu.aggelowe.projects.mbsm.gui.GuiLayoutSetup;
 import eu.aggelowe.projects.mbsm.gui.tabs.servers.ToolViewer;
+import eu.aggelowe.projects.mbsm.servers.ServerReference;
 import eu.aggelowe.projects.mbsm.servers.ServerUtil;
 import eu.aggelowe.projects.mbsm.util.AppUtils;
 import eu.aggelowe.projects.mbsm.util.ExitStatus;
@@ -55,12 +57,15 @@ public final class MBSM {
 	});
 
 	private static final RepetitiveProcess GARBAGE_COLLECTOR = new RepetitiveProcess("Garbage Collector", new IDynamicObject<Boolean>() {
+
 		@Override
 		public Boolean obtain() {
 			try {
-				long sec = 1000;
-				System.gc();
-				Thread.sleep(sec * 10);
+				long occupiedMemory = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
+				if (((double) occupiedMemory / (double) Runtime.getRuntime().maxMemory()) * 100 > 50) {
+					System.gc();
+				}
+				Thread.sleep(1000);
 			} catch (InterruptedException exception) {
 			}
 			return false;
@@ -129,6 +134,11 @@ public final class MBSM {
 	@SuppressWarnings("deprecation")
 	private static void finishLoading() {
 		ToolViewer.setChanged(false);
+		if (ServerReference.SERVERS.size() == 0) {
+			ServerUtil.consctructNewServer();
+		}
+		GuiLayoutSetup.GUI_LOGGER.debug("Showing frame...");
+		ComponentReference.WINDOW.setVisible(true);
 	}
 
 }
